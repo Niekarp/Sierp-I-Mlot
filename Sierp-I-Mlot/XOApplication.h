@@ -3,7 +3,7 @@
 #pragma once
 
 namespace xo {
-	class XOApplication {
-
+	class XOApplication
+	{
 	};
 }
