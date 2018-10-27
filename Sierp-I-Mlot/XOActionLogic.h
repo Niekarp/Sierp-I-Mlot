@@ -9,8 +9,7 @@ namespace xo
 	class XOActionLogic
 	{
 	public:
-		XOActionLogic(const XOViewManager& view_manager, const XOGameLogic& game_logic);
-		~XOActionLogic();
+		XOActionLogic(XOViewManager& view_manager, XOGameLogic& game_logic);
 
 		void take_action(SelectionInfo selection_info);
 		bool quit_pressed();
