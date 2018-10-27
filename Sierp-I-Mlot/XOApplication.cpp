@@ -4,10 +4,10 @@
 
 namespace xo
 {
-	XOApplication *XOApplication::_instance = nullptr;
-	XOApplication *XOApplication::get_instance()
+	std::shared_ptr<XOApplication> XOApplication::_instance = nullptr;
+	std::shared_ptr<XOApplication> XOApplication::get_instance()
 	{
-		if (_instance == nullptr) _instance = new XOApplication();
+		if (_instance == nullptr) _instance = std::make_shared<XOApplication>(new XOApplication());
 		return _instance;
 	}
 

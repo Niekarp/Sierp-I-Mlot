@@ -11,12 +11,12 @@ namespace xo {
 	class XOApplication
 	{
 	public:
-		static XOApplication *get_instance();
+		static std::shared_ptr<XOApplication> get_instance();
 
 		void run();
 	private:
 		XOApplication();
-		static XOApplication *_instance;
+		static std::shared_ptr<XOApplication> _instance;
 
 		XOViewManager _view_manager;
 		XOActionLogic _action_logic;
