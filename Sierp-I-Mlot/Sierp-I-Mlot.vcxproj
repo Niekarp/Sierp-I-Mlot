@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ConsoleOutput.h" />
+    <ClInclude Include="XOConsoleOutput.h" />
     <ClInclude Include="XOIOutput.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="XOActionLogic.h" />
@@ -163,7 +163,7 @@
     <ClInclude Include="XOViewManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConsoleOutput.cpp" />
+    <ClCompile Include="XOConsoleOutput.cpp" />
     <ClCompile Include="XOIOutput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">

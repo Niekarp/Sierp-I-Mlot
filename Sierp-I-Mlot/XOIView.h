@@ -1,8 +1,11 @@
 #pragma once
-class XOIView
-{
-public:
-	XOIView();
-	~XOIView();
-};
 
+namespace xo
+{
+	class XOIView
+	{
+	public:
+		XOIView();
+		~XOIView();
+	};
+}

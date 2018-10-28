@@ -2,11 +2,11 @@
 #include "XOClient.h"
 
 
-XOClient::XOClient()
-{
-}
-
-
-XOClient::~XOClient()
-{
-}
+//XOClient::XOClient()
+//{
+//}
+//
+//
+//XOClient::~XOClient()
+//{
+//}

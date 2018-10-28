@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
@@ -13,43 +9,47 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Input">
-      <UniqueIdentifier>{08ce2675-8b6f-4af9-a03f-5060423b36b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Input">
-      <UniqueIdentifier>{69523fe4-2153-48f9-8fc4-767f3ce2b7b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Other">
       <UniqueIdentifier>{914b8f3a-3281-47a3-a4a6-becefe245617}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Other">
-      <UniqueIdentifier>{88f9b769-aa26-4ef1-a899-f9a62b714924}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Logic">
       <UniqueIdentifier>{2fd526e4-2af2-4881-ac01-8a2f59d0eb7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Logic">
-      <UniqueIdentifier>{8adc2bfc-5ec7-4512-b25e-03d071fa54c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Network">
-      <UniqueIdentifier>{a5d5418e-08d6-4495-a406-06daf6dd79cd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Presentation">
       <UniqueIdentifier>{6cb727b0-a60f-4c72-8117-ec13cca885b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deprecated">
+      <UniqueIdentifier>{8e9fbf40-843c-41ec-829d-d3d52792bb87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Other">
+      <UniqueIdentifier>{88f9b769-aa26-4ef1-a899-f9a62b714924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Logic">
+      <UniqueIdentifier>{8adc2bfc-5ec7-4512-b25e-03d071fa54c0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Presentation">
       <UniqueIdentifier>{da54de29-d221-4a69-89f0-b5249b14cadb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Network">
+    <Filter Include="Deprecated\Network">
+      <UniqueIdentifier>{a5d5418e-08d6-4495-a406-06daf6dd79cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deprecated\Network\Network">
       <UniqueIdentifier>{f232b768-10a4-43e1-b942-0b3d8fdf1720}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deprecated\Input">
+      <UniqueIdentifier>{08ce2675-8b6f-4af9-a03f-5060423b36b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deprecated\Input\Input">
+      <UniqueIdentifier>{69523fe4-2153-48f9-8fc4-767f3ce2b7b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XOInput.h">
-      <Filter>Header Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="XOViewManager.h">
-      <Filter>Header Files\Presentation</Filter>
+      <Filter>Deprecated\Input</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files\Other</Filter>
@@ -64,10 +64,7 @@
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
     <ClInclude Include="XOClient.h">
-      <Filter>Header Files\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="ConsoleOutput.h">
-      <Filter>Header Files\Presentation</Filter>
+      <Filter>Deprecated\Network</Filter>
     </ClInclude>
     <ClInclude Include="XOIOutput.h">
       <Filter>Header Files\Presentation</Filter>
@@ -75,13 +72,16 @@
     <ClInclude Include="XOIView.h">
       <Filter>Header Files\Presentation</Filter>
     </ClInclude>
+    <ClInclude Include="XOConsoleOutput.h">
+      <Filter>Header Files\Presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="XOViewManager.h">
+      <Filter>Deprecated</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XOInput.cpp">
-      <Filter>Source Files\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="XOViewManager.cpp">
-      <Filter>Source Files\Presentation</Filter>
+      <Filter>Deprecated\Input\Input</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files\Other</Filter>
@@ -99,19 +99,22 @@
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
     <ClCompile Include="XOClient.cpp">
-      <Filter>Source Files\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="ConsoleOutput.cpp">
-      <Filter>Source Files\Presentation</Filter>
-    </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Deprecated\Network\Network</Filter>
     </ClCompile>
     <ClCompile Include="XOIOutput.cpp">
       <Filter>Source Files\Presentation</Filter>
     </ClCompile>
     <ClCompile Include="XOIView.cpp">
       <Filter>Source Files\Presentation</Filter>
+    </ClCompile>
+    <ClCompile Include="XOConsoleOutput.cpp">
+      <Filter>Source Files\Presentation</Filter>
+    </ClCompile>
+    <ClCompile Include="XOViewManager.cpp">
+      <Filter>Deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Deprecated</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

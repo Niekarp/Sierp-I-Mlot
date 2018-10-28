@@ -5,7 +5,6 @@
 #include "XOIOutput.h"
 #include "XOActionLogic.h"
 #include "XOGameLogic.h"
-#include "XOClient.h"
 
 namespace xo {
 	class XOApplication
@@ -21,6 +20,5 @@ namespace xo {
 		XOIOutput &_output;
 		XOActionLogic _action_logic;
 		XOGameLogic _game_logic;
-		XOClient _client;
 	};
 }

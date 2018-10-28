@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "XOIView.h"
 
-
-XOIView::XOIView()
+namespace xo
 {
-}
+	XOIView::XOIView()
+	{
+	}
 
-
-XOIView::~XOIView()
-{
+	XOIView::~XOIView()
+	{
+	}
 }

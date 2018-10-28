@@ -1,6 +1,7 @@
 #pragma once
 
 // DEPRECATED CLASS
+/*
 namespace xo
 {
 	enum class XOViewTag
@@ -20,3 +21,5 @@ namespace xo
 		XOViewTag _current_view;
 	};
 }
+
+*/

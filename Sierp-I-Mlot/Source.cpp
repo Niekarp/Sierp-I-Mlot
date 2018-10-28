@@ -1,3 +1,5 @@
+#include "pch.h"
+/*
 struct Menu
 {
 	struct Option
@@ -29,3 +31,4 @@ main_menu->add_option({ "exit", []
 } });
 // u¿ycie
 main_menu->draw_on(IOutput);
+*/

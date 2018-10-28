@@ -1,5 +1,4 @@
 #pragma once
-#include "XOViewManager.h"
 #include "XOActionLogic.h"
 #include "XOIView.h"
 
@@ -10,6 +9,8 @@ namespace xo
 		main_menu,
 		game
 	};
+
+	class XOActionLogic;
 
 	class XOIOutput
 	{

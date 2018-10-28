@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "XOIOutput.h"
 
-
-IOutput::IOutput()
+namespace xo
 {
-}
-
-
-IOutput::~IOutput()
-{
+	XOIOutput::XOIOutput(XOActionLogic &action_logic) :
+		_action_logic(action_logic)
+	{
+	}
+	XOIOutput::~XOIOutput()
+	{
+	}
 }

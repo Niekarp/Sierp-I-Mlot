@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "XOApplication.h"
 #include "XOInput.h"
-#include "ConsoleOutput.h"
+#include "XOConsoleOutput.h"
 
 namespace xo
 {
@@ -13,7 +13,7 @@ namespace xo
 	}
 
 	XOApplication::XOApplication() :
-		_output(new ConsoleOutput(_action_logic)),
+		_output(*(new XOConsoleOutput(_action_logic))),
 		_action_logic(_output, _game_logic),
 		_game_logic(3, 3, PlayerSymbol::circle, 3)
 	{

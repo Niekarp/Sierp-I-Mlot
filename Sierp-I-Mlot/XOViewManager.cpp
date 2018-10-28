@@ -2,6 +2,7 @@
 #include "XOViewManager.h"
 #include "XOActionLogic.h"
 
+/*
 namespace xo
 {
 	XOViewManager::XOViewManager(XOActionLogic &action_logic) :
@@ -14,3 +15,4 @@ namespace xo
 		// run IOutput draw function
 	}
 }
+*/

@@ -1,11 +1,12 @@
 #pragma once
 
-#include "XOInput.h"
 #include "XOIOutput.h"
 #include "XOGameLogic.h"
 
 namespace xo
 {
+	class XOIOutput;
+
 	class XOActionLogic
 	{
 	public:
