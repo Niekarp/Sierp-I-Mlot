@@ -4,27 +4,45 @@
 
 namespace xo
 {
-	typedef std::pair<unsigned, unsigned> BoardSize;
-	typedef std::pair<unsigned, unsigned> BoardPosition;
 	enum class PlayerSymbol
 	{
+		cross,
 		circle,
-		cross
+		none
+	};
+	typedef PlayerSymbol SquareState;
+
+	enum class GameState
+	{
+		ongoing,
+		stopped,
+		finished
 	};
 
 
 	class XOGameLogic
 	{
+		struct BoardInfo
+		{
+			// sizes measured with board square unit
+			unsigned width, height;
+			unsigned number_of_squares;
+
+			std::vector<SquareState> squares_states;
+		};
 	public:
-		XOGameLogic(BoardSize initial_size);
+		XOGameLogic(unsigned initial_width, unsigned initial_height);
 
-		bool make_move(BoardPosition, PlayerSymbol);
-		bool make_move(unsigned, PlayerSymbol);
+		bool play_move(PlayerSymbol symbol, unsigned x, unsigned y);
+		void analyse_board();
 
-		PlayerSymbol get_current_player();
-		BoardSize get_board_size();
-		unsigned get_number_of_fields();
+		PlayerSymbol player_to_play_next();
+		GameState current_state();
 	private:
-		BoardSize _board_size;
+		BoardInfo _board_info;
+		PlayerSymbol _current_player;
+		GameState _current_state;
+
+		std::vector<std::vector<unsigned>> _winning_squares_sqruences;
 	};
 }
