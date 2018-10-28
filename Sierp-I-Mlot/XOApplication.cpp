@@ -8,7 +8,7 @@ namespace xo
 	std::shared_ptr<XOApplication> XOApplication::_instance = nullptr;
 	std::shared_ptr<XOApplication> XOApplication::get_instance()
 	{
-		if (_instance == nullptr) _instance = std::make_shared<XOApplication>(new XOApplication());
+		if (_instance == nullptr) _instance = std::shared_ptr<XOApplication>(new XOApplication());
 		return _instance;
 	}
 
