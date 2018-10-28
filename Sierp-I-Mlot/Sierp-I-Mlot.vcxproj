@@ -110,6 +110,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -148,30 +149,30 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="console\AnimatedFileImagePlane.h" />
-    <ClInclude Include="console\AnimationChain.h" />
-    <ClInclude Include="console\ButtonPlane.h" />
-    <ClInclude Include="console\CenteredFramedPlane.h" />
-    <ClInclude Include="console\ChartReader.h" />
-    <ClInclude Include="console\Console.h" />
-    <ClInclude Include="console\FileImagePlane.h" />
-    <ClInclude Include="console\FramePlaneFrameCreator.h" />
-    <ClInclude Include="console\IAnimation.h" />
-    <ClInclude Include="console\IClickableConsolePlane.h" />
-    <ClInclude Include="console\IConsolePlane.h" />
-    <ClInclude Include="console\IntroAnimation.h" />
-    <ClInclude Include="console\IntroMenuAnimation.h" />
-    <ClInclude Include="console\Menu.h" />
-    <ClInclude Include="console\MusicPlayer.h" />
-    <ClInclude Include="console\Note.h" />
-    <ClInclude Include="console\stxutif.h" />
-    <ClInclude Include="console\SuperWaveAnimation.h" />
-    <ClInclude Include="console\targetver.h" />
-    <ClInclude Include="console\TestError.h" />
-    <ClInclude Include="console\TextConsolePlane.h" />
+    <ClInclude Include="AnimatedFileImagePlane.h" />
+    <ClInclude Include="AnimationChain.h" />
+    <ClInclude Include="ButtonPlane.h" />
+    <ClInclude Include="CenteredFramedPlane.h" />
+    <ClInclude Include="ChartReader.h" />
+    <ClInclude Include="Console.h" />
+    <ClInclude Include="FileImagePlane.h" />
+    <ClInclude Include="FramePlaneFrameCreator.h" />
+    <ClInclude Include="IAnimation.h" />
+    <ClInclude Include="IClickableConsolePlane.h" />
+    <ClInclude Include="IConsolePlane.h" />
+    <ClInclude Include="IntroAnimation.h" />
+    <ClInclude Include="IntroMenuAnimation.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="MusicPlayer.h" />
+    <ClInclude Include="Note.h" />
+    <ClInclude Include="SuperWaveAnimation.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="testerror.h" />
+    <ClInclude Include="TextConsolePlane.h" />
     <ClInclude Include="XOConsoleOutput.h" />
     <ClInclude Include="XOIOutput.h" />
     <ClInclude Include="pch.h" />
@@ -184,22 +185,22 @@
     <ClInclude Include="XOViewManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="console\AnimatedFileImagePlane.cpp" />
-    <ClCompile Include="console\AnimationChain.cpp" />
-    <ClCompile Include="console\ButtonPlane.cpp" />
-    <ClCompile Include="console\CenteredFramedPlane.cpp" />
-    <ClCompile Include="console\ChartReader.cpp" />
-    <ClCompile Include="console\Console.cpp" />
-    <ClCompile Include="console\ConsoleAnimationTest.cpp" />
-    <ClCompile Include="console\FileImagePlane.cpp" />
-    <ClCompile Include="console\FramePlaneFrameCreator.cpp" />
-    <ClCompile Include="console\IntroAnimation.cpp" />
-    <ClCompile Include="console\IntroMenuAnimation.cpp" />
-    <ClCompile Include="console\Menu.cpp" />
-    <ClCompile Include="console\MusicPlayer.cpp" />
-    <ClCompile Include="console\Note.cpp" />
-    <ClCompile Include="console\SuperWaveAnimation.cpp" />
-    <ClCompile Include="console\TextConsolePlane.cpp" />
+    <ClCompile Include="animatedfileimageplane.cpp" />
+    <ClCompile Include="animationchain.cpp" />
+    <ClCompile Include="ButtonPlane.cpp" />
+    <ClCompile Include="CenteredFramedPlane.cpp" />
+    <ClCompile Include="ChartReader.cpp" />
+    <ClCompile Include="Console.cpp" />
+    <ClCompile Include="ConsoleAnimationTest.cpp" />
+    <ClCompile Include="FileImagePlane.cpp" />
+    <ClCompile Include="FramePlaneFrameCreator.cpp" />
+    <ClCompile Include="IntroAnimation.cpp" />
+    <ClCompile Include="IntroMenuAnimation.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MusicPlayer.cpp" />
+    <ClCompile Include="Note.cpp" />
+    <ClCompile Include="SuperWaveAnimation.cpp" />
+    <ClCompile Include="TextConsolePlane.cpp" />
     <ClCompile Include="XOConsoleOutput.cpp" />
     <ClCompile Include="XOIOutput.cpp" />
     <ClCompile Include="main.cpp" />

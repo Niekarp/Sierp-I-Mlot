@@ -46,8 +46,11 @@
     <Filter Include="Deprecated\Input\Input">
       <UniqueIdentifier>{69523fe4-2153-48f9-8fc4-767f3ce2b7b0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Console">
-      <UniqueIdentifier>{bdc21bb1-66e7-4cee-a8bf-105a6e517425}</UniqueIdentifier>
+    <Filter Include="Header Files\Console">
+      <UniqueIdentifier>{edb562fa-51dc-463e-9935-ac21c0699b46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Console">
+      <UniqueIdentifier>{62a75f9b-b8af-47b7-93ce-2a8ecc4f7ba9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -81,68 +84,65 @@
     <ClInclude Include="XOViewManager.h">
       <Filter>Deprecated</Filter>
     </ClInclude>
-    <ClInclude Include="console\AnimatedFileImagePlane.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="TextConsolePlane.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\AnimationChain.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="AnimatedFileImagePlane.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\ButtonPlane.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="AnimationChain.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\CenteredFramedPlane.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="ButtonPlane.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\ChartReader.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="CenteredFramedPlane.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\Console.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="ChartReader.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\FileImagePlane.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="Console.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\FramePlaneFrameCreator.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="FileImagePlane.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\IAnimation.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="FramePlaneFrameCreator.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\IClickableConsolePlane.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="IAnimation.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\IConsolePlane.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="IClickableConsolePlane.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\IntroAnimation.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="IConsolePlane.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\IntroMenuAnimation.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="IntroAnimation.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\Menu.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="IntroMenuAnimation.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\MusicPlayer.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\Note.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="MusicPlayer.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\stxutif.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="Note.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\SuperWaveAnimation.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="SuperWaveAnimation.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\targetver.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\TestError.h">
-      <Filter>Console</Filter>
-    </ClInclude>
-    <ClInclude Include="console\TextConsolePlane.h">
-      <Filter>Console</Filter>
+    <ClInclude Include="testerror.h">
+      <Filter>Header Files\Console</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,53 +182,53 @@
     <ClCompile Include="Source.cpp">
       <Filter>Deprecated</Filter>
     </ClCompile>
-    <ClCompile Include="console\AnimatedFileImagePlane.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="animatedfileimageplane.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\AnimationChain.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="animationchain.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\ButtonPlane.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="ButtonPlane.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\CenteredFramedPlane.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="CenteredFramedPlane.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\ChartReader.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="ChartReader.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\Console.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="Console.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\ConsoleAnimationTest.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="ConsoleAnimationTest.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\FileImagePlane.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="FileImagePlane.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\FramePlaneFrameCreator.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="FramePlaneFrameCreator.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\IntroAnimation.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="IntroAnimation.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\IntroMenuAnimation.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="IntroMenuAnimation.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\Menu.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\MusicPlayer.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="MusicPlayer.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\Note.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="Note.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\SuperWaveAnimation.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="SuperWaveAnimation.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="console\TextConsolePlane.cpp">
-      <Filter>Console</Filter>
+    <ClCompile Include="TextConsolePlane.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

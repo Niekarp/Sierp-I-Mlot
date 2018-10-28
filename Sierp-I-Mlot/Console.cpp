@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 #include "Console.h"
 #include "IAnimation.h"
 #include "IConsolePlane.h"

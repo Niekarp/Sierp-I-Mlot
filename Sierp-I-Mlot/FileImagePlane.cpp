@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 #include "FileImagePlane.h"
 
 FileImagePlane::FileImagePlane(const char *filename) :

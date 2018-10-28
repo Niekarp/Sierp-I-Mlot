@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 #include "Menu.h"
 
 #include "CenteredFramedPlane.h"
@@ -23,7 +23,7 @@ void Menu::draw_on(const std::shared_ptr<Console>& output)
 	menu_plane->fill_color(BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 	output->add_plane(menu_plane);
 
-	auto logo_plane = std::make_shared<FileImagePlane>("logo_pattern.txt");
+	auto logo_plane = std::make_shared<FileImagePlane>("resources/logo_pattern.txt");
 	logo_plane->color(FOREGROUND_RED | FOREGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 	output->add_plane(logo_plane);
 
@@ -38,7 +38,7 @@ void Menu::draw_on(const std::shared_ptr<Console>& output)
 		button_plane->on_click(option.callback);
 		output->add_clickable_plane(button_plane);
 
-		auto text = std::make_shared<TextConsolePlane>(option.name, "letters");
+		auto text = std::make_shared<TextConsolePlane>(option.name, "resources/letters");
 		text->foreground(' ', BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_INTENSITY);
 		text->background(' ', BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 		text->position({ 0, 0 });
