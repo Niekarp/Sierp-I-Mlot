@@ -3,7 +3,7 @@
 
 namespace xo
 {
-	XOGameLogic::XOGameLogic(unsigned initial_width, unsigned initial_height)
+	XOGameLogic::XOGameLogic(unsigned initial_width, unsigned initial_height, PlayerSymbol initial_player)
 	{
 		_board_info.width = initial_width;
 		_board_info.height = initial_height;
@@ -44,7 +44,9 @@ namespace xo
 			{
 				seq.emplace_back();
 				for (int j = 0; j < _board_info.height; ++j)
+				{
 					seq[i].emplace_back();
+				}
 			}
 		}
 
@@ -57,29 +59,33 @@ namespace xo
 
 				if (_board_info.height == _board_info.width) {
 					if (x == y)
+					{
 						seq[winning_lines - 2][y] = index;
+					}
 					if (x + y + 1 == _board_info.height)
+					{
 						seq[winning_lines - 1][x] = index;
+					}
 				}
 			}
 		}
 
-		_current_player = PlayerSymbol::circle;
+		_current_player = initial_player;
 		_current_state = GameState::ongoing;
 	}
 
-	bool XOGameLogic::play_move(PlayerSymbol symbol, unsigned x, unsigned y)
+	bool XOGameLogic::play_move(unsigned x, unsigned y)
 	{
 		auto square_index = x + (y * _board_info.height);
 		if (_board_info.squares_states.at(square_index) == SquareState::none)
 		{
-			_board_info.squares_states.at(square_index) = symbol;
+			_board_info.squares_states.at(square_index) = _current_player;
 			return true;
 		}
 		return false;
 	}
 
-	void XOGameLogic::analyse_board()
+	void XOGameLogic::_analyse_board()
 	{
 		SquareState field, last_field;
 
@@ -89,20 +95,24 @@ namespace xo
 
 		auto _winning_streak = 3;
 
-		for (int i = 0; i < winning_lines; ++i) {
+		for (int i = 0; i < winning_lines; ++i)
+		{
 			field = last_field = _board_info.squares_states[seq[i][0]];
 			amount_of_the_same_fields = 0;
 			unsigned winning_streak = _winning_streak;
 
-			for (int j = 0; j < seq[i].size(); ++j) {
+			for (int j = 0; j < seq[i].size(); ++j)
+			{
 				if (_winning_streak == -1) winning_streak = seq[i].size();
 
 				field = _board_info.squares_states[seq[i][j]];
-				if (field != last_field) {
+				if (field != last_field)
+				{
 					last_field = field;
 					amount_of_the_same_fields = 1;
 				}
-				else {
+				else
+				{
 					++amount_of_the_same_fields;
 					if (amount_of_the_same_fields == winning_streak && field != SquareState::none)
 					{
@@ -122,6 +132,15 @@ namespace xo
 	PlayerSymbol XOGameLogic::player_to_play_next()
 	{
 		return _current_player;
+	}
+	PlayerSymbol XOGameLogic::winner()
+	{
+		if (_current_state == GameState::finished)
+		{
+			if (_current_player == PlayerSymbol::circle) return PlayerSymbol::cross;
+			else return PlayerSymbol::circle;
+		}
+		return PlayerSymbol::none;
 	}
 	GameState XOGameLogic::current_state()
 	{
