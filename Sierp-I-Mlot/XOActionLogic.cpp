@@ -3,7 +3,7 @@
 
 namespace xo
 {
-	XOActionLogic::XOActionLogic(XOIOutput &output, XOGameLogic& game_logic) :
+	XOActionLogic::XOActionLogic(std::shared_ptr<XOIOutput> output, XOGameLogic& game_logic) :
 		_output(output),
 		_game_logic(game_logic)
 	{
@@ -11,7 +11,7 @@ namespace xo
 
 	void xo::XOActionLogic::direct_execution()
 	{
-		_output.keep_drawing();
+		_output->keep_drawing();
 	}
 
 	// legacy stuff

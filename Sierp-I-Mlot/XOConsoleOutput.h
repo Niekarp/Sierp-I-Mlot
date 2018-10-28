@@ -7,7 +7,6 @@ namespace xo
 	{
 	public:
 		XOConsoleOutput(XOActionLogic &);
-		~XOConsoleOutput();
 
 		void keep_drawing() override;
 		void change_drawing_view(XOViewTag view) override;

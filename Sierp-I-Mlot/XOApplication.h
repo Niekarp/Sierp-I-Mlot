@@ -17,7 +17,7 @@ namespace xo {
 		XOApplication();
 		static std::shared_ptr<XOApplication> _instance;
 
-		XOIOutput &_output;
+		std::shared_ptr<XOIOutput> _output;
 		XOActionLogic _action_logic;
 		XOGameLogic _game_logic;
 	};

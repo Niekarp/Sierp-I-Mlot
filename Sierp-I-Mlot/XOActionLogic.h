@@ -10,11 +10,11 @@ namespace xo
 	class XOActionLogic
 	{
 	public:
-		XOActionLogic(XOIOutput &output, XOGameLogic& game_logic);
+		XOActionLogic(std::shared_ptr<XOIOutput> output, XOGameLogic& game_logic);
 
 		void direct_execution();
 	private:
-		XOIOutput &_output;
+		std::shared_ptr<XOIOutput> _output;
 		XOGameLogic &_game_logic;
 	};
 }
