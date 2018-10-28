@@ -1,7 +1,7 @@
 #pragma once
 
 #include "XOInput.h"
-#include "XOViewManager.h"
+#include "XOIOutput.h"
 #include "XOGameLogic.h"
 
 namespace xo
@@ -9,11 +9,11 @@ namespace xo
 	class XOActionLogic
 	{
 	public:
-		XOActionLogic(XOViewManager &view_manager, XOGameLogic& game_logic);
+		XOActionLogic(XOIOutput &output, XOGameLogic& game_logic);
 
 		void direct_execution();
 	private:
-		XOViewManager &_view_manager;
+		XOIOutput &_output;
 		XOGameLogic &_game_logic;
 	};
 }

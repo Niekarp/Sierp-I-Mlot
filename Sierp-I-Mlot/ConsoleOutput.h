@@ -1,7 +1,8 @@
 #pragma once
-#include "IOutput.h"
+#include "XOIOutput.h"
+
 class ConsoleOutput :
-	public IOutput
+	public xo::XOIOutput
 {
 public:
 	ConsoleOutput();

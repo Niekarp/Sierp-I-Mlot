@@ -1,5 +1,6 @@
 #pragma once
 
+// DEPRECATED CLASS
 namespace xo
 {
 	enum class XOViewTag
