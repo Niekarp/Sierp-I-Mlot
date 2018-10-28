@@ -20,7 +20,7 @@ namespace xo
 		}
 
 
-		auto& seq = _winning_squares_sqruences;
+		auto &seq = _winning_squares_sqruences;
 		unsigned winning_lines = _board_info.height + _board_info.width;
 		if (_board_info.height == _board_info.width) winning_lines += 2;
 
@@ -111,7 +111,7 @@ namespace xo
 			winning_lines += 2;
 		}
 		unsigned amount_of_the_same_fields;
-		auto& seq = _winning_squares_sqruences;
+		auto &seq = _winning_squares_sqruences;
 
 		for (int i = 0; i < winning_lines; ++i)
 		{

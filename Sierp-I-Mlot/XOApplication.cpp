@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "XOApplication.h"
 #include "XOInput.h"
+#include "ConsoleOutput.h"
 
 namespace xo
 {
@@ -12,21 +13,14 @@ namespace xo
 	}
 
 	XOApplication::XOApplication() :
-		_action_logic(_view_manager, _game_logic)
+		_output(new ConsoleOutput(_action_logic)),
+		_action_logic(_output, _game_logic),
+		_game_logic(3, 3, PlayerSymbol::circle, 3)
 	{
-		_client.startxd();
 	}
 
 	void XOApplication::run()
 	{
-		while (true)
-		{
-			SelectionInfo element_selection =
-				XOInput::get_element_selection(_view_manager.get_current_view());
-
-			_action_logic.take_action(element_selection);
-
-			if (_action_logic.quit_pressed()) break;
-		}
+		_action_logic.direct_execution();
 	}
 }

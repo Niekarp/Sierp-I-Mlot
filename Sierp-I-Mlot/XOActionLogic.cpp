@@ -3,12 +3,19 @@
 
 namespace xo
 {
-	XOActionLogic::XOActionLogic(XOViewManager& view_manager, XOGameLogic& game_logic) :
-		_view_manager(view_manager),
+	XOActionLogic::XOActionLogic(XOIOutput &output, XOGameLogic& game_logic) :
+		_output(output),
 		_game_logic(game_logic)
 	{
 	}
 
+	void xo::XOActionLogic::direct_execution()
+	{
+		_output.keep_drawing();
+	}
+
+	// legacy stuff
+	/*
 	void XOActionLogic::take_action(SelectionInfo selected_info)
 	{
 		XOViewTag current_view = _view_manager.get_current_view();
@@ -32,4 +39,5 @@ namespace xo
 			}
 		}
 	}
+	*/
 }

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "XOViewManager.h"
+#include "XOIOutput.h"
 #include "XOActionLogic.h"
 #include "XOGameLogic.h"
 #include "XOClient.h"
@@ -18,7 +18,7 @@ namespace xo {
 		XOApplication();
 		static std::shared_ptr<XOApplication> _instance;
 
-		XOViewManager _view_manager;
+		XOIOutput &_output;
 		XOActionLogic _action_logic;
 		XOGameLogic _game_logic;
 		XOClient _client;

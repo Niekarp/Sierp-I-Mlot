@@ -69,7 +69,10 @@
     <ClInclude Include="ConsoleOutput.h">
       <Filter>Header Files\Presentation</Filter>
     </ClInclude>
-    <ClInclude Include="IOutput.h">
+    <ClInclude Include="XOIOutput.h">
+      <Filter>Header Files\Presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="XOIView.h">
       <Filter>Header Files\Presentation</Filter>
     </ClInclude>
   </ItemGroup>
@@ -101,11 +104,14 @@
     <ClCompile Include="ConsoleOutput.cpp">
       <Filter>Source Files\Presentation</Filter>
     </ClCompile>
-    <ClCompile Include="IOutput.cpp">
-      <Filter>Source Files\Presentation</Filter>
-    </ClCompile>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XOIOutput.cpp">
+      <Filter>Source Files\Presentation</Filter>
+    </ClCompile>
+    <ClCompile Include="XOIView.cpp">
+      <Filter>Source Files\Presentation</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

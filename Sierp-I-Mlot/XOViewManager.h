@@ -1,18 +1,22 @@
 #pragma once
 
+// DEPRECATED CLASS
 namespace xo
 {
 	enum class XOViewTag
 	{
-		game,
-		main_menu
+		main_menu,
+		game
 	};
 
 	class XOViewManager
 	{
 	public:
-		XOViewTag get_current_view();
+		XOViewManager(XOActionLogic &);
+
+		void keep_drawing();
 	private:
+		XOActionLogic &_action_logic;
 		XOViewTag _current_view;
 	};
 }
