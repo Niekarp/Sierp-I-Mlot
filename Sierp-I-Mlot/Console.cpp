@@ -51,7 +51,8 @@ Console::Console() :
 	_context({ this }),
 	_width(0),
 	_height(0),
-	_workers_next_index(0)
+	_workers_next_index(0),
+	_running(false)
 {
 	_SetupConsole(&_context);
 	_setup_threadpool();
@@ -113,7 +114,18 @@ std::shared_ptr<Console::Buffer> Console::create_buffer()
 
 void Console::exec()
 {
+	_running = true;
 	_OpenConsoleInputRoutine(_context);
+}
+
+void Console::stop()
+{
+	_running = false;
+}
+
+bool Console::running()
+{
+	return _running;
 }
 
 void Console::_refresh_buffer_size()
@@ -288,7 +300,7 @@ static VOID WINAPI _SetupConsole(Console::_Context *context)
 //DWORD WINAPI ConsoleInputRoutine(LPVOID arg)
 static DWORD WINAPI _ConsoleInputRoutine(Console::_Context &context)
 {
-	for (;;)
+	while (context.console->running())
 	{
 		CHKERR_DWORD(WaitForSingleObject(context.hStdIn, INFINITE));
 
@@ -315,6 +327,8 @@ static DWORD WINAPI _ConsoleInputRoutine(Console::_Context &context)
 			context.console->_refresh_buffer_size();
 		}
 	}
+
+	return 0;
 }
 
 static VOID WINAPI _OpenConsoleInputRoutine(Console::_Context &context)
@@ -342,11 +356,11 @@ static BOOLEAN WINAPI _ConsoleInputRecordCallback(Console::_Context &context,
 		}
 		context.mouse_clicked = true;
 		context.mouse_clicked_coords = record.Event.MouseEvent.dwMousePosition;
-		
+
 		for (auto &clickable_plane : context.console->_clickable_planes)
 		{
 			if (clickable_plane->type() == IConsolePlane::PlaneType::CENTERED)
-			{				
+			{
 				auto plane_pos = clickable_plane->position();
 				auto plane_sz = clickable_plane->size();
 				auto bx = plane_pos.x - plane_sz.x / 2;
@@ -354,7 +368,7 @@ static BOOLEAN WINAPI _ConsoleInputRecordCallback(Console::_Context &context,
 				auto ex = plane_pos.x + plane_sz.x / 2;
 				auto ey = plane_pos.y + plane_sz.y / 2;
 
-				if (context.mouse_clicked_coords.X >= bx && context.mouse_clicked_coords.X < ex 
+				if (context.mouse_clicked_coords.X >= bx && context.mouse_clicked_coords.X < ex
 					&& context.mouse_clicked_coords.Y >= by && context.mouse_clicked_coords.Y < ey)
 				{
 					clickable_plane->click({ (int)context.mouse_clicked_coords.X,

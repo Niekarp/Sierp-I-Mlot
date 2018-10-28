@@ -49,9 +49,9 @@ namespace xo
 			console->resolution(i -= 1);
 			console->resize_window(800, 800);
 		} });
-		main_menu->add_option({ "exit", []
+		main_menu->add_option({ "exit", [&console]
 		{
-			ExitProcess(0);
+			console->stop();
 		} });
 
 		auto image1 = std::make_shared<FileImagePlane>("resources/animation_text1.txt");
