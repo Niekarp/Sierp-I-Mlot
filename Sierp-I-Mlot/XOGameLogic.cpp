@@ -3,7 +3,10 @@
 
 namespace xo
 {
-	XOGameLogic::XOGameLogic(unsigned initial_width, unsigned initial_height, PlayerSymbol initial_player)
+	std::string _player_symbol_to_string(PlayerSymbol player_symbol);
+	std::string _game_state_to_string(GameState game_state);
+
+	XOGameLogic::XOGameLogic(unsigned initial_width, unsigned initial_height, PlayerSymbol initial_player, unsigned initial_winning_streak)
 	{
 		_board_info.width = initial_width;
 		_board_info.height = initial_height;
@@ -72,28 +75,43 @@ namespace xo
 
 		_current_player = initial_player;
 		_current_state = GameState::ongoing;
+
+		_winning_streak = initial_winning_streak;
 	}
 
 	bool XOGameLogic::play_move(unsigned x, unsigned y)
 	{
+		std::cout << "\t\tplaying a move: [" << x << "][" << y << "] as " << _player_symbol_to_string(_current_player) << std::endl;
+
 		auto square_index = x + (y * _board_info.height);
 		if (_board_info.squares_states.at(square_index) == SquareState::none)
 		{
 			_board_info.squares_states.at(square_index) = _current_player;
+			this->_change_player();
+			_analyse_board();
 			return true;
 		}
 		return false;
 	}
+
+	/*
+	void XOGameLogic::restart_game(unsigned board_width, unsigned board_height, PlayerSymbol starting_player)
+	{
+
+	}
+	*/
 
 	void XOGameLogic::_analyse_board()
 	{
 		SquareState field, last_field;
 
 		unsigned winning_lines = _board_info.height + _board_info.width;
+		if (_board_info.width == _board_info.height)
+		{
+			winning_lines += 2;
+		}
 		unsigned amount_of_the_same_fields;
 		auto& seq = _winning_squares_sqruences;
-
-		auto _winning_streak = 3;
 
 		for (int i = 0; i < winning_lines; ++i)
 		{
@@ -117,6 +135,7 @@ namespace xo
 					if (amount_of_the_same_fields == winning_streak && field != SquareState::none)
 					{
 						_current_state = GameState::finished;
+						this->_change_player();
 						return;
 					}
 				}
@@ -133,17 +152,92 @@ namespace xo
 	{
 		return _current_player;
 	}
+
 	PlayerSymbol XOGameLogic::winner()
 	{
 		if (_current_state == GameState::finished)
 		{
-			if (_current_player == PlayerSymbol::circle) return PlayerSymbol::cross;
-			else return PlayerSymbol::circle;
+			return _current_player;
 		}
 		return PlayerSymbol::none;
 	}
+
 	GameState XOGameLogic::current_state()
 	{
 		return _current_state;
+	}
+
+	PlayerSymbol XOGameLogic::_change_player()
+	{
+		if (_current_player == PlayerSymbol::circle)
+		{
+			_current_player = PlayerSymbol::cross;
+		}
+		else
+		{
+			_current_player = PlayerSymbol::circle;
+		}
+		return _current_player;
+	}
+
+	std::string _player_symbol_to_string(PlayerSymbol player_symbol)
+	{
+		if (player_symbol == PlayerSymbol::cross)
+		{
+			return "X";
+		}
+		else if (player_symbol == PlayerSymbol::circle)
+		{
+			return "O";
+		}
+		return "none";
+	}
+
+	std::string _game_state_to_string(GameState game_state)
+	{
+		if (game_state == GameState::ongoing)
+		{
+			return "ongoing";
+		}
+		else if (game_state == GameState::stopped)
+		{
+			return "stopped";
+		}
+		return "finished";
+	}
+
+	using namespace std;
+	void XOGameLogic::print_status()
+	{
+		cout << "Board info" << endl
+			<< "width: " << _board_info.width << endl
+			<< "height: " << _board_info.height << endl
+			<< "number of squares: " << _board_info.number_of_squares << endl
+			<< "squares states: " << endl;
+		for (int i = 0; i < _board_info.squares_states.size(); ++i)
+		{
+			auto e = _board_info.squares_states.at(i);
+			cout << "[" << _player_symbol_to_string(e) << "] ";
+			if (((i % _board_info.width) / (_board_info.height - 1)) == 1)
+			{
+				cout << endl;
+			}
+		}
+		cout << endl;
+
+		cout << "Player to play next: " << _player_symbol_to_string(_current_player) << endl
+			<< "Winner: " << _player_symbol_to_string(this->winner()) << endl
+			<< "Current state: " << _game_state_to_string(_current_state) << endl;
+
+		cout << "Winning squares sequences: ";
+		for (auto e : _winning_squares_sqruences)
+		{
+			cout << endl;
+			for (auto ee : e)
+			{
+				cout << "	[" << ee << "] ";
+			}
+		}
+		cout << endl << endl;
 	}
 }
