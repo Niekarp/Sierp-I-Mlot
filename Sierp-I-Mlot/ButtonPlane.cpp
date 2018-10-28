@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 #include "ButtonPlane.h"
 
 ButtonPlane::ButtonPlane(int position) :

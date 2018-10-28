@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 #include "ChartReader.h"
 
 ChartReader::ChartReader(const char * filename)

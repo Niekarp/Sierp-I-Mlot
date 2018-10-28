@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 #include "IntroMenuAnimation.h"
 
 IntroMenuAnimation::IntroMenuAnimation(IConsolePlane::Position menu_size) :

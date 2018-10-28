@@ -1,19 +1,19 @@
 #include "pch.h"
 #include "XOConsoleOutput.h"
 
-#include "console/Console.h"
-#include "console/SuperWaveAnimation.h"
-#include "console/CenteredFramedPlane.h"
-#include "console/FileImagePlane.h"
-#include "console/ButtonPlane.h"
-#include "console/FramePlaneFrameCreator.h"
-#include "console/TextConsolePlane.h"
-#include "console/Menu.h"
-#include "console/MusicPlayer.h"
-#include "console/IntroAnimation.h"
-#include "console/AnimationChain.h"
-#include "console/IntroMenuAnimation.h"
-#include "console/ChartReader.h"
+#include "Console.h"
+#include "SuperWaveAnimation.h"
+#include "CenteredFramedPlane.h"
+#include "FileImagePlane.h"
+#include "ButtonPlane.h"
+#include "FramePlaneFrameCreator.h"
+#include "TextConsolePlane.h"
+#include "Menu.h"
+#include "MusicPlayer.h"
+#include "IntroAnimation.h"
+#include "AnimationChain.h"
+#include "IntroMenuAnimation.h"
+#include "ChartReader.h"
 
 #include <chrono>
 
@@ -26,47 +26,15 @@ namespace xo
 
 	void XOConsoleOutput::keep_drawing()
 	{
-		ChartReader reader("notes.chart");
+		ChartReader reader("resources/notes.chart");
 		auto notes = reader.notes();
 
 		auto console = Console::get_instance();
 		console->resolution(12);
 		console->resize_window(800, 800);
 
-
-		//
-		/*auto buffer = console->create_buffer();
-		auto start = std::chrono::system_clock::now();
-
-		console->do_every(5, [&console, &buffer, &notes, &start]
-		{
-			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
-				std::chrono::system_clock::now() - start);
-
-			/*if (n.timestamp / 40 % 100 == 0)
-			{
-				buffer->clear(' ', 0);
-			}
-
-			for (auto &n : notes)
-			{
-				if (n.timestamp > duration.count())
-				{
-					break;
-				}
-
-				buffer->put(n.timestamp / 40 % 100, n.key * 4 + 4, ' ', BACKGROUND_RED);
-			}
-
-
-			console->draw(buffer);
-		});
-
-		console->exec();*/
-		//
-
 		auto music_player = std::make_shared<MusicPlayer>();
-		music_player->load("sound.WAV");
+		music_player->load("resources/sound.WAV");
 		music_player->play();
 
 		auto main_menu = std::make_shared<Menu>();
@@ -86,21 +54,21 @@ namespace xo
 			ExitProcess(0);
 		} });
 
-		auto image1 = std::make_shared<FileImagePlane>("animation_text1.txt");
+		auto image1 = std::make_shared<FileImagePlane>("resources/animation_text1.txt");
 		image1->color(FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		auto image2 = std::make_shared<FileImagePlane>("animation_text2.txt");
+		auto image2 = std::make_shared<FileImagePlane>("resources/animation_text2.txt");
 		image2->color(FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		auto image3 = std::make_shared<FileImagePlane>("animation_text3.txt");
+		auto image3 = std::make_shared<FileImagePlane>("resources/animation_text3.txt");
 		image3->color(FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		auto animated_image4 = std::make_shared<AnimatedFileImagePlane>();
 		animated_image4->color(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		animated_image4->load_frame("pblogo5.txt");
-		animated_image4->load_frame("pblogo8.txt");
-		animated_image4->load_frame("pblogo11.txt");
-		animated_image4->load_frame("pblogo14.txt");
-		animated_image4->load_frame("pblogo17.txt");
-		animated_image4->load_frame("pblogo20.txt");
-		animated_image4->load_frame("pblogo23.txt");
+		animated_image4->load_frame("resources/pblogo5.txt");
+		animated_image4->load_frame("resources/pblogo8.txt");
+		animated_image4->load_frame("resources/pblogo11.txt");
+		animated_image4->load_frame("resources/pblogo14.txt");
+		animated_image4->load_frame("resources/pblogo17.txt");
+		animated_image4->load_frame("resources/pblogo20.txt");
+		animated_image4->load_frame("resources/pblogo23.txt");
 
 		auto intro_animation = std::make_shared<IntroAnimation>(image1, image2, image3, animated_image4);
 		auto menu_animation = std::make_shared<SuperWaveAnimation>(8);

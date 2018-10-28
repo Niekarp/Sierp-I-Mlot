@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 #include "MusicPlayer.h"
 
 void MusicPlayer::load(const char * filename)

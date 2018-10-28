@@ -1,6 +1,6 @@
 #pragma once
 
-inline void ErrorExit(LPTSTR lpszFunction, LPTSTR lpszFile, int nLine,
+inline void ErrorExit(LPCTSTR lpszFunction, LPCTSTR lpszFile, int nLine,
 	const wchar_t *call)
 {
 	LPVOID lpMsgBuf;
@@ -23,13 +23,13 @@ inline void ErrorExit(LPTSTR lpszFunction, LPTSTR lpszFile, int nLine,
 
 	// Display the error message and exit the process
 
-	DWORD bufSize = (lstrlen((LPCTSTR)call)
+	DWORD bufSize = (lstrlen(call)
 		+ lstrlen((LPCTSTR)lpMsgBuf)
-		+ lstrlen((LPCTSTR)lpszFunction)
-		+ lstrlen((LPCTSTR)lpszFile)
+		+ lstrlen(lpszFunction)
+		+ lstrlen(lpszFile)
 		+ 80) * sizeof(TCHAR);
 	lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT, bufSize);
-	StringCchPrintf((LPTSTR)lpDisplayBuf,
+	StringCchPrintf((STRSAFE_LPWSTR)lpDisplayBuf,
 		LocalSize(lpDisplayBuf) / sizeof(TCHAR),
 		L"Call: %s\nFunction: %s\nFile: %s\nLine: %d\nCode: %d\nMessage: %s",
 		call, lpszFunction, lpszFile, nLine, dw, lpMsgBuf);
