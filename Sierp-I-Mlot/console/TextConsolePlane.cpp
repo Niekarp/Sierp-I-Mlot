@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "../pch.h"
 #include "TextConsolePlane.h"
 
 TextConsolePlane::TextConsolePlane(const char * str, const char *font_directory) :

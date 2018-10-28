@@ -167,7 +167,6 @@
     <ClInclude Include="console\Menu.h" />
     <ClInclude Include="console\MusicPlayer.h" />
     <ClInclude Include="console\Note.h" />
-    <ClInclude Include="console\stdafx.h" />
     <ClInclude Include="console\stxutif.h" />
     <ClInclude Include="console\SuperWaveAnimation.h" />
     <ClInclude Include="console\targetver.h" />
@@ -199,7 +198,6 @@
     <ClCompile Include="console\Menu.cpp" />
     <ClCompile Include="console\MusicPlayer.cpp" />
     <ClCompile Include="console\Note.cpp" />
-    <ClCompile Include="console\stdafx.cpp" />
     <ClCompile Include="console\SuperWaveAnimation.cpp" />
     <ClCompile Include="console\TextConsolePlane.cpp" />
     <ClCompile Include="XOConsoleOutput.cpp" />

@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "XOConsoleOutput.h"
 
-#include "console/stdafx.h"
 #include "console/Console.h"
 #include "console/SuperWaveAnimation.h"
 #include "console/CenteredFramedPlane.h"

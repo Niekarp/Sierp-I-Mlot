@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "../pch.h"
 #include "SuperWaveAnimation.h"
 
 static const WORD _BC_1 = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_INTENSITY;

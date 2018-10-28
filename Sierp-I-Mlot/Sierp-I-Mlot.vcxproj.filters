@@ -129,9 +129,6 @@
     <ClInclude Include="console\Note.h">
       <Filter>Console</Filter>
     </ClInclude>
-    <ClInclude Include="console\stdafx.h">
-      <Filter>Console</Filter>
-    </ClInclude>
     <ClInclude Include="console\stxutif.h">
       <Filter>Console</Filter>
     </ClInclude>
@@ -225,9 +222,6 @@
       <Filter>Console</Filter>
     </ClCompile>
     <ClCompile Include="console\Note.cpp">
-      <Filter>Console</Filter>
-    </ClCompile>
-    <ClCompile Include="console\stdafx.cpp">
       <Filter>Console</Filter>
     </ClCompile>
     <ClCompile Include="console\SuperWaveAnimation.cpp">
