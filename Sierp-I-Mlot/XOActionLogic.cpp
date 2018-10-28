@@ -14,6 +14,24 @@ namespace xo
 		_output->keep_drawing();
 	}
 
+
+	void XOActionLogic::main_menu_play()
+	{
+
+	}
+
+	void XOActionLogic::main_menu_settings()
+	{
+	}
+
+	void XOActionLogic::main_menu_exit()
+	{
+	}
+
+	void XOActionLogic::game_make_move(unsigned x, unsigned y)
+	{
+	}
+
 	// legacy stuff
 	/*
 	void XOActionLogic::take_action(SelectionInfo selected_info)
