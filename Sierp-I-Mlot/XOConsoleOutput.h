@@ -6,10 +6,12 @@ namespace xo
 	class XOConsoleOutput : public XOIOutput
 	{
 	public:
-		XOConsoleOutput(XOActionLogic &);
+		std::shared_ptr<IXOMenu> create_menu() override;
+		std::shared_ptr<IXOGameMap> create_game_map() override;
 
-		void keep_drawing() override;
-		void change_drawing_view(XOViewTag view) override;
-		void draw_symbol(unsigned x, unsigned y) override;
+		void show(const std::shared_ptr<IXOMenu> &) override;
+		void show(const std::shared_ptr<IXOGameMap> &) override;
+
+		void run() override;
 	};
 }

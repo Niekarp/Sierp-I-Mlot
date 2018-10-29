@@ -19,12 +19,26 @@
 
 namespace xo
 {
-	XOConsoleOutput::XOConsoleOutput(XOActionLogic & action_logic) :
-		XOIOutput(action_logic)
+	std::shared_ptr<IXOMenu> XOConsoleOutput::create_menu()
+	{
+		return std::shared_ptr<IXOMenu>();
+	}
+	
+	std::shared_ptr<IXOGameMap> XOConsoleOutput::create_game_map()
+	{
+		return std::shared_ptr<IXOGameMap>();
+	}
+	
+	void XOConsoleOutput::show(const std::shared_ptr<IXOMenu>&)
 	{
 	}
+	
+	void XOConsoleOutput::show(const std::shared_ptr<IXOGameMap> &)
+	{
 
-	void XOConsoleOutput::keep_drawing()
+	}
+	
+	void XOConsoleOutput::run()
 	{
 		ChartReader reader("resources/notes.chart");
 		auto notes = reader.notes();
@@ -91,13 +105,5 @@ namespace xo
 		console->animate_async(chain, 80);
 
 		console->exec();
-	}
-	void XOConsoleOutput::change_drawing_view(XOViewTag view)
-	{
-
-	}
-	void XOConsoleOutput::draw_symbol(unsigned x, unsigned y)
-	{
-
 	}
 }

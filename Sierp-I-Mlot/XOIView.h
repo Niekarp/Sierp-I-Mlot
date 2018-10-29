@@ -1,11 +1,11 @@
 #pragma once
+#include "XOViewElement.h"
 
 namespace xo
 {
-	class XOIView
+	class IXOView
 	{
 	public:
-		XOIView();
-		~XOIView();
+		virtual void register_element(const XOViewElement&) = 0;
 	};
 }
