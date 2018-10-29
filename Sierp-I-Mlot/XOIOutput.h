@@ -7,7 +7,9 @@ namespace xo
 	enum class XOViewTag
 	{
 		main_menu,
-		game
+		game,
+		settings,
+		exit
 	};
 
 	class XOActionLogic;
@@ -21,7 +23,7 @@ namespace xo
 		virtual void keep_drawing() = 0;
 		virtual void change_drawing_view(XOViewTag view) = 0;
 		virtual void draw_symbol(unsigned x, unsigned y) = 0;
-	private:
+	protected:
 		XOActionLogic &_action_logic;
 		XOViewTag _current_view;
 		std::vector<XOIView> _views;
