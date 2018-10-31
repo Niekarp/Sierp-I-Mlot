@@ -1,5 +1,6 @@
 #include "pch.h"
 #include  "XOConsoleOutput.h"
+#include "XOConsoleMenu.h"
 
 #include "SuperWaveAnimation.h"
 #include "CenteredFramedPlane.h"
@@ -26,7 +27,7 @@ namespace xo
 
 	std::shared_ptr<XOIMenu> XOConsoleOutput::create_menu()
 	{
-		return std::shared_ptr<XOIMenu>();
+		return std::shared_ptr<XOIMenu>(new XOConsoleMenu());
 	}
 	
 	std::shared_ptr<XOIGameMap> XOConsoleOutput::create_game_map()
@@ -48,7 +49,7 @@ namespace xo
 		auto notes = reader.notes();
 
 		_console->resolution(12);
-		_console->resize_window(800, 800);
+		_console->resize_window(900, 900);
 
 		auto music_player = std::make_shared<MusicPlayer>();
 		music_player->load("resources/sound.WAV");
@@ -58,16 +59,16 @@ namespace xo
 		int i = 12;
 		main_menu->add_option({ "play", [&i, this]
 		{
-			this->_console->resize_window(800, 800);
+			// this->_console->resize_window(800, 800);
 		} });
 		main_menu->add_option({ "settings", [this, &i]
 		{
-			_console->resolution(i -= 1);
-			_console->resize_window(800, 800);
+			// _console->resolution(i -= 1);
+			// _console->resize_window(800, 800);
 		} });
 		main_menu->add_option({ "exit", [this]
 		{
-			_console->stop();
+			
 		} });
 
 		auto image1 = std::make_shared<FileImagePlane>("resources/animation_text1.txt");
@@ -107,5 +108,10 @@ namespace xo
 		_console->animate_async(chain, 80);
 
 		_console->exec();
+	}
+
+	void XOConsoleOutput::stop()
+	{
+		_console->stop();
 	}
 }

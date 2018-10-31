@@ -150,9 +150,6 @@
     <ClInclude Include="testerror.h">
       <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="XOIConsoleMenu.h">
-      <Filter>Header Files\Presentation\Console_presentation</Filter>
-    </ClInclude>
     <ClInclude Include="XOConsoleOutput.h">
       <Filter>Header Files\Presentation\Console_presentation</Filter>
     </ClInclude>
@@ -167,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="XOViewElement.h">
       <Filter>Header Files\Presentation\View</Filter>
+    </ClInclude>
+    <ClInclude Include="XOConsoleMenu.h">
+      <Filter>Header Files\Presentation\Console_presentation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -248,14 +248,14 @@
     <ClCompile Include="TextConsolePlane.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="XOIConsoleMenu.cpp">
-      <Filter>Source Files\Presentation\Console_presentation</Filter>
-    </ClCompile>
     <ClCompile Include="XOConsoleOutput.cpp">
       <Filter>Source Files\Presentation\Console_presentation</Filter>
     </ClCompile>
     <ClCompile Include="XOIView.cpp">
       <Filter>Source Files\Presentation\View</Filter>
+    </ClCompile>
+    <ClCompile Include="XOConsoleMenu.cpp">
+      <Filter>Source Files\Presentation\Console_presentation</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

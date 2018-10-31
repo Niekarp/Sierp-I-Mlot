@@ -3,10 +3,17 @@
 
 namespace xo
 {
-	XOActionLogic::XOActionLogic(std::shared_ptr<XOIOutput> output, XOGameLogic& game_logic) :
-		_output(output),
+	XOActionLogic::XOActionLogic(std::shared_ptr<XOIOutput> &output, XOGameLogic &game_logic) :
 		_game_logic(game_logic)
 	{
+		_output = output;
+
+		_main_menu = _output->create_menu();
+		_main_menu->register_element({ "play button", "PLAY", [this] { this->main_menu_play(); } });
+		_main_menu->register_element({ "settings button", "SETTINGS", [this] { this->main_menu_settings(); } });
+		_main_menu->register_element({ "exit button", "EXIT", [this] { this->main_menu_exit(); } });
+
+		_output->show(_main_menu);
 	}
 
 	void xo::XOActionLogic::direct_execution()
@@ -14,33 +21,32 @@ namespace xo
 		_output->run();
 	}
 
-
 	void XOActionLogic::main_menu_play()
 	{
-		// _output->change_drawing_view(XOViewTag::game);
+		_output->show(_game_map);
 	}
 
 	void XOActionLogic::main_menu_settings()
 	{
-		// _output->change_drawing_view(XOViewTag::settings);
+		_output->show(_settings);
 	}
 
 	void XOActionLogic::main_menu_exit()
 	{
-		// wychodzenie przypisane bezpoœrednio do przycisku
+		_output->stop();
 	}
 
 	void XOActionLogic::game_make_move(unsigned x, unsigned y)
 	{
-		if (_game_logic.play_move(x, y))
-		{
-			// _output->draw_symbol(x, y);
-		}
-		if (_game_logic.current_state() == GameState::finished)
-		{
-			PlayerSymbol winner = _game_logic.winner();
-			// zrób coœ z wygranym
-		}
+		//if (_game_logic.play_move(x, y))
+		//{
+		//	// _output->draw_symbol(x, y);
+		//}
+		//if (_game_logic.current_state() == GameState::finished)
+		//{
+		//	PlayerSymbol winner = _game_logic.winner();
+		//	// zrób coœ z wygranym
+		//}
 	}
 
 	// legacy stuff

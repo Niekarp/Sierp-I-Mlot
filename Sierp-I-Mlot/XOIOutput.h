@@ -14,5 +14,6 @@ namespace xo
 		virtual void show(const std::shared_ptr<XOIGameMap> &) = 0;
 
 		virtual void run() = 0;
+		virtual void stop() = 0;
 	};
 }

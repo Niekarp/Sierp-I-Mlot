@@ -5,7 +5,7 @@
 
 namespace xo
 {
-	class XOIConsoleMenu :
+	class XOConsoleMenu :
 		public XOIMenu
 	{
 	public:

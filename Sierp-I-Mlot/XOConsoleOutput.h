@@ -18,6 +18,7 @@ namespace xo
 		void show(const std::shared_ptr<XOIGameMap> &) override;
 
 		void run() override;
+		void stop() override;
 	private:
 		std::shared_ptr<Console> _console;
 	};
