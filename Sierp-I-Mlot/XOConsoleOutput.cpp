@@ -53,9 +53,10 @@ namespace xo
 
 		auto main_menu = std::make_shared<Menu>();
 		int i = 12;
-		main_menu->add_option({ "play", [&console, &i]
+		main_menu->add_option({ "play", [&console, &i, this]
 		{
-			console->resolution(i += 1);
+			// console->resolution(i += 1);
+			this->_action_logic.game_make_move(rand() % 3, rand() % 3);
 			console->resize_window(800, 800);
 		} });
 		main_menu->add_option({ "settings", [&console, &i]

@@ -82,6 +82,9 @@ namespace xo
 	bool XOGameLogic::play_move(unsigned x, unsigned y)
 	{
 		std::cout << "\t\tplaying a move: [" << x << "][" << y << "] as " << _player_symbol_to_string(_current_player) << std::endl;
+		std::wstring ws = L"\t\tplaying a move: [" + std::to_wstring(x) + L"][" + std::to_wstring(y) + L"] as " + std::to_wstring(static_cast<int>(_current_player)) + L"\n";
+		
+		MessageBox(0, ws.c_str(), NULL, MB_OK);
 
 		auto square_index = x + (y * _board_info.height);
 		if (_board_info.squares_states.at(square_index) == SquareState::none)
@@ -135,6 +138,8 @@ namespace xo
 					if (amount_of_the_same_fields == winning_streak && field != SquareState::none)
 					{
 						_current_state = GameState::finished;
+						std::wstring ws = L"Omaj ktoœ wygra³!\nTa gra dzia³a!!";
+						MessageBox(0, ws.c_str(), NULL, MB_OK);
 						this->_change_player();
 						return;
 					}

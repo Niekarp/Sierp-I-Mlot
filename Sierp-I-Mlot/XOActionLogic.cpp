@@ -17,19 +17,30 @@ namespace xo
 
 	void XOActionLogic::main_menu_play()
 	{
-
+		_output->change_drawing_view(XOViewTag::game);
 	}
 
 	void XOActionLogic::main_menu_settings()
 	{
+		_output->change_drawing_view(XOViewTag::settings);
 	}
 
 	void XOActionLogic::main_menu_exit()
 	{
+		// wychodzenie przypisane bezpoœrednio do przycisku
 	}
 
 	void XOActionLogic::game_make_move(unsigned x, unsigned y)
 	{
+		if (_game_logic.play_move(x, y))
+		{
+			_output->draw_symbol(x, y);
+		}
+		if (_game_logic.current_state() == GameState::finished)
+		{
+			PlayerSymbol winner = _game_logic.winner();
+			// zrób coœ z wygranym
+		}
 	}
 
 	// legacy stuff
