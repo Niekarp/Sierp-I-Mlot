@@ -11,18 +11,18 @@ namespace xo
 
 	void xo::XOActionLogic::direct_execution()
 	{
-		_output->keep_drawing();
+		_output->run();
 	}
 
 
 	void XOActionLogic::main_menu_play()
 	{
-		_output->change_drawing_view(XOViewTag::game);
+		// _output->change_drawing_view(XOViewTag::game);
 	}
 
 	void XOActionLogic::main_menu_settings()
 	{
-		_output->change_drawing_view(XOViewTag::settings);
+		// _output->change_drawing_view(XOViewTag::settings);
 	}
 
 	void XOActionLogic::main_menu_exit()
@@ -34,7 +34,7 @@ namespace xo
 	{
 		if (_game_logic.play_move(x, y))
 		{
-			_output->draw_symbol(x, y);
+			// _output->draw_symbol(x, y);
 		}
 		if (_game_logic.current_state() == GameState::finished)
 		{

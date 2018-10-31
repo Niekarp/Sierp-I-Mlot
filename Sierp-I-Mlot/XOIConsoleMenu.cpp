@@ -5,10 +5,10 @@
 #include "ButtonPlane.h"
 #include "FramePlaneFrameCreator.h"
 
-void xo::XOIConsoleMenu::register_element(const char * id, const char * text,
-	std::function<void()> callback)
+void xo::XOIConsoleMenu::register_element(const XOViewElement &view_element)
 {
-	_elements.push_back({ id, text, callback });
+	// _elements.push_back({ view_element.id, view_element.text, view_element.callback });
+	_elements.push_back(view_element);
 }
 
 void xo::XOIConsoleMenu::draw_on(const std::shared_ptr<Console>& output)
@@ -34,7 +34,7 @@ void xo::XOIConsoleMenu::draw_on(const std::shared_ptr<Console>& output)
 		button_plane->on_click(element.callback);
 		output->add_clickable_plane(button_plane);
 
-		auto text = std::make_shared<TextConsolePlane>(element.text, "resources/letters");
+		auto text = std::make_shared<TextConsolePlane>(element.text.c_str(), "resources/letters");
 		text->foreground(' ', BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_INTENSITY);
 		text->background(' ', BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 		text->position({ 0, 0 });

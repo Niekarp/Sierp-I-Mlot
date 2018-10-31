@@ -1,7 +1,6 @@
 #include "pch.h"
-#include "XOConsoleOutput.h"
+#include  "XOConsoleOutput.h"
 
-#include "Console.h"
 #include "SuperWaveAnimation.h"
 #include "CenteredFramedPlane.h"
 #include "FileImagePlane.h"
@@ -19,23 +18,28 @@
 
 namespace xo
 {
-	std::shared_ptr<IXOMenu> XOConsoleOutput::create_menu()
+	XOConsoleOutput::XOConsoleOutput() // :
+		// _console(Console::get_instance())
 	{
-		return std::shared_ptr<IXOMenu>();
+		_console = Console::get_instance();
 	}
-	
-	std::shared_ptr<IXOGameMap> XOConsoleOutput::create_game_map()
-	{
-		return std::shared_ptr<IXOGameMap>();
-	}
-	
-	void XOConsoleOutput::show(const std::shared_ptr<IXOMenu>&)
-	{
-	}
-	
-	void XOConsoleOutput::show(const std::shared_ptr<IXOGameMap> &)
-	{
 
+	std::shared_ptr<XOIMenu> XOConsoleOutput::create_menu()
+	{
+		return std::shared_ptr<XOIMenu>();
+	}
+	
+	std::shared_ptr<XOIGameMap> XOConsoleOutput::create_game_map()
+	{
+		return std::shared_ptr<XOIGameMap>();
+	}
+	
+	void XOConsoleOutput::show(const std::shared_ptr<XOIMenu>&)
+	{
+	}
+	
+	void XOConsoleOutput::show(const std::shared_ptr<XOIGameMap> &)
+	{
 	}
 	
 	void XOConsoleOutput::run()
@@ -43,9 +47,8 @@ namespace xo
 		ChartReader reader("resources/notes.chart");
 		auto notes = reader.notes();
 
-		auto console = Console::get_instance();
-		console->resolution(12);
-		console->resize_window(800, 800);
+		_console->resolution(12);
+		_console->resize_window(800, 800);
 
 		auto music_player = std::make_shared<MusicPlayer>();
 		music_player->load("resources/sound.WAV");
@@ -53,20 +56,18 @@ namespace xo
 
 		auto main_menu = std::make_shared<Menu>();
 		int i = 12;
-		main_menu->add_option({ "play", [&console, &i, this]
+		main_menu->add_option({ "play", [&i, this]
 		{
-			// console->resolution(i += 1);
-			this->_action_logic.game_make_move(rand() % 3, rand() % 3);
-			console->resize_window(800, 800);
+			this->_console->resize_window(800, 800);
 		} });
-		main_menu->add_option({ "settings", [&console, &i]
+		main_menu->add_option({ "settings", [this, &i]
 		{
-			console->resolution(i -= 1);
-			console->resize_window(800, 800);
+			_console->resolution(i -= 1);
+			_console->resize_window(800, 800);
 		} });
-		main_menu->add_option({ "exit", [&console]
+		main_menu->add_option({ "exit", [this]
 		{
-			console->stop();
+			_console->stop();
 		} });
 
 		auto image1 = std::make_shared<FileImagePlane>("resources/animation_text1.txt");
@@ -95,16 +96,16 @@ namespace xo
 		chain->add(menu_animation);
 		chain->add(intro_menu_animation);
 		chain->overlap(100);
-		chain->on_end([&main_menu, &console](auto animation_index)
+		chain->on_end([&main_menu, this](auto animation_index)
 		{
 			if (animation_index == 2)
 			{
-				main_menu->draw_on(console);
+				main_menu->draw_on(_console);
 			}
 		});
 
-		console->animate_async(chain, 80);
+		_console->animate_async(chain, 80);
 
-		console->exec();
+		_console->exec();
 	}
 }

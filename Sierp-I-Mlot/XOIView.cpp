@@ -3,11 +3,4 @@
 
 namespace xo
 {
-	XOIView::XOIView()
-	{
-	}
-
-	XOIView::~XOIView()
-	{
-	}
 }

@@ -162,8 +162,8 @@
     <ClInclude Include="FileImagePlane.h" />
     <ClInclude Include="FramePlaneFrameCreator.h" />
     <ClInclude Include="XOIConsoleMenu.h" />
-    <ClInclude Include="IXOGameMap.h" />
-    <ClInclude Include="IXOMenu.h" />
+    <ClInclude Include="XOIGameMap.h" />
+    <ClInclude Include="XOIMenu.h" />
     <ClInclude Include="IAnimation.h" />
     <ClInclude Include="IClickableConsolePlane.h" />
     <ClInclude Include="IConsolePlane.h" />
