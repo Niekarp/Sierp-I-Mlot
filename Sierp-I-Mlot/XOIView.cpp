@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "XOIOutput.h"
+#include "XOIView.h"
 
 namespace xo
 {

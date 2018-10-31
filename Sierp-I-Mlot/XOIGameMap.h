@@ -1,9 +1,9 @@
 #pragma once
 #include "XOIView.h"
 
-namespace xo 
+namespace xo
 {
-	class IXOGameMap : public XOIView
+	class XOIGameMap : public XOIView
 	{
 	public:
 		enum class Figure

@@ -10,7 +10,9 @@ AnimationChain::AnimationChain() :
 
 void AnimationChain::draw(const std::shared_ptr<Console::Buffer>& buffer)
 {
-	if (_current_overlap_frame_index < _n_overlap_frames && _current_animation_index != 0)
+	if (_current_overlap_frame_index < _n_overlap_frames
+		&& _current_animation_index != 0
+		&& _current_animation_index < _animations.size())
 	{
 		_current_overlap_frame_index += 1;
 		_animations[_current_animation_index - 1]->draw(buffer);
@@ -40,7 +42,7 @@ void AnimationChain::draw(const std::shared_ptr<Console::Buffer>& buffer)
 			_current_animation_index += 1;
 			_current_overlap_frame_index = 0;
 		}
-		if (_animations[_current_animation_index]->end())
+		else if (_animations[_current_animation_index]->end())
 		{
 			if (_on_end_callback)
 			{
@@ -76,4 +78,3 @@ void AnimationChain::on_end(std::function<void(size_t animation_index)> callback
 {
 	_on_end_callback = callback;
 }
-

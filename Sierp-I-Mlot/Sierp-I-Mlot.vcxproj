@@ -161,9 +161,9 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="FileImagePlane.h" />
     <ClInclude Include="FramePlaneFrameCreator.h" />
-    <ClInclude Include="XOIConsoleMenu.h" />
-    <ClInclude Include="IXOGameMap.h" />
-    <ClInclude Include="IXOMenu.h" />
+    <ClInclude Include="XOConsoleMenu.h" />
+    <ClInclude Include="XOIGameMap.h" />
+    <ClInclude Include="XOIMenu.h" />
     <ClInclude Include="IAnimation.h" />
     <ClInclude Include="IClickableConsolePlane.h" />
     <ClInclude Include="IConsolePlane.h" />
@@ -206,7 +206,8 @@
     <ClCompile Include="SuperWaveAnimation.cpp" />
     <ClCompile Include="TextConsolePlane.cpp" />
     <ClCompile Include="XOConsoleOutput.cpp" />
-    <ClCompile Include="XOIConsoleMenu.cpp" />
+    <ClCompile Include="XOConsoleMenu.cpp" />
+    <ClCompile Include="XOIOutput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -220,6 +221,7 @@
     <ClCompile Include="XOClient.cpp" />
     <ClCompile Include="XOGameLogic.cpp" />
     <ClCompile Include="XOInput.cpp" />
+    <ClCompile Include="XOIView.cpp" />
     <ClCompile Include="XOViewManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

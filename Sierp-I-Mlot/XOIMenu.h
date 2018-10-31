@@ -1,9 +1,9 @@
 #pragma once
 #include "XOIView.h"
 
-namespace xo 
+namespace xo
 {
-	class IXOMenu : public XOIView
+	class XOIMenu : public XOIView
 	{
 	public:
 

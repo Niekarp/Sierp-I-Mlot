@@ -1,16 +1,17 @@
 #include "pch.h"
-#include "XOIConsoleMenu.h"
+#include "XOConsoleMenu.h"
 #include "CenteredFramedPlane.h"
 #include "FileImagePlane.h"
 #include "ButtonPlane.h"
 #include "FramePlaneFrameCreator.h"
 
-void xo::XOIConsoleMenu::register_element(const XOViewElement& element)
+void xo::XOConsoleMenu::register_element(const XOViewElement &view_element)
 {
-	_elements.push_back(element);
+	// _elements.push_back({ view_element.id, view_element.text, view_element.callback });
+	_elements.push_back(view_element);
 }
 
-void xo::XOIConsoleMenu::draw_on(const std::shared_ptr<Console>& output)
+void xo::XOConsoleMenu::draw_on(const std::shared_ptr<Console>& output)
 {
 	auto menu_plane = std::make_shared<CenteredFramedPlane>();
 	menu_plane->size({ 60, 40 });

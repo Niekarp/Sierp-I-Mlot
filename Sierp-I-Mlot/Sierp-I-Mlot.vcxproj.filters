@@ -52,11 +52,17 @@
     <Filter Include="Source Files\Console">
       <UniqueIdentifier>{62a75f9b-b8af-47b7-93ce-2a8ecc4f7ba9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Console_presentation">
+    <Filter Include="Header Files\Presentation\Console_presentation">
       <UniqueIdentifier>{cea0dd78-20cc-4e7b-b542-ec731cd539fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Console_presentation">
+    <Filter Include="Source Files\Presentation\Console_presentation">
       <UniqueIdentifier>{03944fde-8591-4c94-8c47-6387311f1187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Presentation\View">
+      <UniqueIdentifier>{8eb70a93-375b-44b9-bd4f-7ba038e1c521}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Presentation\View">
+      <UniqueIdentifier>{3fdd8e2a-babe-4b90-94a8-510a13386b1e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,9 +85,6 @@
       <Filter>Deprecated\Network</Filter>
     </ClInclude>
     <ClInclude Include="XOIOutput.h">
-      <Filter>Header Files\Presentation</Filter>
-    </ClInclude>
-    <ClInclude Include="XOConsoleOutput.h">
       <Filter>Header Files\Presentation</Filter>
     </ClInclude>
     <ClInclude Include="XOViewManager.h">
@@ -147,20 +150,23 @@
     <ClInclude Include="testerror.h">
       <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="IXOMenu.h">
+    <ClInclude Include="XOConsoleOutput.h">
+      <Filter>Header Files\Presentation\Console_presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="XOIGameMap.h">
       <Filter>Header Files\Presentation</Filter>
     </ClInclude>
-    <ClInclude Include="IXOGameMap.h">
-      <Filter>Header Files\Presentation</Filter>
-    </ClInclude>
-    <ClInclude Include="XOIConsoleMenu.h">
-      <Filter>Header Files\Console_presentation</Filter>
-    </ClInclude>
-    <ClInclude Include="XOViewElement.h">
+    <ClInclude Include="XOIMenu.h">
       <Filter>Header Files\Presentation</Filter>
     </ClInclude>
     <ClInclude Include="XOIView.h">
-      <Filter>Header Files\Presentation</Filter>
+      <Filter>Header Files\Presentation\View</Filter>
+    </ClInclude>
+    <ClInclude Include="XOViewElement.h">
+      <Filter>Header Files\Presentation\View</Filter>
+    </ClInclude>
+    <ClInclude Include="XOConsoleMenu.h">
+      <Filter>Header Files\Presentation\Console_presentation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -185,7 +191,7 @@
     <ClCompile Include="XOClient.cpp">
       <Filter>Deprecated\Network\Network</Filter>
     </ClCompile>
-    <ClCompile Include="XOConsoleOutput.cpp">
+    <ClCompile Include="XOIOutput.cpp">
       <Filter>Source Files\Presentation</Filter>
     </ClCompile>
     <ClCompile Include="XOViewManager.cpp">
@@ -242,8 +248,14 @@
     <ClCompile Include="TextConsolePlane.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="XOIConsoleMenu.cpp">
-      <Filter>Source Files\Console_presentation</Filter>
+    <ClCompile Include="XOConsoleOutput.cpp">
+      <Filter>Source Files\Presentation\Console_presentation</Filter>
+    </ClCompile>
+    <ClCompile Include="XOIView.cpp">
+      <Filter>Source Files\Presentation\View</Filter>
+    </ClCompile>
+    <ClCompile Include="XOConsoleMenu.cpp">
+      <Filter>Source Files\Presentation\Console_presentation</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
