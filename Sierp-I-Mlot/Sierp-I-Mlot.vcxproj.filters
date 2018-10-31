@@ -81,9 +81,6 @@
     <ClInclude Include="XOIOutput.h">
       <Filter>Header Files\Presentation</Filter>
     </ClInclude>
-    <ClInclude Include="XOIView.h">
-      <Filter>Header Files\Presentation</Filter>
-    </ClInclude>
     <ClInclude Include="XOConsoleOutput.h">
       <Filter>Header Files\Presentation</Filter>
     </ClInclude>
@@ -162,6 +159,9 @@
     <ClInclude Include="XOViewElement.h">
       <Filter>Header Files\Presentation</Filter>
     </ClInclude>
+    <ClInclude Include="XOIView.h">
+      <Filter>Header Files\Presentation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XOInput.cpp">
@@ -184,12 +184,6 @@
     </ClCompile>
     <ClCompile Include="XOClient.cpp">
       <Filter>Deprecated\Network\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="XOIOutput.cpp">
-      <Filter>Source Files\Presentation</Filter>
-    </ClCompile>
-    <ClCompile Include="XOIView.cpp">
-      <Filter>Source Files\Presentation</Filter>
     </ClCompile>
     <ClCompile Include="XOConsoleOutput.cpp">
       <Filter>Source Files\Presentation</Filter>

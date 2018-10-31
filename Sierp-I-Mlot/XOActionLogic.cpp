@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "XOActionLogic.h"
-
+/*
 namespace xo
 {
 	XOActionLogic::XOActionLogic(std::shared_ptr<XOIOutput> output, XOGameLogic& game_logic) :
@@ -11,7 +11,7 @@ namespace xo
 
 	void xo::XOActionLogic::direct_execution()
 	{
-		_output->keep_drawing();
+		//_output->keep_drawing();
 	}
 
 
@@ -68,5 +68,5 @@ namespace xo
 			}
 		}
 	}
-	*/
-}
+	
+}*/

@@ -56,7 +56,7 @@ namespace xo
 		main_menu->add_option({ "play", [&console, &i, this]
 		{
 			// console->resolution(i += 1);
-			this->_action_logic.game_make_move(rand() % 3, rand() % 3);
+			//this->_action_logic.game_make_move(rand() % 3, rand() % 3);
 			console->resize_window(800, 800);
 		} });
 		main_menu->add_option({ "settings", [&console, &i]

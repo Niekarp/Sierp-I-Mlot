@@ -5,8 +5,8 @@ namespace xo
 	class XOViewElement
 	{
 	public:
-		const char *id;
-		const char *text;
+		const std::string id;
+		const std::string text;
 		std::function<void()> callback;
 	};
 }
