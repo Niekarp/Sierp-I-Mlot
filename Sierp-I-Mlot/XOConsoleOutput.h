@@ -21,5 +21,8 @@ namespace xo
 		void stop() override;
 	private:
 		std::shared_ptr<Console> _console;
+
+		bool _everyone_stunned;
+		void _amaze_them_with_the_intro(const std::shared_ptr<XOIMenu> &) override;
 	};
 }
