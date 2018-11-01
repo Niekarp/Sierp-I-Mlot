@@ -52,17 +52,17 @@
     <Filter Include="Source Files\Console">
       <UniqueIdentifier>{62a75f9b-b8af-47b7-93ce-2a8ecc4f7ba9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Presentation\Console_presentation">
+    <Filter Include="Header Files\Presentation\Console">
       <UniqueIdentifier>{cea0dd78-20cc-4e7b-b542-ec731cd539fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Presentation\Console_presentation">
-      <UniqueIdentifier>{03944fde-8591-4c94-8c47-6387311f1187}</UniqueIdentifier>
+    <Filter Include="Header Files\Presentation\Abstract">
+      <UniqueIdentifier>{2b7c44e3-ab28-483e-b93b-50797f05e438}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Presentation\View">
+    <Filter Include="Header Files\Presentation\Abstract\View">
       <UniqueIdentifier>{8eb70a93-375b-44b9-bd4f-7ba038e1c521}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Presentation\View">
-      <UniqueIdentifier>{3fdd8e2a-babe-4b90-94a8-510a13386b1e}</UniqueIdentifier>
+    <Filter Include="Source Files\Presentation\Console">
+      <UniqueIdentifier>{03944fde-8591-4c94-8c47-6387311f1187}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +83,6 @@
     </ClInclude>
     <ClInclude Include="XOClient.h">
       <Filter>Deprecated\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="XOIOutput.h">
-      <Filter>Header Files\Presentation</Filter>
     </ClInclude>
     <ClInclude Include="XOViewManager.h">
       <Filter>Deprecated</Filter>
@@ -132,9 +129,6 @@
     <ClInclude Include="IntroMenuAnimation.h">
       <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
     <ClInclude Include="MusicPlayer.h">
       <Filter>Header Files\Console</Filter>
     </ClInclude>
@@ -151,22 +145,31 @@
       <Filter>Header Files\Console</Filter>
     </ClInclude>
     <ClInclude Include="XOConsoleOutput.h">
-      <Filter>Header Files\Presentation\Console_presentation</Filter>
-    </ClInclude>
-    <ClInclude Include="XOIGameMap.h">
-      <Filter>Header Files\Presentation</Filter>
-    </ClInclude>
-    <ClInclude Include="XOIMenu.h">
-      <Filter>Header Files\Presentation</Filter>
+      <Filter>Header Files\Presentation\Console</Filter>
     </ClInclude>
     <ClInclude Include="XOIView.h">
-      <Filter>Header Files\Presentation\View</Filter>
+      <Filter>Header Files\Presentation\Abstract\View</Filter>
     </ClInclude>
     <ClInclude Include="XOViewElement.h">
-      <Filter>Header Files\Presentation\View</Filter>
+      <Filter>Header Files\Presentation\Abstract\View</Filter>
     </ClInclude>
     <ClInclude Include="XOConsoleMenu.h">
-      <Filter>Header Files\Presentation\Console_presentation</Filter>
+      <Filter>Header Files\Presentation\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="XOConsoleGameMap.h">
+      <Filter>Header Files\Presentation\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="XOIGameMap.h">
+      <Filter>Header Files\Presentation\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="XOIMenu.h">
+      <Filter>Header Files\Presentation\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="XOIOutput.h">
+      <Filter>Header Files\Presentation\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Deprecated</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -190,9 +193,6 @@
     </ClCompile>
     <ClCompile Include="XOClient.cpp">
       <Filter>Deprecated\Network\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="XOIOutput.cpp">
-      <Filter>Source Files\Presentation</Filter>
     </ClCompile>
     <ClCompile Include="XOViewManager.cpp">
       <Filter>Deprecated</Filter>
@@ -233,9 +233,6 @@
     <ClCompile Include="IntroMenuAnimation.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
     <ClCompile Include="MusicPlayer.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
@@ -249,13 +246,16 @@
       <Filter>Source Files\Console</Filter>
     </ClCompile>
     <ClCompile Include="XOConsoleOutput.cpp">
-      <Filter>Source Files\Presentation\Console_presentation</Filter>
-    </ClCompile>
-    <ClCompile Include="XOIView.cpp">
-      <Filter>Source Files\Presentation\View</Filter>
+      <Filter>Source Files\Presentation\Console</Filter>
     </ClCompile>
     <ClCompile Include="XOConsoleMenu.cpp">
-      <Filter>Source Files\Presentation\Console_presentation</Filter>
+      <Filter>Source Files\Presentation\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="XOConsoleGameMap.cpp">
+      <Filter>Source Files\Presentation\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Deprecated</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

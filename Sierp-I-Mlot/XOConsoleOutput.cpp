@@ -1,6 +1,7 @@
 #include "pch.h"
-#include  "XOConsoleOutput.h"
+#include "XOConsoleOutput.h"
 #include "XOConsoleMenu.h"
+#include "XOConsoleGameMap.h"
 
 #include "SuperWaveAnimation.h"
 #include "CenteredFramedPlane.h"
@@ -36,7 +37,7 @@ namespace xo
 	
 	std::shared_ptr<XOIGameMap> XOConsoleOutput::create_game_map()
 	{
-		return std::shared_ptr<XOIGameMap>();
+		return std::shared_ptr<XOIGameMap>(new XOConsoleGameMap());
 	}
 	
 	void XOConsoleOutput::show(const std::shared_ptr<XOIMenu>& menu)

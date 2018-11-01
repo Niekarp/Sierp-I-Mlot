@@ -18,6 +18,8 @@ namespace xo
 		void main_menu_settings();
 		void main_menu_exit();
 
+		void settings_back();
+
 		void game_make_move(unsigned x, unsigned y);
 	private:
 		std::shared_ptr<XOIOutput> _output;
@@ -25,6 +27,6 @@ namespace xo
 
 		std::shared_ptr<XOIMenu> _main_menu;
 		std::shared_ptr<XOIGameMap> _game_map;
-		std::shared_ptr<XOIGameMap> _settings;
+		std::shared_ptr<XOIMenu> _settings;
 	};
 }

@@ -24,7 +24,12 @@ namespace xo
 			std::string coords = x + " " + y;
 			_game_map->register_element({ coords, "", [this, x, y] 
 			{
-				this->game_make_move(x, y);
+				PlayerSymbol next_symbol = this->_game_logic.player_to_play_next();
+				bool result = this->_game_logic.play_move(x, y);
+				if (result)
+				{
+					this->_game_map->put(next_symbol, x, y);
+				}
 			} });
 		}
 
@@ -61,19 +66,15 @@ namespace xo
 
 	void XOActionLogic::game_make_move(unsigned x, unsigned y)
 	{
-		PlayerSymbol next_symbol = _game_logic.player_to_play_next();
-		bool result = _game_logic.play_move(x, y);
-		if (result)
-		{
-			_game_map->put(next_symbol, x, y);
-		}
-
-		if (_game_logic.current_state() == GameState::finished)
-		{
-			PlayerSymbol winner = _game_logic.winner();
-			// zrób coœ z wygranym
-			_output->show(_main_menu);
-		}
+		//if (_game_logic.play_move(x, y))
+		//{
+		//	// _output->draw_symbol(x, y);
+		//}
+		//if (_game_logic.current_state() == GameState::finished)
+		//{
+		//	PlayerSymbol winner = _game_logic.winner();
+		//	// zrób coœ z wygranym
+		//}
 	}
 
 	// legacy stuff
