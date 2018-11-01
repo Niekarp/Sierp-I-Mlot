@@ -44,15 +44,18 @@ namespace xo
 	{
 		if (_everyone_stunned == false)
 		{
-			_amaze_them_with_the_intro(menu);
+			const std::shared_ptr<XOIMenu> &then_menu = menu;
+
+			_amaze_them_with_the_intro(then_menu);
 			_everyone_stunned = true;
 			return;
 		}
 		std::static_pointer_cast<XOConsoleMenu>(menu)->draw_on(_console);
 	}
 	
-	void XOConsoleOutput::show(const std::shared_ptr<XOIGameMap> &)
+	void XOConsoleOutput::show(const std::shared_ptr<XOIGameMap> &game_map)
 	{
+		std::static_pointer_cast<XOConsoleGameMap>(game_map)->draw_on(_console);
 	}
 	
 	void XOConsoleOutput::run()
