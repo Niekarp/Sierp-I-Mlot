@@ -20,6 +20,6 @@ namespace xo
 			const char *text;
 			std::function<void()> callback;
 		};*/
-		std::vector<XOViewElement> _elements;
+		// std::vector<XOViewElement> _elements;
 	};
 }

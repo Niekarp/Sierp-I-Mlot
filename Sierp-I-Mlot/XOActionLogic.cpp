@@ -9,9 +9,27 @@ namespace xo
 		_output = output;
 
 		_main_menu = _output->create_menu();
-		_main_menu->register_element({ "play button", "PLAY", [this] { this->main_menu_play(); } });
-		_main_menu->register_element({ "settings button", "SETTINGS", [this] { this->main_menu_settings(); } });
-		_main_menu->register_element({ "exit button", "EXIT", [this] { this->main_menu_exit(); } });
+		_main_menu->register_element({ "play button", "play", [this] { this->main_menu_play(); } });
+		_main_menu->register_element({ "settings button", "settings", [this] { this->main_menu_settings(); } });
+		_main_menu->register_element({ "exit button", "exit", [this] { this->main_menu_exit(); } });
+
+		_game_map = _output->create_game_map();
+		_game_map->width(3);
+		_game_map->height(3);
+		for (int i = 0; i < 9; ++i)
+		{
+			unsigned x, y;
+			x = i % 3;
+			y = i / 3;
+			std::string coords = x + " " + y;
+			_game_map->register_element({ coords, "", [this, x, y] 
+			{
+				this->game_make_move(x, y);
+			} });
+		}
+
+		_settings = _output->create_menu();
+		_settings->register_element({ "back to main menu button", "back", [this] {this->settings_back(); } });
 
 		_output->show(_main_menu);
 	}
@@ -36,17 +54,26 @@ namespace xo
 		_output->stop();
 	}
 
+	void XOActionLogic::settings_back()
+	{
+		_output->show(_main_menu);
+	}
+
 	void XOActionLogic::game_make_move(unsigned x, unsigned y)
 	{
-		//if (_game_logic.play_move(x, y))
-		//{
-		//	// _output->draw_symbol(x, y);
-		//}
-		//if (_game_logic.current_state() == GameState::finished)
-		//{
-		//	PlayerSymbol winner = _game_logic.winner();
-		//	// zrób coœ z wygranym
-		//}
+		PlayerSymbol next_symbol = _game_logic.player_to_play_next();
+		bool result = _game_logic.play_move(x, y);
+		if (result)
+		{
+			_game_map->put(next_symbol, x, y);
+		}
+
+		if (_game_logic.current_state() == GameState::finished)
+		{
+			PlayerSymbol winner = _game_logic.winner();
+			// zrób coœ z wygranym
+			_output->show(_main_menu);
+		}
 	}
 
 	// legacy stuff
