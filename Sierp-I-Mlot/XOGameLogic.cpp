@@ -97,12 +97,12 @@ namespace xo
 		return false;
 	}
 
-	/*
-	void XOGameLogic::restart_game(unsigned board_width, unsigned board_height, PlayerSymbol starting_player)
+	void xo::XOGameLogic::restart_game(unsigned board_width, unsigned board_height, PlayerSymbol starting_player, unsigned initial_winning_streak)
 	{
-
+		XOGameLogic new_game = XOGameLogic(board_width, board_height, starting_player, initial_winning_streak);
+		
+		*(this) = new_game;
 	}
-	*/
 
 	void XOGameLogic::_analyse_board()
 	{

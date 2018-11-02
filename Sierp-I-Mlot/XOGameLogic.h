@@ -34,7 +34,7 @@ namespace xo
 		XOGameLogic(unsigned initial_width, unsigned initial_height, PlayerSymbol initial_player, unsigned initial_winning_streak);
 
 		bool play_move(unsigned x, unsigned y);
-		// void restart_game(unsigned board_width, unsigned board_height, PlayerSymbol starting_player);
+		void restart_game(unsigned board_width, unsigned board_height, PlayerSymbol starting_player, unsigned initial_winning_streak);
 
 		PlayerSymbol player_to_play_next();
 		PlayerSymbol winner();

@@ -42,11 +42,15 @@ namespace xo
 	void XOActionLogic::main_menu_play()
 	{
 		_output->show(_game_map);
+		// this->game_make_move(rand() % 3, rand() % 3);
+		// this->_game_logic.print_status();
 	}
 
 	void XOActionLogic::main_menu_settings()
 	{
 		_output->show(_settings);
+		// this->_game_logic.restart_game(3, 3, PlayerSymbol::cross, 3);
+		// this->_game_logic.print_status();
 	}
 
 	void XOActionLogic::main_menu_exit()
