@@ -18,13 +18,12 @@ namespace xo
 		_game_map->height(3);
 		for (int i = 0; i < 9; ++i)
 		{
-			unsigned x, y;
-			x = i % 3;
-			y = i / 3;
-			std::string coords = x + " " + y;
-			_game_map->register_element({ coords, "", [this, x, y] 
+			auto col = i % 3;
+			auto row = i / 3;
+			std::string coords = std::to_string(col) + " " + std::to_string(row);
+			_game_map->register_element({ coords, "", [this, col, row] 
 			{
-				this->game_make_move(x, y);
+				this->game_make_move(col, row);
 			} });
 		}
 

@@ -10,6 +10,7 @@ XOConsoleMapPlane::XOConsoleMapPlane(int cols, int rows) :
 	_color_foreground(0)
 {
 	_fields.resize(cols * rows);
+	std::fill(_fields.begin(), _fields.end(), -1);
 	_x_plane = std::make_shared<CenteredFramedPlane>();
 }
 
@@ -36,6 +37,8 @@ void XOConsoleMapPlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 	auto by = cy - _size.y / 2;
 	auto ex = cx + _size.x / 2;
 	auto ey = cy + _size.y / 2;
+	auto row_h = 1. * (ey - by) / _rows;
+	auto col_w = 1. * (ex - bx) / _cols;
 
 	bx = bx < 0 ? 0 : bx;
 	by = by < 0 ? 0 : by;
@@ -59,7 +62,7 @@ void XOConsoleMapPlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 	{
 		for (int j = by; j <= ey; ++j)
 		{
-			buffer->put(bx + i * (ex - bx) / _cols, j, ' ', _color_foreground);
+			buffer->put(bx + i * col_w, j, ' ', _color_foreground);
 		}
 	}
 
@@ -67,16 +70,23 @@ void XOConsoleMapPlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 	{
 		for (int j = 0; j < _rows + 1; ++j)
 		{
-			buffer->put(i, by + j * (ey - by) / _rows, ' ', _color_foreground);
+			buffer->put(i, by + j * row_h, ' ', _color_foreground);
 		}
 	}
 
 	// Xs and Os
-	for(int i = 0; i < _cols; ++i)
+	for(int col = 0; col < _cols; ++col)
 	{
-		for (int j = 0; j < _rows; ++j)
+		for (int row = 0; row < _rows; ++row)
 		{
-
+			if (_fields[row * _cols + col] != -1)
+			{
+				auto &field_image = _images[_fields[row * _cols + col]];
+				field_image->position({ 
+					bx + (int)((col + 0.5) * col_w - field_image->size().x / 2),
+					by + (int)((row + 0.5) * row_h) - field_image->size().y / 2 });
+				field_image->draw(buffer);
+			}		
 		}
 	}
 }
@@ -89,7 +99,10 @@ void XOConsoleMapPlane::click(IConsolePlane::Position position, DWORD btn, DWORD
 	auto col = rel_pos_x / (_size.x / _cols);
 	auto row = rel_pos_y / (_size.y / _rows);
 
-	put(col, row, 1);
+	if (_callback_click)
+	{
+		_callback_click(col, row);
+	}
 }
 
 void XOConsoleMapPlane::click_release()
@@ -123,5 +136,15 @@ void XOConsoleMapPlane::put(int col, int row, int f)
 	}
 	
 	_fields[row * _cols + col] = f;
+}
+
+void XOConsoleMapPlane::images(const std::vector<std::shared_ptr<FileImagePlane>>& images)
+{
+	_images = images;
+}
+
+void XOConsoleMapPlane::click(std::function<void(int, int)> callback)
+{
+	_callback_click = callback;
 }
 

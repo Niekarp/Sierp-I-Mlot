@@ -6,9 +6,9 @@ namespace xo
 {
 	enum class PlayerSymbol
 	{
-		cross,
-		circle,
-		none
+		none = -1,
+		cross = 0,
+		circle = 1,
 	};
 	typedef PlayerSymbol SquareState;
 
