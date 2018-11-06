@@ -102,5 +102,7 @@ private:
 	std::vector<std::shared_ptr<IConsolePlane>> _planes;
 
 public:
+	void _thread_start();
+	void _thread_stop();
 	std::vector<std::shared_ptr<IClickableConsolePlane>> _clickable_planes;
 };

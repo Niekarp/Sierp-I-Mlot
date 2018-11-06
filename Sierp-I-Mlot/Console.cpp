@@ -85,6 +85,28 @@ void Console::_setup_threadpool()
 	_workers_mutex = CreateMutex(NULL, FALSE, NULL);
 }
 
+void Console::_thread_start()
+{
+	_context.threadDrawStop = false;
+	_context.threadInputStop = false;
+	CHKERR_BOOL(ReleaseMutex(_workers_mutex));
+}
+
+void Console::_thread_stop()
+{
+	CHKERR_DWORD(WaitForSingleObject(_workers_mutex, INFINITE));
+	_context.threadInputStop = true;
+	_context.threadDrawStop = true;
+	while (_context.threadInputCounter > 1)
+	{
+		Sleep(1);
+	}
+	while (_context.threadDrawCounter > 0)
+	{
+		Sleep(1);
+	}
+}
+
 std::shared_ptr<Console> Console::get_instance()
 {
 	static std::shared_ptr<Console> console(new Console());
@@ -193,25 +215,13 @@ void Console::resolution(int sz)
 
 void Console::clear_planes()
 {
-	CHKERR_DWORD(WaitForSingleObject(_workers_mutex, INFINITE));
-	_context.threadInputStop = true;
-	_context.threadDrawStop = true;
-	while(_context.threadInputCounter > 1)
-	{
-		Sleep(1);
-	}
-	while (_context.threadDrawCounter > 0)
-	{
-		Sleep(1);
-	}
+	_thread_stop();
 
 	_context.mouse_clicked = false;
 	_planes.clear();
 	_clickable_planes.clear();
 	
-	_context.threadDrawStop = false;
-	_context.threadInputStop = false;
-	CHKERR_BOOL(ReleaseMutex(_workers_mutex));
+	_thread_start();
 }
 
 void Console::Buffer::clear(char chr, int color)
@@ -290,7 +300,11 @@ void Console::add_plane(const std::shared_ptr<IConsolePlane> &plane)
 
 void Console::add_clickable_plane(const std::shared_ptr<IClickableConsolePlane> &plane)
 {
+	_thread_stop();
+
 	_clickable_planes.push_back(plane);
+	
+	_thread_start();
 }
 
 void Console::mouse_click_event(
@@ -380,9 +394,9 @@ static BOOLEAN WINAPI _HandleConsoleInputRecord(Console::_Context &context, cons
 		{
 			if (context.mouse_clicked)
 			{
-				for (int i = 0; i < context.console->_clickable_planes.size(); ++i)
+				for (int i = 0; i < context.clicked_clickable_planes.size(); ++i)
 				{
-					auto &clickable_plane = context.console->_clickable_planes[i];
+					auto clickable_plane = context.clicked_clickable_planes[i];
 					clickable_plane->click_release();
 				}
 				context.clicked_clickable_planes.clear();
@@ -395,7 +409,7 @@ static BOOLEAN WINAPI _HandleConsoleInputRecord(Console::_Context &context, cons
 
 		for(int i = 0; i < context.console->_clickable_planes.size(); ++i)
 		{
-			auto &clickable_plane = context.console->_clickable_planes[i];
+			auto clickable_plane = context.console->_clickable_planes[i];
 			
 			if (clickable_plane->type() == IConsolePlane::PlaneType::CENTERED)
 			{
