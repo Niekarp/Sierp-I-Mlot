@@ -64,6 +64,9 @@
     <Filter Include="Source Files\Presentation\Console">
       <UniqueIdentifier>{03944fde-8591-4c94-8c47-6387311f1187}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Console\XO">
+      <UniqueIdentifier>{9731fcf5-0959-4bc5-ad73-8eabb5c2776c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XOInput.h">
@@ -171,6 +174,9 @@
     <ClInclude Include="Menu.h">
       <Filter>Deprecated</Filter>
     </ClInclude>
+    <ClInclude Include="XOConsoleMapPlane.h">
+      <Filter>Source Files\Console\XO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XOInput.cpp">
@@ -256,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="Menu.cpp">
       <Filter>Deprecated</Filter>
+    </ClCompile>
+    <ClCompile Include="XOConsoleMapPlane.cpp">
+      <Filter>Source Files\Console\XO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -50,12 +50,16 @@ namespace xo
 			_everyone_stunned = true;
 			return;
 		}
-		std::static_pointer_cast<XOConsoleMenu>(menu)->draw_on(_console);
+		auto console_menu = std::dynamic_pointer_cast<XOConsoleMenu>(menu);
+		console_menu->clear(_console);
+		console_menu->draw_on(_console);
 	}
 	
 	void XOConsoleOutput::show(const std::shared_ptr<XOIGameMap> &game_map)
 	{
-		std::static_pointer_cast<XOConsoleGameMap>(game_map)->draw_on(_console);
+		auto console_game_map = std::dynamic_pointer_cast<XOConsoleGameMap>(game_map);
+		//console_game_map->clear(_console);
+		console_game_map->draw_on(_console);
 	}
 	
 	void XOConsoleOutput::run()
@@ -153,7 +157,7 @@ namespace xo
 		auto menu_animation = std::make_shared<SuperWaveAnimation>(8);
 		auto intro_menu_animation = std::make_shared<IntroMenuAnimation>(IConsolePlane::Position{ 60, 40 });
 		intro_menu_animation->fill((char)178, BACKGROUND_BLUE | BACKGROUND_INTENSITY);
-		auto chain = std::make_shared<AnimationChain>();
+		auto chain = std::make_shared<AnimationChain>(0);
 
 		chain->add(intro_animation);
 		chain->add(menu_animation);

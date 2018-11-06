@@ -12,6 +12,7 @@ namespace xo
 		void register_element(const XOViewElement &) override;
 
 		void draw_on(const std::shared_ptr<Console> &output);
+		void clear(const std::shared_ptr<Console> &output);
 
 	private:
 		/*struct _Element

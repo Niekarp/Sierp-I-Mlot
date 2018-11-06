@@ -28,14 +28,14 @@ void ButtonPlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 
 void ButtonPlane::click(IConsolePlane::Position position, DWORD btn, DWORD flag)
 {
-	if (_click_callback)
-	{
-		_click_callback();
-	}
 	CenteredFramedPlane::fill_color(BACKGROUND_BLUE);
 	if (_text)
 	{
 		_text->background(' ', BACKGROUND_BLUE);
+	}
+	if (_click_callback)
+	{
+		_click_callback();
 	}
 }
 

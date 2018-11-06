@@ -162,6 +162,7 @@
     <ClInclude Include="FileImagePlane.h" />
     <ClInclude Include="FramePlaneFrameCreator.h" />
     <ClInclude Include="XOConsoleGameMap.h" />
+    <ClInclude Include="XOConsoleMapPlane.h" />
     <ClInclude Include="XOConsoleMenu.h" />
     <ClInclude Include="XOIGameMap.h" />
     <ClInclude Include="XOIMenu.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="SuperWaveAnimation.cpp" />
     <ClCompile Include="TextConsolePlane.cpp" />
     <ClCompile Include="XOConsoleGameMap.cpp" />
+    <ClCompile Include="XOConsoleMapPlane.cpp" />
     <ClCompile Include="XOConsoleOutput.cpp" />
     <ClCompile Include="XOConsoleMenu.cpp" />
     <ClCompile Include="main.cpp" />

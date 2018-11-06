@@ -39,6 +39,7 @@ public:
 	void active_screen(const char *buffer_name);
 	void resize_window(int width, int height);
 	void resolution(int sz);
+	void clear_planes();
 
 	int width() const;
 	int height() const;
@@ -68,6 +69,8 @@ public:
 		bool mouse_clicked = false;
 		COORD mouse_clicked_coords = { 0, 0 };
 		std::vector<std::shared_ptr<IClickableConsolePlane>> clicked_clickable_planes;
+		int threadInputCounter;
+		bool threadInputStop;
 	};
 
 	struct _WorkerInfo

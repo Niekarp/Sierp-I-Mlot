@@ -51,3 +51,9 @@ void xo::XOConsoleMenu::draw_on(const std::shared_ptr<Console>& output)
 			new_height / 2 - 14 });
 	});
 }
+
+void xo::XOConsoleMenu::clear(const std::shared_ptr<Console>& output)
+{
+	output->clear_planes();
+}
+

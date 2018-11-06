@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "XOConsoleGameMap.h"
+#include "XOConsoleMapPlane.h"
 
 
 namespace xo
@@ -11,7 +12,13 @@ namespace xo
 
 	void XOConsoleGameMap::draw_on(const std::shared_ptr<Console>& output)
 	{
-		// tutaj pawo³ czaruje
+		output->clear_planes();
+
+		auto game_plane = std::make_shared<XOConsoleMapPlane>();
+		game_plane->size({50, 30});
+		game_plane->color(BACKGROUND_RED | BACKGROUND_INTENSITY);
+
+		output->add_plane(game_plane);
 	}
 
 	size_t XOConsoleGameMap::width()

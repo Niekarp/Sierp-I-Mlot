@@ -4,7 +4,7 @@
 struct AnimationChain :
 	public IAnimation
 {
-	AnimationChain();
+	AnimationChain(int animation_index = 0);
 
 	void draw(const std::shared_ptr<Console::Buffer> &buffer) override;
 	bool end() override;
@@ -17,9 +17,11 @@ struct AnimationChain :
 private:
 	std::vector<std::shared_ptr<IAnimation>> _animations;
 	std::vector<std::shared_ptr<IAnimation>> _continued_animations;
-	size_t _current_animation_index;
+	volatile size_t _current_animation_index;
 	size_t _n_overlap_frames;
-	size_t _current_overlap_frame_index;
+	volatile size_t _current_overlap_frame_index;
 	std::function<void(size_t animation_index)> _on_end_callback;
+	HANDLE _draw_mutex;
+	bool _end;
 };
 

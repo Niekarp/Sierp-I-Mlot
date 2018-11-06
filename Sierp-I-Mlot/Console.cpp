@@ -54,6 +54,8 @@ Console::Console() :
 	_workers_next_index(0),
 	_running(false)
 {
+	_context.threadInputCounter = 0;
+	_context.threadInputStop = false;
 	_SetupConsole(&_context);
 	_setup_threadpool();
 }
@@ -179,6 +181,21 @@ void Console::resolution(int sz)
 	CHKERR_BOOL(SetCurrentConsoleFontEx(_context.hStdOutActive, FALSE, &consoleFont));
 }
 
+void Console::clear_planes()
+{
+	CHKERR_DWORD(WaitForSingleObject(_workers_mutex, INFINITE));
+	_context.threadInputStop = true;
+	while(_context.threadInputCounter > 1)
+	{
+		Sleep(1);
+	}
+	_context.mouse_clicked = false;
+	_planes.clear();
+	_clickable_planes.clear();
+	_context.threadInputStop = false;
+	CHKERR_BOOL(ReleaseMutex(_workers_mutex));
+}
+
 void Console::Buffer::clear(char chr, int color)
 {
 	CHAR_INFO chr_info{};
@@ -223,7 +240,7 @@ void Console::draw_async(
 			break;
 		}
 	}
-	ReleaseMutex(_workers_mutex);
+	CHKERR_BOOL(ReleaseMutex(_workers_mutex));
 }
 
 void Console::do_every(int period_ms, std::function<void()> trigger)
@@ -336,8 +353,7 @@ static VOID WINAPI _OpenConsoleInputRoutine(Console::_Context &context)
 	_ConsoleInputRoutine(context);
 }
 
-static BOOLEAN WINAPI _ConsoleInputRecordCallback(Console::_Context &context,
-	const INPUT_RECORD& record)
+static BOOLEAN WINAPI _HandleConsoleInputRecord(Console::_Context &context, const INPUT_RECORD& record)
 {
 	if (record.EventType == MOUSE_EVENT)
 	{
@@ -345,8 +361,9 @@ static BOOLEAN WINAPI _ConsoleInputRecordCallback(Console::_Context &context,
 		{
 			if (context.mouse_clicked)
 			{
-				for (auto &clickable_plane : context.clicked_clickable_planes)
+				for (int i = 0; i < context.console->_clickable_planes.size(); ++i)
 				{
+					auto &clickable_plane = context.console->_clickable_planes[i];
 					clickable_plane->click_release();
 				}
 				context.clicked_clickable_planes.clear();
@@ -357,8 +374,10 @@ static BOOLEAN WINAPI _ConsoleInputRecordCallback(Console::_Context &context,
 		context.mouse_clicked = true;
 		context.mouse_clicked_coords = record.Event.MouseEvent.dwMousePosition;
 
-		for (auto &clickable_plane : context.console->_clickable_planes)
+		for(int i = 0; i < context.console->_clickable_planes.size(); ++i)
 		{
+			auto &clickable_plane = context.console->_clickable_planes[i];
+			
 			if (clickable_plane->type() == IConsolePlane::PlaneType::CENTERED)
 			{
 				auto plane_pos = clickable_plane->position();
@@ -401,6 +420,21 @@ static BOOLEAN WINAPI _ConsoleInputRecordCallback(Console::_Context &context,
 	}
 
 	return false;
+}
+
+static BOOLEAN WINAPI _ConsoleInputRecordCallback(Console::_Context &context,
+	const INPUT_RECORD& record)
+{
+	if (context.threadInputStop)
+	{
+		return false;
+	}
+	
+	context.threadInputCounter += 1;
+	auto result = _HandleConsoleInputRecord(context, record);
+	context.threadInputCounter -= 1;
+	
+	return result;
 }
 VOID CALLBACK _ConsoleWorkCallback(PTP_CALLBACK_INSTANCE instance,
 	PVOID arg,
