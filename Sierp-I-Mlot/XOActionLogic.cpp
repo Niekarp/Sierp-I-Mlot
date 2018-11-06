@@ -76,6 +76,7 @@ namespace xo
 			PlayerSymbol winner = _game_logic.winner();
 			// zrób coœ z wygranym
 			_output->show(_main_menu);
+			_game_logic.restart_game(3, 3, PlayerSymbol::circle, 3);
 		}
 	}
 
