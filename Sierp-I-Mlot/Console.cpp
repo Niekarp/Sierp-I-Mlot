@@ -32,6 +32,14 @@ void Console::Buffer::put(int x, int y, wchar_t chr,
 void Console::Buffer::put(int x, int y, char chr,
 	int color)
 {
+	if (x < 0 || x >= WRITE_BUF_SZ)
+	{
+		return;
+	}
+	if (y < 0 || y >= WRITE_BUF_SZ)
+	{
+		return;
+	}
 	_write_buf[y * WRITE_BUF_SZ + x].Char.UnicodeChar = 0;
 	_write_buf[y * WRITE_BUF_SZ + x].Char.AsciiChar = chr;
 	_write_buf[y * WRITE_BUF_SZ + x].Attributes = color;
