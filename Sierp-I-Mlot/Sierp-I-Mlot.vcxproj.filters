@@ -67,6 +67,9 @@
     <Filter Include="Source Files\Console\XO">
       <UniqueIdentifier>{9731fcf5-0959-4bc5-ad73-8eabb5c2776c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Console\XO">
+      <UniqueIdentifier>{5c11109a-d57c-4745-8109-3bf8fce27463}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XOInput.h">
@@ -175,7 +178,7 @@
       <Filter>Deprecated</Filter>
     </ClInclude>
     <ClInclude Include="XOConsoleMapPlane.h">
-      <Filter>Source Files\Console\XO</Filter>
+      <Filter>Header Files\Console\XO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

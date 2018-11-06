@@ -289,6 +289,7 @@ void Console::window_resize_event(
 
 static VOID WINAPI _SetupConsole(Console::_Context *context)
 {
+	CHKERR_BOOL(SetConsoleOutputCP(852));
 	CHKERR_HANDLE(context->hStdIn = CreateFile(L"CONIN$",
 		GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE,
 		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));

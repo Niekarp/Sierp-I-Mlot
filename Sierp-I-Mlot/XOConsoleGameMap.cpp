@@ -16,9 +16,10 @@ namespace xo
 
 		auto game_plane = std::make_shared<XOConsoleMapPlane>();
 		game_plane->size({50, 30});
-		game_plane->color(BACKGROUND_RED | BACKGROUND_INTENSITY);
+		game_plane->foreground(BACKGROUND_RED | BACKGROUND_INTENSITY);
+		game_plane->background(BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY);
 
-		output->add_plane(game_plane);
+		output->add_clickable_plane(game_plane);
 	}
 
 	size_t XOConsoleGameMap::width()
