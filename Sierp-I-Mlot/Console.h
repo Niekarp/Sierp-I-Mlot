@@ -69,8 +69,10 @@ public:
 		bool mouse_clicked = false;
 		COORD mouse_clicked_coords = { 0, 0 };
 		std::vector<std::shared_ptr<IClickableConsolePlane>> clicked_clickable_planes;
-		int threadInputCounter;
-		bool threadInputStop;
+		volatile int threadInputCounter;
+		volatile int threadDrawCounter;
+		volatile bool threadInputStop;
+		volatile bool threadDrawStop;
 	};
 
 	struct _WorkerInfo

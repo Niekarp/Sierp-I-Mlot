@@ -55,7 +55,9 @@ Console::Console() :
 	_running(false)
 {
 	_context.threadInputCounter = 0;
+	_context.threadDrawCounter = 0;
 	_context.threadInputStop = false;
+	_context.threadDrawStop = false;
 	_SetupConsole(&_context);
 	_setup_threadpool();
 }
@@ -91,6 +93,12 @@ std::shared_ptr<Console> Console::get_instance()
 
 void Console::draw(const std::shared_ptr<Buffer> &buffer)
 {
+	if (_context.threadDrawStop)
+	{
+		return;
+	}
+	_context.threadDrawCounter += 1;
+
 	for (auto &plane : _planes)
 	{
 		plane->draw(buffer);
@@ -107,6 +115,8 @@ void Console::draw(const std::shared_ptr<Buffer> &buffer)
 	CHKERR_BOOL(WriteConsoleOutputA(_context.hStdOutActive,
 		buffer->_write_buf, COORD{ WRITE_BUF_SZ, WRITE_BUF_SZ },
 		COORD{ 0,0 }, &drawRect));
+
+	_context.threadDrawCounter -= 1;
 }
 
 std::shared_ptr<Console::Buffer> Console::create_buffer()
@@ -185,13 +195,21 @@ void Console::clear_planes()
 {
 	CHKERR_DWORD(WaitForSingleObject(_workers_mutex, INFINITE));
 	_context.threadInputStop = true;
+	_context.threadDrawStop = true;
 	while(_context.threadInputCounter > 1)
 	{
 		Sleep(1);
 	}
+	while (_context.threadDrawCounter > 0)
+	{
+		Sleep(1);
+	}
+
 	_context.mouse_clicked = false;
 	_planes.clear();
 	_clickable_planes.clear();
+	
+	_context.threadDrawStop = false;
 	_context.threadInputStop = false;
 	CHKERR_BOOL(ReleaseMutex(_workers_mutex));
 }
