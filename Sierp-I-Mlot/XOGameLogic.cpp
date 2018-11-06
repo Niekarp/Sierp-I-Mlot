@@ -138,7 +138,17 @@ namespace xo
 					if (amount_of_the_same_fields == winning_streak && field != SquareState::none)
 					{
 						_current_state = GameState::finished;
-						std::wstring ws = L"Omaj ktoœ wygra³!\nTa gra dzia³a!!";
+						std::wstring plr;
+						if (_current_player == xo::PlayerSymbol::circle)
+						{
+							plr = L"krzy¿ek";
+						}
+						else
+						{
+							plr = L"kó³ek";
+						}
+						
+						std::wstring ws = L"Omaj " + plr +  L" wygra³!\nTa gra dzia³a!!";
 						MessageBox(0, ws.c_str(), NULL, MB_OK);
 						this->_change_player();
 						return;
