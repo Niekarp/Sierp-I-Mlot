@@ -21,6 +21,7 @@ namespace xo
 		void settings_back();
 		void settings_zoom_in();
 		void settings_zoom_out();
+		void game_hero_key(int key, bool down);
 
 		void game_make_move(unsigned x, unsigned y);
 
@@ -30,7 +31,8 @@ namespace xo
 		float _scale;
 
 		std::shared_ptr<XOIMenu> _main_menu;
-		std::shared_ptr<XOIGameMap> _game_map;
+		std::shared_ptr<XOIGameMapXO> _game_map_xo;
+		std::shared_ptr<XOIGameMapHero> _game_map_hero;
 		std::shared_ptr<XOIMenu> _settings;
 	};
 }

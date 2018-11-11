@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "XOConsoleOutput.h"
 #include "XOConsoleMenu.h"
-#include "XOConsoleGameMap.h"
+#include "XOConsoleGameMapXO.h"
 
 #include "SuperWaveAnimation.h"
 #include "CenteredFramedPlane.h"
@@ -15,6 +15,7 @@
 #include "AnimationChain.h"
 #include "IntroMenuAnimation.h"
 #include "ChartReader.h"
+#include "XOConsoleGameMapHero.h"
 
 #include <chrono>
 
@@ -35,9 +36,14 @@ namespace xo
 		return std::shared_ptr<XOIMenu>(new XOConsoleMenu());
 	}
 	
-	std::shared_ptr<XOIGameMap> XOConsoleOutput::create_game_map()
+	std::shared_ptr<XOIGameMapXO> XOConsoleOutput::create_game_map_xo()
 	{
-		return std::shared_ptr<XOIGameMap>(new XOConsoleGameMap());
+		return std::shared_ptr<XOIGameMapXO>(new XOConsoleGameMapXO());
+	}
+
+	std::shared_ptr<XOIGameMapHero> XOConsoleOutput::create_game_map_hero()
+	{
+		return std::shared_ptr<XOIGameMapHero>(new XOConsoleGameMapHero());
 	}
 	
 	void XOConsoleOutput::show(const std::shared_ptr<XOIMenu>& menu)
@@ -55,10 +61,16 @@ namespace xo
 		console_menu->draw_on(_console);
 	}
 	
-	void XOConsoleOutput::show(const std::shared_ptr<XOIGameMap> &game_map)
+	void XOConsoleOutput::show(const std::shared_ptr<XOIGameMapXO> &game_map)
 	{
-		auto console_game_map = std::dynamic_pointer_cast<XOConsoleGameMap>(game_map);
+		auto console_game_map = std::dynamic_pointer_cast<XOConsoleGameMapXO>(game_map);
 		//console_game_map->clear(_console);
+		console_game_map->draw_on(_console);
+	}
+
+	void XOConsoleOutput::show(const std::shared_ptr<XOIGameMapHero> &game_map)
+	{
+		auto console_game_map = std::dynamic_pointer_cast<XOConsoleGameMapHero>(game_map);
 		console_game_map->draw_on(_console);
 	}
 	

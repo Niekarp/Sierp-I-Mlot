@@ -4,7 +4,7 @@
 
 namespace xo
 {
-	class XOIGameMap : public XOIView
+	class XOIGameMapXO : public XOIView
 	{
 	public:
 		virtual size_t width() = 0;

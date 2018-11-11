@@ -1,13 +1,16 @@
 #pragma once
-#include "Note.h"
+#include "XOIGameMapHero.h"
 
-struct ChartReader
+namespace xo
 {
-	ChartReader(const char *filename);
-	void load(const char *filename);
-	std::vector<Note> notes();
+	class ChartReader
+	{
+	public:
+		ChartReader(const char *filename);
+		void load(const char *filename);
+		void put_notes_on(const std::shared_ptr<XOIGameMapHero> &);
 
-private:
-	std::vector<Note> _notes;
-};
-
+	private:
+		std::vector<XOIGameMapHero::Note> _notes;
+	};
+}

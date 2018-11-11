@@ -1,14 +1,14 @@
 #pragma once
-#include "XOIGameMap.h"
+#include "XOIGameMapXO.h"
 #include "Console.h"
 #include "XOConsoleMapPlane.h"
 
 namespace xo
 {
-	class XOConsoleGameMap : public XOIGameMap
+	class XOConsoleGameMapXO : public XOIGameMapXO
 	{
 	public:
-		XOConsoleGameMap();
+		XOConsoleGameMapXO();
 
 		void register_element(const XOViewElement &) override;		
 		size_t width() override;
@@ -27,5 +27,6 @@ namespace xo
 		std::shared_ptr<XOConsoleMapPlane> _map_plane;
 		size_t _click_row;
 		size_t _click_col;
+		std::function<void(int)> _key_down_callback;
 	};
 }

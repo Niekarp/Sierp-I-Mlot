@@ -1,7 +1,7 @@
 #pragma once
 #include "XOIOutput.h"
 #include "XOIMenu.h"
-#include "XOIGameMap.h"
+#include "XOIGameMapXO.h"
 #include "Console.h"
 
 namespace xo
@@ -12,10 +12,12 @@ namespace xo
 		XOConsoleOutput();
 
 		std::shared_ptr<XOIMenu> create_menu() override;
-		std::shared_ptr<XOIGameMap> create_game_map() override;
+		std::shared_ptr<XOIGameMapXO> create_game_map_xo() override;
+		std::shared_ptr<XOIGameMapHero> create_game_map_hero() override;
 
 		void show(const std::shared_ptr<XOIMenu> &) override;
-		void show(const std::shared_ptr<XOIGameMap> &) override;
+		void show(const std::shared_ptr<XOIGameMapXO> &) override;
+		void show(const std::shared_ptr<XOIGameMapHero> &) override;
 
 		void run() override;
 		void stop() override;

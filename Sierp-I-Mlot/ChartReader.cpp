@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "ChartReader.h"
 
+using namespace xo;
+
 ChartReader::ChartReader(const char * filename)
 {
 	load(filename);
@@ -22,9 +24,9 @@ void ChartReader::load(const char * filename)
 
 	while (input_file)
 	{
-		Note note;
+		XOIGameMapHero::Note note;
 
-		input_file >> note.timestamp;
+		input_file >> note.time;
 		std::getline(input_file, line, '=');
 		char symbol;
 		input_file >> symbol;
@@ -35,16 +37,24 @@ void ChartReader::load(const char * filename)
 			continue;
 		}
 
-		input_file >> note.key;
+		input_file >> note.tone;
 		input_file >> note.duration;
 
 		std::getline(input_file, line);
+
+		if (note.tone > 3)
+		{
+			continue;
+		}
 
 		_notes.push_back(note);
 	}
 }
 
-std::vector<Note> ChartReader::notes()
+void xo::ChartReader::put_notes_on(const std::shared_ptr<XOIGameMapHero>& game_map)
 {
-	return _notes;
+	for (auto &note : _notes)
+	{
+		game_map->put(note);
+	}
 }

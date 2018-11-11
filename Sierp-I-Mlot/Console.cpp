@@ -329,20 +329,27 @@ size_t Console::frame()
 }
 
 void Console::mouse_click_event(
-	std::function<void(int x, int y, int button, int flag)> callback)
+	const std::function<void(int x, int y, int button, int flag)> &callback)
 {
-	_context.mouse_click_callback = callback;
+
+	_context.mouse_click_callbacks.push_back(callback);
 }
 
 void Console::window_resize_event(
-	std::function<void(int new_width, int new_height)> callback)
+	const std::function<void(int new_width, int new_height)> &callback)
 {
-	_context.window_resize_callback = callback;
+	_context.window_resize_callbacks.push_back(callback);
 }
 
-void Console::key_down_event(std::function<void(int key)> callback)
+void Console::key_down_event(const std::function<void(int key)> &callback)
 {
-	_context.key_down_callback = callback;
+
+	_context.key_down_callbacks.push_back(callback);
+}
+
+void Console::key_up_event(const std::function<void(int key)>& callback)
+{
+	_context.key_up_callbacks.push_back(callback);
 }
 
 static VOID WINAPI _SetupConsole(Console::_Context *context)
@@ -456,9 +463,9 @@ static BOOLEAN WINAPI _HandleConsoleInputRecord(Console::_Context &context, cons
 				}
 			}
 		}
-		if (context.mouse_click_callback)
+		for (auto &callback : context.mouse_click_callbacks)
 		{
-			context.mouse_click_callback(
+			callback(
 				(int)record.Event.MouseEvent.dwMousePosition.X,
 				(int)record.Event.MouseEvent.dwMousePosition.Y,
 				(int)record.Event.MouseEvent.dwButtonState,
@@ -467,29 +474,30 @@ static BOOLEAN WINAPI _HandleConsoleInputRecord(Console::_Context &context, cons
 	}
 	else if (record.EventType == WINDOW_BUFFER_SIZE_EVENT)
 	{
-		if (context.window_resize_callback == nullptr)
-		{
-			return true;
-		}
-
 		auto newSize = record.Event.WindowBufferSizeEvent.dwSize;
-		context.window_resize_callback((int)newSize.X, (int)newSize.Y);
+		for (auto &callback : context.window_resize_callbacks)
+		{
+			callback((int)newSize.X, (int)newSize.Y);
+		}
 
 		return true;
 	}
 	else if (record.EventType == KEY_EVENT)
 	{
-		if (context.key_down_callback == nullptr)
+		if (record.Event.KeyEvent.bKeyDown)
 		{
-			return false;
+			for (auto &callback : context.key_down_callbacks)
+			{
+				callback((int)record.Event.KeyEvent.wVirtualKeyCode);
+			}
 		}
-
-		if (!record.Event.KeyEvent.bKeyDown)
+		else
 		{
-			return false;
-		}
-
-		context.key_down_callback((int)record.Event.KeyEvent.wVirtualKeyCode);
+			for (auto &callback : context.key_up_callbacks)
+			{
+				callback((int)record.Event.KeyEvent.wVirtualKeyCode);
+			}
+		}		
 	}
 
 	return false;

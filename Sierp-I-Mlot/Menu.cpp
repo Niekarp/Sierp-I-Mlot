@@ -38,7 +38,7 @@ void Menu::draw_on(const std::shared_ptr<Console>& output)
 		button_plane->on_click(option.callback);
 		output->add_clickable_plane(button_plane);
 
-		auto text = std::make_shared<TextConsolePlane>(option.name, "resources/letters");
+		auto text = std::make_shared<TextConsolePlane>(option.name, "resources/letters_small");
 		text->foreground(' ', BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_INTENSITY);
 		text->background(' ', BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 		text->position({ 0, 0 });

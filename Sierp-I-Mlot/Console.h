@@ -55,10 +55,11 @@ public:
 	size_t frame();
 
 	void mouse_click_event(
-		std::function<void(int x, int y, int button, int flag)> callback);
+		const std::function<void(int x, int y, int button, int flag)> &callback);
 	void window_resize_event(
-		std::function<void(int new_width, int new_height)> callback);
-	void key_down_event(std::function<void(int key)> callback);
+		const std::function<void(int new_width, int new_height)> &callback);
+	void key_down_event(const std::function<void(int key)> &callback);
+	void key_up_event(const std::function<void(int key)> &callback);
 
 	struct _Context
 	{
@@ -66,9 +67,10 @@ public:
 		HANDLE hStdIn;
 		HANDLE hStdOutActive;
 		std::map<const char *, HANDLE> hStdOutBack;
-		std::function<void(int x, int y, int button, int flag)> mouse_click_callback;
-		std::function<void(int new_width, int new_height)> window_resize_callback;
-		std::function<void(int)> key_down_callback;
+		std::vector<std::function<void(int x, int y, int button, int flag)>> mouse_click_callbacks;
+		std::vector<std::function<void(int new_width, int new_height)>> window_resize_callbacks;
+		std::vector<std::function<void(int)>> key_down_callbacks;
+		std::vector<std::function<void(int)>> key_up_callbacks;
 		bool mouse_clicked = false;
 		COORD mouse_clicked_coords = { 0, 0 };
 		std::vector<std::shared_ptr<IClickableConsolePlane>> clicked_clickable_planes;
