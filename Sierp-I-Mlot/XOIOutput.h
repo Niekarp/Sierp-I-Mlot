@@ -15,6 +15,8 @@ namespace xo
 
 		virtual void run() = 0;
 		virtual void stop() = 0;
+
+		virtual void scale(float) = 0;
 	private:
 		virtual void _amaze_them_with_the_intro(const std::shared_ptr<XOIMenu> &) = 0;
 	};

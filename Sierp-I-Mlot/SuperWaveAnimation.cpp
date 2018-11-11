@@ -177,21 +177,19 @@ SuperWaveAnimation::SuperWaveAnimation(int n_rows) :
 {
 }
 
-void SuperWaveAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer)
+void SuperWaveAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer, size_t frame)
 {
-	static int o = 1000;
+	frame = frame * 4 + 400;
 
 	auto screen_w = buffer->screen_width();
 	auto screen_h = buffer->screen_height();
 
-	_draw_wave_background(buffer, screen_w, screen_h, o);
+	_draw_wave_background(buffer, screen_w, screen_h, frame);
 
 	for (int i = 0; i < _n_rows; ++i)
 	{
-		_draw_single_row(buffer, screen_w, screen_h, _n_rows, i, o);
+		_draw_single_row(buffer, screen_w, screen_h, _n_rows, i, frame);
 	}
-
-	o += 4;
 }
 
 bool SuperWaveAnimation::end()

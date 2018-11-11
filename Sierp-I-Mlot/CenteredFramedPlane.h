@@ -4,7 +4,7 @@
 struct CenteredFramedPlane :
 	public virtual IConsolePlane
 {
-	CenteredFramedPlane(int position = 0);
+	CenteredFramedPlane(float position = 0);
 	Position position() override;
 	Position size() override;
 	PlaneType type() override;
@@ -25,7 +25,7 @@ protected:
 	Position _size;
 	WORD _frame_color;
 	WORD _fill_color;
-	int _order_position;
+	float _order_position;
 	Position _position;
 };
 

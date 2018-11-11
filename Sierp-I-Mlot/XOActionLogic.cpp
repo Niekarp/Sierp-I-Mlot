@@ -4,7 +4,8 @@
 namespace xo
 {
 	XOActionLogic::XOActionLogic(std::shared_ptr<XOIOutput> &output, XOGameLogic &game_logic) :
-		_game_logic(game_logic)
+		_game_logic(game_logic),
+		_scale(1.f)
 	{
 		_output = output;
 
@@ -21,7 +22,7 @@ namespace xo
 			auto col = i % 3;
 			auto row = i / 3;
 			std::string coords = std::to_string(col) + " " + std::to_string(row);
-			_game_map->register_element({ coords, "", [this, col, row] 
+			_game_map->register_element({ coords, "", [this, col, row]
 			{
 				this->game_make_move(col, row);
 			} });
@@ -29,6 +30,9 @@ namespace xo
 
 		_settings = _output->create_menu();
 		_settings->register_element({ "back to main menu button", "back", [this] {this->settings_back(); } });
+		_settings->register_element({ "", "zoom in", [this] {settings_zoom_in(); } });
+		_settings->register_element({ "", "zoom out", [this] {settings_zoom_out(); } });
+		_settings->main(false);
 
 		_output->show(_main_menu);
 	}
@@ -60,6 +64,18 @@ namespace xo
 	void XOActionLogic::settings_back()
 	{
 		_output->show(_main_menu);
+	}
+
+	void XOActionLogic::settings_zoom_in()
+	{
+		_scale *= 1.25f;
+		_output->scale(_scale);
+	}
+
+	void XOActionLogic::settings_zoom_out()
+	{
+		_scale *= 0.75;
+		_output->scale(_scale);
 	}
 
 	void XOActionLogic::game_make_move(unsigned x, unsigned y)

@@ -79,12 +79,22 @@ void AnimatedFileImagePlane::next()
 	++_current_frame_index;
 }
 
+void AnimatedFileImagePlane::frame(size_t frame)
+{
+	if (frame > last_frame_index())
+	{
+		_current_frame_index = last_frame_index();
+		return;
+	}
+	_current_frame_index = frame;
+}
+
 unsigned AnimatedFileImagePlane::frame_index()
 {
 	return _current_frame_index;
 }
 
-unsigned AnimatedFileImagePlane::end_frame_index()
+unsigned AnimatedFileImagePlane::last_frame_index()
 {
 	return _image_frames.size() - 1;
 }

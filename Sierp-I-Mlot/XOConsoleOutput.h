@@ -19,8 +19,11 @@ namespace xo
 
 		void run() override;
 		void stop() override;
+
+		void scale(float) override;
 	private:
 		std::shared_ptr<Console> _console;
+		float _scale;
 
 		bool _everyone_stunned;
 		void _amaze_them_with_the_intro(const std::shared_ptr<XOIMenu> &) override;

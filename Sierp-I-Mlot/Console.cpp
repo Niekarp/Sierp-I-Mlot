@@ -60,7 +60,8 @@ Console::Console() :
 	_width(0),
 	_height(0),
 	_workers_next_index(0),
-	_running(false)
+	_running(false),
+	_animation_frame(0)
 {
 	_context.threadInputCounter = 0;
 	_context.threadDrawCounter = 0;
@@ -279,23 +280,25 @@ void Console::draw_async(
 	CHKERR_BOOL(ReleaseMutex(_workers_mutex));
 }
 
-void Console::do_every(int period_ms, std::function<void()> trigger)
+void Console::do_every(int period_ms, std::function<void(size_t)> trigger)
 {
-	static std::function<void()> ownTrigger = trigger;
+	_do_every_trigger = trigger;
 	HANDLE timer;
-	CHKERR_BOOL(CreateTimerQueueTimer(&timer, NULL, [](PVOID trigger, BOOLEAN towf)
+	CHKERR_BOOL(CreateTimerQueueTimer(&timer, NULL, [](PVOID console_, BOOLEAN towf)
 	{
-		ownTrigger();
-	}, NULL, period_ms, period_ms, WT_EXECUTEDEFAULT));
+		auto console = static_cast<Console *>(console_);
+		console->_do_every_trigger(console->_animation_frame);
+		console->_animation_frame += 1;
+	}, this, period_ms, period_ms, WT_EXECUTEDEFAULT));
 }
 
 void Console::animate_async(const std::shared_ptr<IAnimation>& animation,
 	int period_ms)
 {
-	do_every(period_ms, [&, animation] {
-		draw_async([&, animation](auto buffer)
+	do_every(period_ms, [&, animation] (auto frame) {
+		draw_async([&, animation, frame](auto buffer)
 		{
-			animation->draw(buffer);
+			animation->draw(buffer, frame);
 			draw(buffer);
 		});
 	});
@@ -315,6 +318,16 @@ void Console::add_clickable_plane(const std::shared_ptr<IClickableConsolePlane> 
 	_thread_start();
 }
 
+void Console::frame(size_t frame)
+{
+	_animation_frame = frame;
+}
+
+size_t Console::frame()
+{
+	return _animation_frame;
+}
+
 void Console::mouse_click_event(
 	std::function<void(int x, int y, int button, int flag)> callback)
 {
@@ -325,6 +338,11 @@ void Console::window_resize_event(
 	std::function<void(int new_width, int new_height)> callback)
 {
 	_context.window_resize_callback = callback;
+}
+
+void Console::key_down_event(std::function<void(int key)> callback)
+{
+	_context.key_down_callback = callback;
 }
 
 static VOID WINAPI _SetupConsole(Console::_Context *context)
@@ -355,7 +373,7 @@ static VOID WINAPI _SetupConsole(Console::_Context *context)
 	CHKERR_BOOL(SetConsoleMode(context->hStdIn, consoleInputMode));
 }
 
-//DWORD WINAPI ConsoleInputRoutine(LPVOID arg)
+
 static DWORD WINAPI _ConsoleInputRoutine(Console::_Context &context)
 {
 	while (context.console->running())
@@ -458,6 +476,20 @@ static BOOLEAN WINAPI _HandleConsoleInputRecord(Console::_Context &context, cons
 		context.window_resize_callback((int)newSize.X, (int)newSize.Y);
 
 		return true;
+	}
+	else if (record.EventType == KEY_EVENT)
+	{
+		if (context.key_down_callback == nullptr)
+		{
+			return false;
+		}
+
+		if (!record.Event.KeyEvent.bKeyDown)
+		{
+			return false;
+		}
+
+		context.key_down_callback((int)record.Event.KeyEvent.wVirtualKeyCode);
 	}
 
 	return false;

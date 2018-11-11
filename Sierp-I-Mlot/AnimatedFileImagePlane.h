@@ -16,8 +16,9 @@ struct AnimatedFileImagePlane :
 	void load_frame(const char *filename);
 	void position(Position position);
 	void next();
+	void frame(size_t);
 	unsigned frame_index();
-	unsigned end_frame_index();
+	unsigned last_frame_index();
 
 private:
 	std::vector<std::shared_ptr<FileImagePlane>> _image_frames;

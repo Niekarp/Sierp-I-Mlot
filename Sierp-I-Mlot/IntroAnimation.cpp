@@ -6,7 +6,6 @@ IntroAnimation::IntroAnimation(
 	const std::shared_ptr<FileImagePlane> &image2,
 	const std::shared_ptr<FileImagePlane> &image3,
 	const std::shared_ptr<AnimatedFileImagePlane> &animated_image4) :
-	_frame_index(0),
 	_end(false)
 {
 	_image1 = image1;
@@ -23,7 +22,7 @@ IntroAnimation::IntroAnimation(
 	_animated_image4->position({ -1000, -1000 });
 }
 
-void IntroAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer)
+void IntroAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer, size_t frame)
 {
 	buffer->clear(' ', 0);
 
@@ -35,36 +34,38 @@ void IntroAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer)
 	const auto frame_key3 = 205;
 	const auto frame_key4 = 320;
 
+	frame *= 2;
+
 	// key 1
-	if (_frame_index < frame_key1)
+	if (frame < frame_key1)
 	{
 		_image1->position(
 		{
-			cx - _image1->size().x / 2 + (int)_frame_index - 150,
+			cx - _image1->size().x / 2 + (int)frame - 150,
 			cy - _image1->size().y / 2 - 1
 		});
 		_image2->position(
 		{
-			cx - _image2->size().x / 2 - (int)_frame_index + 150,
+			cx - _image2->size().x / 2 - (int)frame + 150,
 			cy + _image2->size().y / 2 + 1
 		});
 	}
 	// key 2
-	else if (_frame_index < frame_key2)
+	else if (frame < frame_key2)
 	{
 		_image1->position(
 		{
 			cx - _image1->size().x / 2 + frame_key1 - 150,
-			cy - _image1->size().y / 2 - 1 - (int)(_frame_index - frame_key1) / 2
+			cy - _image1->size().y / 2 - 1 - (int)(frame - frame_key1) / 2
 		});
 		_image2->position(
 		{
 			cx - _image2->size().x / 2 - frame_key1 + 150,
-			cy + _image2->size().y / 2 + 1 - (int)(_frame_index - frame_key1) / 2
+			cy + _image2->size().y / 2 + 1 - (int)(frame - frame_key1) / 2
 		});
 	}
 	// key 3
-	else if (_frame_index < frame_key3)
+	else if (frame < frame_key3)
 	{
 		_image1->position(
 		{
@@ -79,12 +80,13 @@ void IntroAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer)
 		_image3->position(
 		{
 			cx - _image3->size().x / 2,
-			cy + _image3->size().y / 2 + 50 - (int)(_frame_index - frame_key2)
+			cy + _image3->size().y / 2 + 50 - (int)(frame - frame_key2)
 		});
 	}
 	// key 4
-	else if(_animated_image4->frame_index() < _animated_image4->end_frame_index())
+	else if((frame - frame_key3) / 6 <= _animated_image4->last_frame_index())
 	{
+		_animated_image4->frame((frame - frame_key3) / 6);
 		_image1->position(
 		{
 			cx - _image1->size().x / 2 + frame_key1 - 150,
@@ -104,13 +106,9 @@ void IntroAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer)
 		{
 			cx - _animated_image4->size().x / 2,
 			cy - _animated_image4->size().y / 2 - 22
-		});
-		if (_frame_index % 8 == 0)
-		{
-			_animated_image4->next();
-		}		
+		});	
 	}
-	else if(_frame_index < frame_key4)
+	else if(frame < frame_key4)
 	{
 		_image1->position(
 		{
@@ -132,13 +130,11 @@ void IntroAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer)
 			cx - _animated_image4->size().x / 2,
 			cy - _animated_image4->size().y / 2 - 22
 		});
-		
 	}
 	else
 	{
 		_end = true;
 	}
-	_frame_index += 2;
 
 	_image1->draw(buffer);
 	_image2->draw(buffer);

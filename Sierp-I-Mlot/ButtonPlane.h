@@ -7,7 +7,7 @@ struct ButtonPlane :
 	public IClickableConsolePlane,
 	public CenteredFramedPlane
 {
-	ButtonPlane(int position = 0);
+	ButtonPlane(float position = 0);
 	void draw(const std::shared_ptr<Console::Buffer> &) override;
 	void click(IConsolePlane::Position position, DWORD btn, DWORD flag)  override;
 	void click_release() override;

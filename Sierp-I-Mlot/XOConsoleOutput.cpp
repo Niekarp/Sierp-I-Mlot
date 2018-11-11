@@ -20,13 +20,13 @@
 
 namespace xo
 {
-	XOConsoleOutput::XOConsoleOutput() // :
-		// _console(Console::get_instance())
+	XOConsoleOutput::XOConsoleOutput() :
+		_scale(1)
 	{
 		_everyone_stunned = false;
 
 		_console = Console::get_instance();
-		_console->resolution(12);
+		_console->resolution(_scale * 12);
 		_console->resize_window(900, 900);
 	}
 
@@ -131,6 +131,12 @@ namespace xo
 		_console->stop();
 	}
 
+	void XOConsoleOutput::scale(float scale)
+	{
+		_scale = scale;
+		_console->resolution(_scale * 12);
+	}
+
 	void XOConsoleOutput::_amaze_them_with_the_intro(const std::shared_ptr<XOIMenu> &menu_after_intro)
 	{
 		auto music_player = std::make_shared<MusicPlayer>();
@@ -157,7 +163,7 @@ namespace xo
 		auto menu_animation = std::make_shared<SuperWaveAnimation>(8);
 		auto intro_menu_animation = std::make_shared<IntroMenuAnimation>(IConsolePlane::Position{ 60, 40 });
 		intro_menu_animation->fill((char)178, BACKGROUND_BLUE | BACKGROUND_INTENSITY);
-		auto chain = std::make_shared<AnimationChain>(0);
+		auto chain = std::make_shared<AnimationChain>();
 
 		chain->add(intro_animation);
 		chain->add(menu_animation);
@@ -173,6 +179,13 @@ namespace xo
 		});
 
 		_console->animate_async(chain, 80);
+		_console->key_down_event([this](auto key)
+		{
+			if (key == VK_SPACE)
+			{
+				_console->frame(100000);
+			}
+		});
 
 		// _console->exec();
 	}

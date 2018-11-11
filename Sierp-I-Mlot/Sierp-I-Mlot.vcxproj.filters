@@ -180,6 +180,9 @@
     <ClInclude Include="XOConsoleMapPlane.h">
       <Filter>Header Files\Console\XO</Filter>
     </ClInclude>
+    <ClInclude Include="FullScreenTextAnimation.h">
+      <Filter>Header Files\Console</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XOInput.cpp">
@@ -268,6 +271,9 @@
     </ClCompile>
     <ClCompile Include="XOConsoleMapPlane.cpp">
       <Filter>Source Files\Console\XO</Filter>
+    </ClCompile>
+    <ClCompile Include="FullScreenTextAnimation.cpp">
+      <Filter>Source Files\Console</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

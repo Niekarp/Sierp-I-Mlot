@@ -161,6 +161,7 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="FileImagePlane.h" />
     <ClInclude Include="FramePlaneFrameCreator.h" />
+    <ClInclude Include="FullScreenTextAnimation.h" />
     <ClInclude Include="XOConsoleGameMap.h" />
     <ClInclude Include="XOConsoleMapPlane.h" />
     <ClInclude Include="XOConsoleMenu.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="ConsoleAnimationTest.cpp" />
     <ClCompile Include="FileImagePlane.cpp" />
     <ClCompile Include="FramePlaneFrameCreator.cpp" />
+    <ClCompile Include="FullScreenTextAnimation.cpp" />
     <ClCompile Include="IntroAnimation.cpp" />
     <ClCompile Include="IntroMenuAnimation.cpp" />
     <ClCompile Include="Menu.cpp" />

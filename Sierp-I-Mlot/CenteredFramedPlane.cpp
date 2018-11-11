@@ -2,7 +2,7 @@
 #include "CenteredFramedPlane.h"
 
 
-CenteredFramedPlane::CenteredFramedPlane(int position) :
+CenteredFramedPlane::CenteredFramedPlane(float position) :
 	_fill_chr(' '),
 	/*_left_chr('\xb3'),
 	_top_chr('\xc4'),
@@ -44,7 +44,7 @@ CenteredFramedPlane::PlaneType CenteredFramedPlane::type()
 void CenteredFramedPlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 {
 	auto cx = buffer->screen_width() / 2;
-	auto cy = buffer->screen_height() / 2 + _order_position * (_size.y + 1);
+	auto cy = buffer->screen_height() / 2 + (int)(_order_position * (_size.y + 1));
 	auto bx = cx - _size.x / 2;
 	auto by = cy - _size.y / 2;
 	auto ex = cx + _size.x / 2;

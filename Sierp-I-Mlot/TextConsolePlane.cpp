@@ -48,6 +48,11 @@ void TextConsolePlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 
 	for (int i = 0; i < text_len; ++i)
 	{
+		if (_text[i] == ' ')
+		{
+			continue;
+		}
+
 		auto letter = _letters[_text[i]];
 
 		auto bx = _position.x + i * (_letter_width + 1);

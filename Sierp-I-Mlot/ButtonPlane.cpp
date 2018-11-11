@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ButtonPlane.h"
 
-ButtonPlane::ButtonPlane(int position) :
+ButtonPlane::ButtonPlane(float position) :
 	CenteredFramedPlane(position)
 {
 }
@@ -33,10 +33,6 @@ void ButtonPlane::click(IConsolePlane::Position position, DWORD btn, DWORD flag)
 	{
 		_text->background(' ', BACKGROUND_BLUE);
 	}
-	if (_click_callback)
-	{
-		_click_callback();
-	}
 }
 
 void ButtonPlane::click_release()
@@ -45,6 +41,11 @@ void ButtonPlane::click_release()
 	if (_text)
 	{
 		_text->background(' ', BACKGROUND_BLUE | BACKGROUND_INTENSITY);
+	}
+
+	if (_click_callback)
+	{
+		_click_callback();
 	}
 }
 

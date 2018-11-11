@@ -47,16 +47,18 @@ public:
 	void draw_async(std::function<void(const std::shared_ptr<Buffer> &buffer)>);
 	void draw(const std::shared_ptr<Buffer> &buffer);
 	std::shared_ptr<Buffer> create_buffer();
-	void do_every(int period_ms, std::function<void()> trigger);
+	void do_every(int period_ms, std::function<void(size_t frame)> trigger);
 	void animate_async(const std::shared_ptr<IAnimation> &, int period_ms);
 	void add_plane(const std::shared_ptr<IConsolePlane> &);
 	void add_clickable_plane(const std::shared_ptr<IClickableConsolePlane> &);
+	void frame(size_t);
+	size_t frame();
 
 	void mouse_click_event(
 		std::function<void(int x, int y, int button, int flag)> callback);
 	void window_resize_event(
 		std::function<void(int new_width, int new_height)> callback);
-	void _refresh_buffer_size();
+	void key_down_event(std::function<void(int key)> callback);
 
 	struct _Context
 	{
@@ -66,6 +68,7 @@ public:
 		std::map<const char *, HANDLE> hStdOutBack;
 		std::function<void(int x, int y, int button, int flag)> mouse_click_callback;
 		std::function<void(int new_width, int new_height)> window_resize_callback;
+		std::function<void(int)> key_down_callback;
 		bool mouse_clicked = false;
 		COORD mouse_clicked_coords = { 0, 0 };
 		std::vector<std::shared_ptr<IClickableConsolePlane>> clicked_clickable_planes;
@@ -102,7 +105,11 @@ private:
 	std::vector<std::shared_ptr<IConsolePlane>> _planes;
 
 public:
+	void _refresh_buffer_size();
 	void _thread_start();
 	void _thread_stop();
 	std::vector<std::shared_ptr<IClickableConsolePlane>> _clickable_planes;
+	
+	std::function<void(size_t)> _do_every_trigger;
+	size_t _animation_frame;
 };
