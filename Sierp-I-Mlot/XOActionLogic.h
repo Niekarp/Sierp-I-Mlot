@@ -2,6 +2,7 @@
 
 #include "XOIOutput.h"
 #include "XOGameLogic.h"
+#include "MusicPlayer.h"
 
 namespace xo
 {
@@ -28,6 +29,7 @@ namespace xo
 	private:
 		std::shared_ptr<XOIOutput> _output;
 		XOGameLogic &_game_logic;
+		std::shared_ptr<MusicPlayer> _music_player;
 		float _scale;
 
 		std::shared_ptr<XOIMenu> _main_menu;

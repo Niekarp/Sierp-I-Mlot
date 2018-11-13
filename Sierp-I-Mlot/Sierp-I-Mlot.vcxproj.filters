@@ -177,9 +177,6 @@
     <ClInclude Include="XOConsoleGameMapXO.h">
       <Filter>Header Files\Presentation\Console</Filter>
     </ClInclude>
-    <ClInclude Include="XOConsoleGameMapHero.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
@@ -188,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="ChartReader.h">
       <Filter>Header Files\Presentation</Filter>
+    </ClInclude>
+    <ClInclude Include="XOConsoleGameMapHero.h">
+      <Filter>Header Files\Presentation\Console</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

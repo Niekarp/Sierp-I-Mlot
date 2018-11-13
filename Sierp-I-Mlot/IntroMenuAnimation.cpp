@@ -11,7 +11,7 @@ IntroMenuAnimation::IntroMenuAnimation(IConsolePlane::Position menu_size) :
 
 void IntroMenuAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer, size_t frame)
 {
-	frame *= 4;
+	frame *= 2;
 
 	if (frame > _max_frame_index)
 	{

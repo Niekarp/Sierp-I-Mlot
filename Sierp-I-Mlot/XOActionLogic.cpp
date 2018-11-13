@@ -2,6 +2,7 @@
 #include "XOActionLogic.h"
 #include "ChartReader.h"
 
+
 using namespace xo;
 
 XOActionLogic::XOActionLogic(std::shared_ptr<XOIOutput> &output, XOGameLogic &game_logic) :
@@ -46,6 +47,10 @@ XOActionLogic::XOActionLogic(std::shared_ptr<XOIOutput> &output, XOGameLogic &ga
 	_settings->main(false);
 
 	_output->show(_main_menu);
+
+	_music_player = std::make_shared<MusicPlayer>();
+	_music_player->load("resources/sound.WAV");
+	_music_player->play();
 }
 
 void xo::XOActionLogic::direct_execution()
@@ -79,13 +84,13 @@ void XOActionLogic::settings_back()
 
 void XOActionLogic::settings_zoom_in()
 {
-	_scale += .25f;
+	_scale *= 1.1f;
 	_output->scale(_scale);
 }
 
 void XOActionLogic::settings_zoom_out()
 {
-	_scale += .25f;
+	_scale /= 1.1f;
 	_output->scale(_scale);
 }
 
@@ -96,9 +101,12 @@ void XOActionLogic::game_hero_key(int key, bool down)
 
 void XOActionLogic::game_make_move(unsigned x, unsigned y)
 {
-	ChartReader("resources/notes.chart").put_notes_on(_game_map_hero);
+	ChartReader("resources/songs/1/tones.txt").put_notes_on(_game_map_hero);
 	_output->show(_game_map_hero);
-	_game_map_hero->start(5000);
+	_game_map_hero->start(0);
+	_music_player->stop();
+	_music_player->load("resources/songs/1/sound.WAV");
+	_music_player->play();
 	/*PlayerSymbol next_symbol = _game_logic.player_to_play_next();
 	bool result = _game_logic.play_move(x, y);
 	if (result)

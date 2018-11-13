@@ -11,7 +11,7 @@ static const WORD NOTE_COLORS[] = {
 };
 static const int NOTE_MAX_R = 20;
 static const int NOTE_MIN_R = 6;
-static const int NOTE_START_TIME = 5000;
+static const int NOTE_START_TIME = 3000;
 
 
 using namespace xo;
@@ -189,7 +189,7 @@ inline static void _draw_buttons(const std::shared_ptr<Console::Buffer>& buffer,
 				}
 				else if (r >= 3 * note_r / 4 - 1)
 				{
-					buffer->put(ix, iy, ' ', NOTE_COLORS[stringi] | BACKGROUND_INTENSITY);
+					buffer->put(ix, iy, ' ', NOTE_COLORS[stringi]);
 					continue;
 				}
 				if (button_states[stringi])

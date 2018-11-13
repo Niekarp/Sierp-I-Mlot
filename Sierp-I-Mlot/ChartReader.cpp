@@ -11,42 +11,10 @@ ChartReader::ChartReader(const char * filename)
 void ChartReader::load(const char * filename)
 {
 	std::fstream input_file(filename, std::ios::in);
-	std::string line;
-
-	while (std::getline(input_file, line))
+	XOIGameMapHero::Note note;
+	while (input_file >> note.tone >> note.time) 
 	{
-		if (line == "[ExpertSingle]")
-		{
-			std::getline(input_file, line);
-			break;
-		}
-	}
-
-	while (input_file)
-	{
-		XOIGameMapHero::Note note;
-
-		input_file >> note.time;
-		std::getline(input_file, line, '=');
-		char symbol;
-		input_file >> symbol;
-
-		if (symbol != 'N')
-		{
-			std::getline(input_file, line);
-			continue;
-		}
-
-		input_file >> note.tone;
-		input_file >> note.duration;
-
-		std::getline(input_file, line);
-
-		if (note.tone > 3)
-		{
-			continue;
-		}
-
+		note.tone -= 1;
 		_notes.push_back(note);
 	}
 }

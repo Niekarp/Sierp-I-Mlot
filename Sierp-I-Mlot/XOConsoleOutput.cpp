@@ -151,9 +151,6 @@ namespace xo
 
 	void XOConsoleOutput::_amaze_them_with_the_intro(const std::shared_ptr<XOIMenu> &menu_after_intro)
 	{
-		auto music_player = std::make_shared<MusicPlayer>();
-		music_player->load("resources/sound.WAV");
-		music_player->play();
 
 		auto image1 = std::make_shared<FileImagePlane>("resources/animation_text1.txt");
 		image1->color(FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
@@ -190,7 +187,7 @@ namespace xo
 			}
 		});
 
-		_console->animate_async(chain, 80);
+		_console->animate_async(chain, 50);
 		_console->key_down_event([this](auto key)
 		{
 			if (key == VK_SPACE)

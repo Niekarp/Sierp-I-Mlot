@@ -103,7 +103,7 @@ static inline WORD _get_color(int i, int j, int o, int screen_width, int screen_
 {
 	auto center_len = (int)sqrt((i - screen_width / 2) * (i - screen_width / 2) 
 		+ 4 * (j - screen_height / 2) * (j - screen_height / 2));
-	if (center_len < 1200 - o)
+	if (center_len < 1350 - o)
 	{
 		return 0;
 	}
@@ -179,7 +179,7 @@ SuperWaveAnimation::SuperWaveAnimation(int n_rows) :
 
 void SuperWaveAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer, size_t frame)
 {
-	frame = frame * 4 + 400;
+	frame = frame * 3 + 400;
 
 	auto screen_w = buffer->screen_width();
 	auto screen_h = buffer->screen_height();
