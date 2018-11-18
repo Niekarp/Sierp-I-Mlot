@@ -3,6 +3,7 @@
 #include "XOIOutput.h"
 #include "XOGameLogic.h"
 #include "MusicPlayer.h"
+#include "XOIMessage.h"
 
 namespace xo
 {
@@ -31,10 +32,15 @@ namespace xo
 		XOGameLogic &_game_logic;
 		std::shared_ptr<MusicPlayer> _music_player;
 		float _scale;
+		unsigned _next_x;
+		unsigned _next_y;
 
 		std::shared_ptr<XOIMenu> _main_menu;
 		std::shared_ptr<XOIGameMapXO> _game_map_xo;
 		std::shared_ptr<XOIGameMapHero> _game_map_hero;
 		std::shared_ptr<XOIMenu> _settings;
+		std::shared_ptr<XOIMessage> _player_one_message;
+		std::shared_ptr<XOIMessage> _player_two_message;
+		std::shared_ptr<XOIMessage> _ready_message;
 	};
 }

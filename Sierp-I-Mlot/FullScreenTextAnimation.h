@@ -5,7 +5,7 @@ class FullScreenTextAnimation :
 	public IAnimation
 {
 public:
-	FullScreenTextAnimation(const char *line1, const char *line2);
+	FullScreenTextAnimation(const std::string &line1, const std::string &line2);
 
 	void draw(const std::shared_ptr<Console::Buffer>& buffer, size_t frame) override;
 	bool end() override;
@@ -15,8 +15,8 @@ public:
 	void background(char chr, WORD color);
 
 private:
-	const char *_line1;
-	const char *_line2;
+	std::string _line1;
+	std::string _line2;
 	bool _end;
 	char _foreground_chr;
 	char _background_chr;

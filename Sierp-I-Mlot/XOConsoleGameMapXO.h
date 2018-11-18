@@ -2,15 +2,17 @@
 #include "XOIGameMapXO.h"
 #include "Console.h"
 #include "XOConsoleMapPlane.h"
+#include "XOViewElementRegistrar.h"
 
 namespace xo
 {
-	class XOConsoleGameMapXO : public XOIGameMapXO
+	class XOConsoleGameMapXO : 
+		public XOIGameMapXO,
+		public XOViewElementRegistrar
 	{
 	public:
 		XOConsoleGameMapXO();
-
-		void register_element(const XOViewElement &) override;		
+	
 		size_t width() override;
 		void width(size_t) override;
 		size_t height() override;
@@ -19,9 +21,14 @@ namespace xo
 		void clear_fields() override;
 
 		void draw_on(const std::shared_ptr<Console> &output);
+		void field_x(const std::string &path);
+		void field_o(const std::string &path);
 	
 	private:
 		void _on_click(int col, int row);
+
+		std::string _field_x_path;
+		std::string _field_o_path;
 		size_t _width;
 		size_t _height;
 		std::shared_ptr<XOConsoleMapPlane> _map_plane;

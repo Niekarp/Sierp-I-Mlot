@@ -3,12 +3,12 @@
 
 using namespace xo;
 
-ChartReader::ChartReader(const char * filename)
+ChartReader::ChartReader(const std::string & filename)
 {
 	load(filename);
 }
 
-void ChartReader::load(const char * filename)
+void ChartReader::load(const std::string & filename)
 {
 	std::fstream input_file(filename, std::ios::in);
 	XOIGameMapHero::Note note;

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "FullScreenTextAnimation.h"
 
-FullScreenTextAnimation::FullScreenTextAnimation(const char *line1, const char *line2) :
+FullScreenTextAnimation::FullScreenTextAnimation(const std::string &line1, const std::string &line2) :
 	_line1(line1),
 	_line2(line2),
 	_end(false),

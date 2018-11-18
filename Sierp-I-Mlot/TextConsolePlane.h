@@ -4,26 +4,34 @@
 struct TextConsolePlane :
 	public IConsolePlane
 {
-	TextConsolePlane(const char *text, const char *font_directory);
+	TextConsolePlane();
 	
 	Position position() override;
 	Position size() override;
 	PlaneType type() override;
 	void draw(const std::shared_ptr<Console::Buffer> &) override;
 
-	void text(const char *str);
-	void load_font(const char *directory);
-	void position(Position);
+	void font_size(const Position &new_size);
+	void text(const std::string &str);
+	void load_font(const std::string &directory);
+	void position(const Position &);
 
 	void foreground(char chr, WORD color);
 	void background(char chr, WORD color);
 
 private:
-	static const int LETTER_SIZE = 12;
-	const char *_text;
-	std::map<char, std::array<char, LETTER_SIZE>> _letters;
-	const int _letter_width = 3;
+	void _load_font_char(const std::string &directory, char chr);
+
+	struct Letter
+	{
+		int width;
+		std::vector<char> data;
+	};
+	Position _font_size;
+	std::string _text;
+	std::map<char, Letter> _letters;
 	Position _position;
+	Position _size;
 	WORD _foreground_color;
 	WORD _background_color;
 	char _foreground_chr;

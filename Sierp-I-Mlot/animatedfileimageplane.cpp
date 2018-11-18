@@ -38,7 +38,7 @@ void AnimatedFileImagePlane::color(WORD color)
 	}
 }
 
-void AnimatedFileImagePlane::load_frame(const char * filename)
+void AnimatedFileImagePlane::load_frame(const std::string & filename)
 {
 	auto frame = std::make_shared<FileImagePlane>(filename);
 	frame->color(_color);

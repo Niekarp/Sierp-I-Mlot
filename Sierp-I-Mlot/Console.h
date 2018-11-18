@@ -36,10 +36,11 @@ public:
 	void exec();
 	void stop();
 	bool running();
-	void active_screen(const char *buffer_name);
+	void active_screen(const std::string &buffer_name);
 	void resize_window(int width, int height);
 	void resolution(int sz);
 	void clear_planes();
+	void clear();
 
 	int width() const;
 	int height() const;
@@ -53,6 +54,7 @@ public:
 	void add_clickable_plane(const std::shared_ptr<IClickableConsolePlane> &);
 	void frame(size_t);
 	size_t frame();
+	std::shared_ptr<IAnimation> animation();
 
 	void mouse_click_event(
 		const std::function<void(int x, int y, int button, int flag)> &callback);
@@ -66,7 +68,7 @@ public:
 		Console* console;
 		HANDLE hStdIn;
 		HANDLE hStdOutActive;
-		std::map<const char *, HANDLE> hStdOutBack;
+		std::map<std::string, HANDLE> hStdOutBack;
 		std::vector<std::function<void(int x, int y, int button, int flag)>> mouse_click_callbacks;
 		std::vector<std::function<void(int new_width, int new_height)>> window_resize_callbacks;
 		std::vector<std::function<void(int)>> key_down_callbacks;
@@ -103,9 +105,10 @@ private:
 	HANDLE _workers_mutex;
 	std::array<_WorkerInfo, MAX_WORKERS_THREADS> _workers;
 	int _workers_next_index;
+	HANDLE _queue_timer;
 
 	std::vector<std::shared_ptr<IConsolePlane>> _planes;
-
+	std::shared_ptr<IAnimation> _animation;
 public:
 	void _refresh_buffer_size();
 	void _thread_start();

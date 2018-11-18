@@ -16,13 +16,15 @@
 #include "IntroMenuAnimation.h"
 #include "ChartReader.h"
 #include "XOConsoleGameMapHero.h"
+#include "XOConsoleMessage.h"
 
 #include <chrono>
 
 namespace xo
 {
 	XOConsoleOutput::XOConsoleOutput() :
-		_scale(1)
+		_scale(1),
+		_background_animation(true)
 	{
 		_everyone_stunned = false;
 
@@ -38,16 +40,25 @@ namespace xo
 	
 	std::shared_ptr<XOIGameMapXO> XOConsoleOutput::create_game_map_xo()
 	{
-		return std::shared_ptr<XOIGameMapXO>(new XOConsoleGameMapXO());
+		auto map = std::make_shared<XOConsoleGameMapXO>();
+		map->field_o(conf::FILE_O_FIELD);
+		map->field_x(conf::FILE_X_FIELD);
+		return map;
 	}
 
 	std::shared_ptr<XOIGameMapHero> XOConsoleOutput::create_game_map_hero()
 	{
 		return std::shared_ptr<XOIGameMapHero>(new XOConsoleGameMapHero());
 	}
+
+	std::shared_ptr<XOIMessage> XOConsoleOutput::create_message()
+	{
+		return std::shared_ptr<XOIMessage>(new XOConsoleMessage());
+	}
 	
 	void XOConsoleOutput::show(const std::shared_ptr<XOIMenu>& menu)
 	{
+		_run_background_animation();
 		if (_everyone_stunned == false)
 		{
 			const std::shared_ptr<XOIMenu> &then_menu = menu;
@@ -63,15 +74,23 @@ namespace xo
 	
 	void XOConsoleOutput::show(const std::shared_ptr<XOIGameMapXO> &game_map)
 	{
+		_run_background_animation();
 		auto console_game_map = std::dynamic_pointer_cast<XOConsoleGameMapXO>(game_map);
-		//console_game_map->clear(_console);
 		console_game_map->draw_on(_console);
 	}
 
 	void XOConsoleOutput::show(const std::shared_ptr<XOIGameMapHero> &game_map)
 	{
+		_run_background_animation();
 		auto console_game_map = std::dynamic_pointer_cast<XOConsoleGameMapHero>(game_map);
 		console_game_map->draw_on(_console);
+	}
+
+	void XOConsoleOutput::show(const std::shared_ptr<XOIMessage> &message)
+	{
+		_background_animation = false;
+		auto console_message = std::dynamic_pointer_cast<XOConsoleMessage>(message);
+		console_message->draw_on(_console);
 	}
 	
 	void XOConsoleOutput::run()
@@ -151,7 +170,6 @@ namespace xo
 
 	void XOConsoleOutput::_amaze_them_with_the_intro(const std::shared_ptr<XOIMenu> &menu_after_intro)
 	{
-
 		auto image1 = std::make_shared<FileImagePlane>("resources/animation_text1.txt");
 		image1->color(FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		auto image2 = std::make_shared<FileImagePlane>("resources/animation_text2.txt");
@@ -169,7 +187,8 @@ namespace xo
 		animated_image4->load_frame("resources/pblogo23.txt");
 
 		auto intro_animation = std::make_shared<IntroAnimation>(image1, image2, image3, animated_image4);
-		auto menu_animation = std::make_shared<SuperWaveAnimation>(8);
+		auto menu_animation = std::make_shared<SuperWaveAnimation>(1350, 8);
+		menu_animation->speed(3);
 		auto intro_menu_animation = std::make_shared<IntroMenuAnimation>(IConsolePlane::Position{ 60, 40 });
 		intro_menu_animation->fill((char)178, BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 		auto chain = std::make_shared<AnimationChain>();
@@ -187,7 +206,7 @@ namespace xo
 			}
 		});
 
-		_console->animate_async(chain, 50);
+		_console->animate_async(chain, xo::conf::ANIMATION_FRAME_FREQUENCY);
 		_console->key_down_event([this](auto key)
 		{
 			if (key == VK_SPACE)
@@ -196,6 +215,23 @@ namespace xo
 			}
 		});
 
+		_background_animation = true;
+
 		// _console->exec();
+	}
+	void XOConsoleOutput::_run_background_animation()
+	{
+		if (_background_animation)
+		{
+			return;
+		}
+
+		//_console->clear();
+
+		_background_animation = true;
+		//auto menu_animation = std::make_shared<SuperWaveAnimation>(600, 8);
+		auto chain_animation = std::make_shared<AnimationChain>();
+		//chain_animation->add(menu_animation);
+		_console->animate_async(chain_animation, xo::conf::ANIMATION_FRAME_FREQUENCY);
 	}
 }

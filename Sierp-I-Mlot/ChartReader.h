@@ -6,8 +6,8 @@ namespace xo
 	class ChartReader
 	{
 	public:
-		ChartReader(const char *filename);
-		void load(const char *filename);
+		ChartReader(const std::string &filename);
+		void load(const std::string &filename);
 		void put_notes_on(const std::shared_ptr<XOIGameMapHero> &);
 
 	private:

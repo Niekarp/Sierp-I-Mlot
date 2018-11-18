@@ -158,7 +158,11 @@
     <ClInclude Include="ButtonPlane.h" />
     <ClInclude Include="CenteredFramedPlane.h" />
     <ClInclude Include="ChartReader.h" />
+    <ClInclude Include="Config.h" />
     <ClInclude Include="Console.h" />
+    <ClInclude Include="GameHeroAnimation.h" />
+    <ClInclude Include="GameXOAnimation.h" />
+    <ClInclude Include="XOConsoleMessage.h" />
     <ClInclude Include="FileImagePlane.h" />
     <ClInclude Include="FramePlaneFrameCreator.h" />
     <ClInclude Include="FullScreenTextAnimation.h" />
@@ -182,6 +186,7 @@
     <ClInclude Include="testerror.h" />
     <ClInclude Include="TextConsolePlane.h" />
     <ClInclude Include="XOConsoleOutput.h" />
+    <ClInclude Include="XOIMessage.h" />
     <ClInclude Include="XOIOutput.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="XOActionLogic.h" />
@@ -191,6 +196,7 @@
     <ClInclude Include="XOInput.h" />
     <ClInclude Include="XOIView.h" />
     <ClInclude Include="XOViewElement.h" />
+    <ClInclude Include="XOViewElementRegistrar.h" />
     <ClInclude Include="XOViewManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +207,10 @@
     <ClCompile Include="ChartReader.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="ConsoleAnimationTest.cpp" />
+    <ClCompile Include="GameHeroAnimation.cpp" />
+    <ClCompile Include="GameXOAnimation.cpp" />
+    <ClCompile Include="XOViewElementRegistrar.cpp" />
+    <ClCompile Include="XOConsoleMessage.cpp" />
     <ClCompile Include="FileImagePlane.cpp" />
     <ClCompile Include="FramePlaneFrameCreator.cpp" />
     <ClCompile Include="FullScreenTextAnimation.cpp" />
@@ -208,7 +218,6 @@
     <ClCompile Include="IntroMenuAnimation.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MusicPlayer.cpp" />
-    <ClCompile Include="Note.cpp" />
     <ClCompile Include="SuperWaveAnimation.cpp" />
     <ClCompile Include="TextConsolePlane.cpp" />
     <ClCompile Include="XOConsoleGameMapHero.cpp" />

@@ -4,7 +4,7 @@ struct Menu
 {
 	struct Option
 	{
-		const char *name;
+		const std::string &name;
 		std::function<void()> callback;
 	};
 

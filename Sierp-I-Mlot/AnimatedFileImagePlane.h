@@ -13,7 +13,7 @@ struct AnimatedFileImagePlane :
 	void draw(const std::shared_ptr<Console::Buffer> &) override;
 
 	void color(WORD color);
-	void load_frame(const char *filename);
+	void load_frame(const std::string &filename);
 	void position(Position position);
 	void next();
 	void frame(size_t);

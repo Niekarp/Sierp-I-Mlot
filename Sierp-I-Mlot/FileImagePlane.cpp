@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "FileImagePlane.h"
 
-FileImagePlane::FileImagePlane(const char *filename) :
+FileImagePlane::FileImagePlane(const std::string &filename) :
 	_pattern_size({ 1, 1 }),
 	_pattern_pos({}),
 	_color(0)
@@ -58,7 +58,7 @@ void FileImagePlane::position(Position pos)
 	_pattern_pos = pos;
 }
 
-void FileImagePlane::load(const char *filename)
+void FileImagePlane::load(const std::string &filename)
 {
 	std::fstream input_file(filename, std::ios::in);
 	if (!input_file)

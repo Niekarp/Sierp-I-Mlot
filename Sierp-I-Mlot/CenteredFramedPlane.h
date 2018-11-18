@@ -17,14 +17,18 @@ struct CenteredFramedPlane :
 	void frame_chars(char left_chr, char top_chr, char right_chr, char bottom_chr);
 	void corner_chars(char left_top_chr, char right_top_chr, char left_bottom_chr,
 		char right_bottom_chr);
+	void shadow(char chr, WORD color);
 
 protected:
 	char _fill_chr;
 	char _left_chr, _top_chr, _right_chr, _bottom_chr;
 	char _left_top_chr, _right_top_chr, _left_bottom_chr, _right_bottom_chr;
-	Position _size;
+	char _shadow_chr;
+	WORD _shadow_color;
 	WORD _frame_color;
 	WORD _fill_color;
+	bool _shadow;
+	Position _size;
 	float _order_position;
 	Position _position;
 };

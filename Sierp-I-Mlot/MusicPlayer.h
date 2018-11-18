@@ -1,11 +1,11 @@
 #pragma once
 struct MusicPlayer
 {
-	void load(const char *filename);
+	void load(const std::string &filename);
 	void play();
 	void stop();
 
 private:
-	const char *_filename;
+	std::string _filename;
 };
 

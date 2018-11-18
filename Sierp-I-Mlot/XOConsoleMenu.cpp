@@ -10,12 +10,6 @@ xo::XOConsoleMenu::XOConsoleMenu() :
 {
 }
 
-void xo::XOConsoleMenu::register_element(const XOViewElement &view_element)
-{
-	// _elements.push_back({ view_element.id, view_element.text, view_element.callback });
-	_elements.push_back(view_element);
-}
-
 void xo::XOConsoleMenu::main(bool main)
 {
 	_main = main;
@@ -54,22 +48,30 @@ void xo::XOConsoleMenu::draw_on(const std::shared_ptr<Console>& output)
 	} 
 	else
 	{
-		menu_plane->size({ 60, (int)((6 + 1) * _elements.size()) + 3 });
+		menu_plane->size({ 60, (int)((6 + 1) * elements().size()) + 3 });
 		
-		button_index = -(_elements.size() / 2.f - 0.5f);
+		button_index = -(elements().size() / 2.f - 0.5f);
 	}	
 
-	for (auto &element : _elements)
+	for (auto &element : elements())
 	{
+		if (element.second.size() == 0)
+		{
+			continue;
+		}
+
 		auto button_plane = std::make_shared<ButtonPlane>(button_index++);
 		FramePlaneFrameCreator(button_plane).make_double_line_frame();
 		button_plane->size({ 50, 6 });
 		button_plane->frame_color(FOREGROUND_GREEN | FOREGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 		button_plane->fill_color(BACKGROUND_BLUE | BACKGROUND_INTENSITY);
-		button_plane->on_click(element.callback);
+		button_plane->on_click([this, element] { element_call(element.first); });
 		output->add_clickable_plane(button_plane);
 
-		auto text = std::make_shared<TextConsolePlane>(element.text.c_str(), "resources/letters_small");
+		auto text = std::make_shared<TextConsolePlane>();
+		text->font_size({ xo::conf::FONT_SMALL_SIZE_X, xo::conf::FONT_SMALL_SIZE_Y });
+		text->text(element_text(element.first));
+		text->load_font(xo::conf::FONT_SMALL_DIRECTORY);
 		text->foreground(' ', BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_INTENSITY);
 		text->background(' ', BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 		text->position({ 0, 0 });

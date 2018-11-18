@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "XOConsoleGameMapHero.h"
+#include "AnimationChain.h"
+#include "GameHeroAnimation.h"
 
 static const int MAP_WIDTH_TOP = 30;
 static const int MAP_WIDTH_BOTTOM = 80;
@@ -21,7 +23,8 @@ XOConsoleGameMapHero::XOConsoleGameMapHero() :
 		this, std::placeholders::_1, true)),
 	_key_up_callback(std::bind(&XOConsoleGameMapHero::_on_key,
 		this, std::placeholders::_1, false)),
-	_key_callback_binded(false)
+	_key_callback_binded(false),
+	_frame(0)
 {
 	_note_image = std::make_shared<FileImagePlane>("resources/note.txt");
 	_note_image->color(FOREGROUND_GREEN | BACKGROUND_RED | BACKGROUND_INTENSITY);
@@ -68,9 +71,8 @@ inline static int _get_guitar_string_x(int y, int string_n,
 	return (int)(bx + (string_n + 0.5f) * wx / N_STRINGS);
 }
 
-inline static void _draw_guitar_neck(const std::shared_ptr<Console::Buffer>& buffer)
+inline static void _draw_guitar_neck(const std::shared_ptr<Console::Buffer>& buffer, int by)
 {
-	auto by = 0;
 	auto ey = buffer->screen_height() - 1;
 
 	for (auto iy = by; iy <= ey; ++iy)
@@ -91,12 +93,12 @@ inline static void _draw_guitar_neck(const std::shared_ptr<Console::Buffer>& buf
 	}
 }
 
-inline static void _draw_guitar_strings(const std::shared_ptr<Console::Buffer>& buffer)
+inline static void _draw_guitar_strings(const std::shared_ptr<Console::Buffer>& buffer, int by)
 {
 	auto screen_width = buffer->screen_width();
 	auto screen_height = buffer->screen_height();
 
-	for (int iy = 0; iy < buffer->screen_height(); ++iy)
+	for (int iy = by; iy < buffer->screen_height(); ++iy)
 	{
 		for (int istring = 0; istring < N_STRINGS; ++istring)
 		{
@@ -203,10 +205,12 @@ inline static void _draw_buttons(const std::shared_ptr<Console::Buffer>& buffer,
 
 void XOConsoleGameMapHero::draw(const std::shared_ptr<Console::Buffer>& buffer)
 {
-	_draw_guitar_neck(buffer);
-	_draw_guitar_strings(buffer);
+	_draw_guitar_neck(buffer, 100 - _frame);
+	_draw_guitar_strings(buffer, 100 - _frame);
 	_draw_notes(buffer, _notes, _start_point);
 	_draw_buttons(buffer, _button_states);
+
+	_frame++;
 }
 
 void XOConsoleGameMapHero::draw_on(const std::shared_ptr<Console> &console)
@@ -218,6 +222,17 @@ void XOConsoleGameMapHero::draw_on(const std::shared_ptr<Console> &console)
 		_key_callback_binded = true;
 	}
 	console->clear_planes();
+
+	auto chain_animation = std::dynamic_pointer_cast<AnimationChain>(console->animation());
+	if (chain_animation)
+	{
+		auto game_animation = std::make_shared<GameHeroAnimation>();
+		game_animation->start_frame(200);
+		game_animation->speed(3);
+		game_animation->center(0, -50);
+		chain_animation->add(game_animation);
+	}
+
 	console->add_plane(shared_from_this());
 }
 

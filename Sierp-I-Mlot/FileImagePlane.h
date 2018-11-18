@@ -3,14 +3,14 @@
 
 struct FileImagePlane : public IConsolePlane
 {
-	FileImagePlane(const char *filename);
+	FileImagePlane(const std::string &filename);
 	Position position() override;
 	Position size() override;
 	PlaneType type() override;
 	void draw(const std::shared_ptr<Console::Buffer> &) override;
 
 	void position(Position);
-	void load(const char *filename);
+	void load(const std::string &filename);
 	void color(WORD color);
 
 private:

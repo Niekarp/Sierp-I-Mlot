@@ -39,6 +39,7 @@ namespace xo
 		std::function<void(int key)> _key_down_callback;
 		std::function<void(int key)> _key_up_callback;
 		bool _key_callback_binded;
+		int _frame;
 	};
 }
 

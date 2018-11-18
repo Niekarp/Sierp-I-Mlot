@@ -61,7 +61,8 @@ Console::Console() :
 	_height(0),
 	_workers_next_index(0),
 	_running(false),
-	_animation_frame(0)
+	_animation_frame(0),
+	_queue_timer(NULL)
 {
 	_context.threadInputCounter = 0;
 	_context.threadDrawCounter = 0;
@@ -187,7 +188,7 @@ void Console::_refresh_buffer_size()
 	} while (!result);
 }
 
-void Console::active_screen(const char *buffer_name)
+void Console::active_screen(const std::string &buffer_name)
 {
 	if (_context.hStdOutBack.find(buffer_name) == _context.hStdOutBack.end())
 	{
@@ -231,6 +232,14 @@ void Console::clear_planes()
 	_clickable_planes.clear();
 	
 	_thread_start();
+}
+
+void Console::clear()
+{
+	for (auto &worker : _workers)
+	{
+		worker.buffer->clear(' ', 0);
+	}
 }
 
 void Console::Buffer::clear(char chr, int color)
@@ -282,9 +291,14 @@ void Console::draw_async(
 
 void Console::do_every(int period_ms, std::function<void(size_t)> trigger)
 {
+	if (_queue_timer != NULL)
+	{
+		DeleteTimerQueueTimer(NULL, _queue_timer, NULL);
+		_animation_frame = 0;
+	}
+
 	_do_every_trigger = trigger;
-	HANDLE timer;
-	CHKERR_BOOL(CreateTimerQueueTimer(&timer, NULL, [](PVOID console_, BOOLEAN towf)
+	CHKERR_BOOL(CreateTimerQueueTimer(&_queue_timer, NULL, [](PVOID console_, BOOLEAN towf)
 	{
 		auto console = static_cast<Console *>(console_);
 		console->_do_every_trigger(console->_animation_frame);
@@ -295,6 +309,7 @@ void Console::do_every(int period_ms, std::function<void(size_t)> trigger)
 void Console::animate_async(const std::shared_ptr<IAnimation>& animation,
 	int period_ms)
 {
+	_animation = animation;
 	do_every(period_ms, [&, animation] (auto frame) {
 		draw_async([&, animation, frame](auto buffer)
 		{
@@ -326,6 +341,11 @@ void Console::frame(size_t frame)
 size_t Console::frame()
 {
 	return _animation_frame;
+}
+
+std::shared_ptr<IAnimation> Console::animation()
+{
+	return _animation;
 }
 
 void Console::mouse_click_event(
@@ -517,6 +537,7 @@ static BOOLEAN WINAPI _ConsoleInputRecordCallback(Console::_Context &context,
 	
 	return result;
 }
+
 VOID CALLBACK _ConsoleWorkCallback(PTP_CALLBACK_INSTANCE instance,
 	PVOID arg,
 	PTP_WORK work)

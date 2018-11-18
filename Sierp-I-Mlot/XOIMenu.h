@@ -3,7 +3,8 @@
 
 namespace xo
 {
-	class XOIMenu : public XOIView
+	class XOIMenu : 
+		public virtual XOIView
 	{
 	public:
 		virtual void main(bool) = 0;

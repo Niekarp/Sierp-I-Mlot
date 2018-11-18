@@ -22,7 +22,8 @@ CenteredFramedPlane::CenteredFramedPlane(float position) :
 	_right_bottom_chr('\xb1'),
 	_size({ 1, 1 }),
 	_order_position(position),
-	_position({0, 0})
+	_position({0, 0}),
+	_shadow(false)
 {
 }
 
@@ -96,6 +97,15 @@ void CenteredFramedPlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 			buffer->put(i, j, _fill_chr, _fill_color);
 		}
 	}
+
+	// shadow
+	if (_shadow)
+	{
+		for (auto j = by + 1; j < ey - 1 + 2; ++j)
+		{
+			buffer->put(ex - 1 + 1, j, _shadow_chr, _shadow_color);
+		}
+	}
 }
 
 void CenteredFramedPlane::size(Position size)
@@ -132,4 +142,11 @@ void CenteredFramedPlane::corner_chars(char left_top_chr, char right_top_chr, ch
 	_right_top_chr = right_top_chr;
 	_left_bottom_chr = left_bottom_chr;
 	_right_bottom_chr = right_bottom_chr;
+}
+
+void CenteredFramedPlane::shadow(char chr, WORD color)
+{
+	_shadow = true;
+	_shadow_chr = chr;
+	_shadow_color = color;
 }

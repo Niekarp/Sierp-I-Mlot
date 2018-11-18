@@ -33,7 +33,7 @@ void AnimationChain::draw(const std::shared_ptr<Console::Buffer>& buffer, size_t
 		return;
 	}
 
-	auto &current_animation = _animations[_current_animation_index];
+	auto current_animation = _animations[_current_animation_index];
 
 	if (_current_overlap_frame_index < _n_overlap_frames
 		&& _current_animation_index != 0)

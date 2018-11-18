@@ -5,10 +5,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Header Files\Other">
       <UniqueIdentifier>{914b8f3a-3281-47a3-a4a6-becefe245617}</UniqueIdentifier>
     </Filter>
@@ -70,6 +66,12 @@
     <Filter Include="Header Files\Console\XO">
       <UniqueIdentifier>{5c11109a-d57c-4745-8109-3bf8fce27463}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Console\Animation">
+      <UniqueIdentifier>{6dfa6931-be23-4c2b-ba3c-8ecc0a67d0eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Console\Animation">
+      <UniqueIdentifier>{88da9141-f2d5-4914-b6fc-912e79df23d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XOInput.h">
@@ -96,12 +98,6 @@
     <ClInclude Include="TextConsolePlane.h">
       <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatedFileImagePlane.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationChain.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
     <ClInclude Include="ButtonPlane.h">
       <Filter>Header Files\Console</Filter>
     </ClInclude>
@@ -126,16 +122,7 @@
     <ClInclude Include="IConsolePlane.h">
       <Filter>Header Files\Console</Filter>
     </ClInclude>
-    <ClInclude Include="IntroAnimation.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="IntroMenuAnimation.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
     <ClInclude Include="Note.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="SuperWaveAnimation.h">
       <Filter>Header Files\Console</Filter>
     </ClInclude>
     <ClInclude Include="testerror.h">
@@ -165,9 +152,6 @@
     <ClInclude Include="XOConsoleMapPlane.h">
       <Filter>Header Files\Console\XO</Filter>
     </ClInclude>
-    <ClInclude Include="FullScreenTextAnimation.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
     <ClInclude Include="XOIGameMapXO.h">
       <Filter>Header Files\Presentation\Abstract</Filter>
     </ClInclude>
@@ -188,6 +172,42 @@
     </ClInclude>
     <ClInclude Include="XOConsoleGameMapHero.h">
       <Filter>Header Files\Presentation\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="XOIMessage.h">
+      <Filter>Header Files\Presentation\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="XOConsoleMessage.h">
+      <Filter>Header Files\Presentation\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="XOViewElementRegistrar.h">
+      <Filter>Header Files\Presentation\Abstract\View</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedFileImagePlane.h">
+      <Filter>Header Files\Console\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationChain.h">
+      <Filter>Header Files\Console\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="FullScreenTextAnimation.h">
+      <Filter>Header Files\Console\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroAnimation.h">
+      <Filter>Header Files\Console\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroMenuAnimation.h">
+      <Filter>Header Files\Console\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperWaveAnimation.h">
+      <Filter>Header Files\Console\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="GameXOAnimation.h">
+      <Filter>Header Files\Console\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="GameHeroAnimation.h">
+      <Filter>Header Files\Console\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -218,12 +238,6 @@
     <ClCompile Include="Source.cpp">
       <Filter>Deprecated</Filter>
     </ClCompile>
-    <ClCompile Include="animatedfileimageplane.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="animationchain.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
     <ClCompile Include="ButtonPlane.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
@@ -242,18 +256,6 @@
     <ClCompile Include="FramePlaneFrameCreator.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="IntroAnimation.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="IntroMenuAnimation.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="Note.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="SuperWaveAnimation.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
     <ClCompile Include="TextConsolePlane.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
@@ -269,9 +271,6 @@
     <ClCompile Include="XOConsoleMapPlane.cpp">
       <Filter>Source Files\Console\XO</Filter>
     </ClCompile>
-    <ClCompile Include="FullScreenTextAnimation.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
     <ClCompile Include="XOConsoleGameMapXO.cpp">
       <Filter>Source Files\Presentation\Console</Filter>
     </ClCompile>
@@ -283,6 +282,36 @@
     </ClCompile>
     <ClCompile Include="MusicPlayer.cpp">
       <Filter>Source Files\Presentation</Filter>
+    </ClCompile>
+    <ClCompile Include="XOConsoleMessage.cpp">
+      <Filter>Source Files\Presentation\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="XOViewElementRegistrar.cpp">
+      <Filter>Header Files\Presentation\Abstract\View</Filter>
+    </ClCompile>
+    <ClCompile Include="animatedfileimageplane.cpp">
+      <Filter>Source Files\Console\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="animationchain.cpp">
+      <Filter>Source Files\Console\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="FullScreenTextAnimation.cpp">
+      <Filter>Source Files\Console\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroAnimation.cpp">
+      <Filter>Source Files\Console\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroMenuAnimation.cpp">
+      <Filter>Source Files\Console\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperWaveAnimation.cpp">
+      <Filter>Source Files\Console\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="GameXOAnimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameHeroAnimation.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

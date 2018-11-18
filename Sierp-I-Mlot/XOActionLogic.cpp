@@ -7,14 +7,16 @@ using namespace xo;
 
 XOActionLogic::XOActionLogic(std::shared_ptr<XOIOutput> &output, XOGameLogic &game_logic) :
 	_game_logic(game_logic),
-	_scale(1.f)
+	_scale(1.f),
+	_next_x(0),
+	_next_y(0)
 {
 	_output = output;
 
 	_main_menu = _output->create_menu();
-	_main_menu->register_element({ "play button", "play", [this] { this->main_menu_play(); } });
-	_main_menu->register_element({ "settings button", "settings", [this] { this->main_menu_settings(); } });
-	_main_menu->register_element({ "exit button", "exit", [this] { this->main_menu_exit(); } });
+	_main_menu->register_element({ "1 play button", "play", [this] { this->main_menu_play(); } });
+	_main_menu->register_element({ "2 settings button", "settings", [this] { this->main_menu_settings(); } });
+	_main_menu->register_element({ "3 exit button", "exit", [this] { this->main_menu_exit(); } });
 
 	_game_map_xo = _output->create_game_map_xo();
 	_game_map_xo->width(3);
@@ -26,7 +28,10 @@ XOActionLogic::XOActionLogic(std::shared_ptr<XOIOutput> &output, XOGameLogic &ga
 		std::string coords = std::to_string(col) + " " + std::to_string(row);
 		_game_map_xo->register_element({ coords, "", [this, col, row]
 		{
-			this->game_make_move(col, row);
+			_next_x = col;
+			_next_y = row;
+			_output->show(_ready_message);
+			_music_player->stop();
 		} });
 	}
 
@@ -41,15 +46,30 @@ XOActionLogic::XOActionLogic(std::shared_ptr<XOIOutput> &output, XOGameLogic &ga
 	_game_map_hero->register_element({ "4 up", "", [this] { game_hero_key(4, false); } });
 
 	_settings = _output->create_menu();
-	_settings->register_element({ "back to main menu button", "back", [this] {this->settings_back(); } });
-	_settings->register_element({ "", "zoom in", [this] {settings_zoom_in(); } });
-	_settings->register_element({ "", "zoom out", [this] {settings_zoom_out(); } });
+	_settings->register_element({ "1", "zoom_in", [this] {settings_zoom_in(); } });
+	_settings->register_element({ "2", "zoom_out", [this] {settings_zoom_out(); } });
+	_settings->register_element({ "3 back to main menu button", "back", [this] {this->settings_back(); } });
 	_settings->main(false);
 
 	_output->show(_main_menu);
 
+	_ready_message = _output->create_message();
+	_ready_message->text("ready");
+	_ready_message->time(xo::conf::MESSAGE_TIME);
+	_ready_message->register_element({ "after", "", [this] {
+		game_make_move(_next_x, _next_y);
+	}});
+
+	_player_one_message = _output->create_message();
+	_player_one_message->text("player_1");
+	_player_one_message->time(xo::conf::MESSAGE_TIME);
+	_player_one_message->register_element({ "after", "", [this] {
+		// _output->show(_ready_message);
+		_output->show(_game_map_xo);
+	}});
+
 	_music_player = std::make_shared<MusicPlayer>();
-	_music_player->load("resources/sound.WAV");
+	_music_player->load(xo::conf::FILE_MUSIC_INTRO);
 	_music_player->play();
 }
 
@@ -60,7 +80,10 @@ void xo::XOActionLogic::direct_execution()
 
 void XOActionLogic::main_menu_play()
 {
-	_output->show(_game_map_xo);
+	_output->show(_player_one_message);
+	_music_player->load(xo::conf::FILE_MUSIC_GAME_XO);
+	_music_player->play();
+	//_output->show(_game_map_xo);
 	// this->game_make_move(rand() % 3, rand() % 3);
 	// this->_game_logic.print_status();
 }
@@ -101,12 +124,13 @@ void XOActionLogic::game_hero_key(int key, bool down)
 
 void XOActionLogic::game_make_move(unsigned x, unsigned y)
 {
-	ChartReader("resources/songs/1/tones.txt").put_notes_on(_game_map_hero);
+	ChartReader(conf::FILE_MUSIC_GAME_HERO_TONES).put_notes_on(_game_map_hero);
 	_output->show(_game_map_hero);
 	_game_map_hero->start(0);
 	_music_player->stop();
-	_music_player->load("resources/songs/1/sound.WAV");
+	_music_player->load(conf::FILE_MUSIC_INTRO);
 	_music_player->play();
+
 	/*PlayerSymbol next_symbol = _game_logic.player_to_play_next();
 	bool result = _game_logic.play_move(x, y);
 	if (result)

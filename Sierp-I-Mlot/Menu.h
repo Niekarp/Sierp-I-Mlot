@@ -5,7 +5,7 @@ struct Menu
 {
 	struct Option
 	{
-		const char *name;
+		std::string name;
 		std::function<void()> callback;
 	};
 

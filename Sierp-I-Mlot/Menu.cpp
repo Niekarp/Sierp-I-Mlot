@@ -21,6 +21,7 @@ void Menu::draw_on(const std::shared_ptr<Console>& output)
 	menu_plane->size({ 60, 40 });
 	menu_plane->frame_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 	menu_plane->fill_color(BACKGROUND_BLUE | BACKGROUND_INTENSITY);
+
 	output->add_plane(menu_plane);
 
 	auto logo_plane = std::make_shared<FileImagePlane>("resources/logo_pattern.txt");
@@ -38,20 +39,22 @@ void Menu::draw_on(const std::shared_ptr<Console>& output)
 		button_plane->on_click(option.callback);
 		output->add_clickable_plane(button_plane);
 
-		auto text = std::make_shared<TextConsolePlane>(option.name, "resources/letters_small");
+		auto text = std::make_shared<TextConsolePlane>();
+		text->font_size({ xo::conf::FONT_SMALL_SIZE_X, xo::conf::FONT_SMALL_SIZE_Y });
+		text->text(option.name);
+		text->load_font(xo::conf::FONT_SMALL_DIRECTORY);
 		text->foreground(' ', BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_INTENSITY);
 		text->background(' ', BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 		text->position({ 0, 0 });
 		button_plane->text(text);
 	}
 
-	logo_plane->position({
-		output->width() / 2 - logo_plane->size().x / 2,
-		output->height() / 2 - 14 });
-	output->window_resize_event([logo_plane](auto new_width, auto new_height)
+	auto wnd_resize_callback = [logo_plane](auto new_width, auto new_height)
 	{
 		logo_plane->position({
 			new_width / 2 - logo_plane->size().x / 2,
-			new_height / 2 - 14});
-	});
+			new_height / 2 - 14 });
+	};
+	wnd_resize_callback(output->width(), output->height());
+	output->window_resize_event(wnd_resize_callback);
 }

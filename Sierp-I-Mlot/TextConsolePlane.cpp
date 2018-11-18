@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "TextConsolePlane.h"
 
-TextConsolePlane::TextConsolePlane(const char * str, const char *font_directory) :
+TextConsolePlane::TextConsolePlane() :
 	_foreground_color(0),
 	_background_color(0),
-	_position({0, 0})
+	_position({0, 0}),
+	_font_size({0, 0}),
+	_size({0, 0})
 {
-	text(str);
-	load_font(font_directory);
 }
 
 TextConsolePlane::Position TextConsolePlane::position()
@@ -15,7 +15,7 @@ TextConsolePlane::Position TextConsolePlane::position()
 	return _position;
 }
 
-void TextConsolePlane::position(TextConsolePlane::Position position)
+void TextConsolePlane::position(const TextConsolePlane::Position &position)
 {
 	_position = position;
 }
@@ -34,7 +34,12 @@ void TextConsolePlane::background(char chr, WORD color)
 
 TextConsolePlane::Position TextConsolePlane::size()
 {
-	return { (int)strlen(_text) * (_letter_width + 1), 4 };
+	if (_font_size.x == 0)
+	{
+		return _size;
+	}
+
+	return { (int)_text.size() * (_font_size.x + 1), _font_size.y };
 }
 
 TextConsolePlane::PlaneType TextConsolePlane::type()
@@ -44,9 +49,11 @@ TextConsolePlane::PlaneType TextConsolePlane::type()
 
 void TextConsolePlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 {
-	auto text_len = strlen(_text);
+	auto bx = _position.x;
+	auto by = _position.y;
+	auto offsetx = 0;
 
-	for (int i = 0; i < text_len; ++i)
+	for (int i = 0; i < _text.size(); ++i)
 	{
 		if (_text[i] == ' ')
 		{
@@ -55,40 +62,103 @@ void TextConsolePlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 
 		auto letter = _letters[_text[i]];
 
-		auto bx = _position.x + i * (_letter_width + 1);
-		auto by = _position.y;
-
-		for (int j = 0; j < letter.size() / _letter_width; ++j)
+		for (int iy = 0; iy < letter.data.size() / letter.width; ++iy)
 		{
-			for (int k = 0; k < _letter_width; ++k)
+			for (int ix = 0; ix < letter.width; ++ix)
 			{
-				if (letter[j * _letter_width + k] - '0')
+				if (_foreground_chr == 0)
 				{
-					buffer->put(bx + k, by + j, _foreground_chr, _foreground_color);
+					if (letter.data[iy * letter.width + ix] - '0')
+					{
+						buffer->put(bx + offsetx + ix, by + iy,
+							letter.data[iy * letter.width + ix], _foreground_color);
+					}
 				}
 				else
 				{
-					buffer->put(bx + k, by + j, _background_chr, _background_color);
+					if (letter.data[iy * letter.width + ix] - '0')
+					{
+						buffer->put(bx + offsetx + ix, by + iy,
+							_foreground_chr, _foreground_color);
+					}
+					else
+					{
+						buffer->put(bx + offsetx + ix, by + iy,
+							_background_chr, _background_color);
+					}
 				}
 			}
 		}
+
+		offsetx += letter.width + 1;
 	}
 }
 
-void TextConsolePlane::text(const char * str)
+void TextConsolePlane::font_size(const Position & new_size)
 {
+	_font_size = new_size;
+}
+
+void TextConsolePlane::text(const std::string & str)
+{
+	if (_font_size.x == 0)
+	{
+		_size.x = 0;
+		_size.y = 0;
+		for (auto chr : str)
+		{
+			_size.x += _letters[chr].width + 1;
+			auto h = _letters[chr].data.size() / _letters[chr].width;
+			if (h > _size.y)
+			{
+				_size.y = h;
+			}
+		}
+	}
 	_text = str;
 }
 
-void TextConsolePlane::load_font(const char * directory)
+void TextConsolePlane::load_font(const std::string & directory)
 {
-	char letter[LETTER_SIZE];
 	for (auto current_chr = 'a'; current_chr <= 'z'; ++current_chr)
 	{
-		std::fstream letter_file(std::string(directory) + "/" + current_chr + std::string(".txt"), std::ios::in);
-		int i = 0;
-		while (letter_file >> letter[i++] && i < sizeof(letter));
-		_letters[current_chr];
-		std::copy(std::begin(letter), std::end(letter), std::begin(_letters[current_chr]));
+		_load_font_char(directory, current_chr);
+	}
+	for (auto current_chr = '0'; current_chr <= '9'; ++current_chr)
+	{
+		_load_font_char(directory, current_chr);
+	}
+	_load_font_char(directory, '_');
+}
+
+void TextConsolePlane::_load_font_char(const std::string &directory, 
+	char current_chr)
+{
+	std::fstream letter_file(std::string(directory) + "/" 
+		+ current_chr + std::string(".txt"), std::ios::in);
+
+	auto &letter = _letters[current_chr];
+
+	// dynamic font width
+	if (_font_size.x == 0)
+	{
+		letter_file >> letter.width;
+		letter.data.reserve(letter.width);
+	}
+	else
+	{
+		letter.width = _font_size.x;
+	}
+
+	char chr;
+	while (letter_file >> std::noskipws >> chr)
+	{
+		if (chr == '\n') continue;
+		letter.data.push_back(chr);
+	}
+
+	if (letter.data.size() % letter.width != 0)
+	{
+		throw std::invalid_argument("_pattern_height * _pattern_width != _pattern.size()");
 	}
 }
