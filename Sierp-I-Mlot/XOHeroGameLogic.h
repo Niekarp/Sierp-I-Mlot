@@ -39,5 +39,6 @@ namespace xo
 		long long _ommision_time;
 		long long _start_time;
 		bool _play;
+		bool _start;
 	};
 }
