@@ -24,6 +24,7 @@ public:
 	void select(int col, int row, xo::PlayerSymbol f);
 	void images(const std::vector<std::shared_ptr<FileImagePlane>> &);
 	void click(std::function<void(int, int)> callback);
+	void colrow(int col, int row);
 
 private:
 	int _cols;

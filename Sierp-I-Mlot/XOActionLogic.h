@@ -26,11 +26,13 @@ namespace xo
 		void settings_back();
 		void settings_zoom_in();
 		void settings_zoom_out();
+		void settings_map_size();
 		void game_hero_key(int key, bool down);
 
 		void game_make_move(unsigned x, unsigned y);
 		void on_note_omitted(const Note &);
 		void on_xo_map_field_selected(int x, int y);
+		void set_map_size(int x, int y);
 
 	private:
 		void _resume_xo_map();
@@ -50,6 +52,7 @@ namespace xo
 		std::shared_ptr<XOIGameMapXO> _game_map_xo;
 		std::shared_ptr<XOIGameMapHero> _game_map_hero;
 		std::shared_ptr<XOIMenu> _settings;
+		std::shared_ptr<XOIMenu> _settings_size;
 		std::shared_ptr<XOIMessage> _message_player_x;
 		std::shared_ptr<XOIMessage> _message_player_o;
 		std::shared_ptr<XOIMessage> _message_ready;

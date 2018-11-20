@@ -13,7 +13,7 @@ XOActionLogic::XOActionLogic(const std::shared_ptr<XOIOutput> &output,
 	_hero_game_logic(hero_game_logic),
 	_scale(1.f),
 	_random_distribution(conf::GAME_HERO_TURN_MUSIC_RANGE_BEGIN,
-			conf::GAME_HERO_TURN_MUSIC_RANGE_END),
+		conf::GAME_HERO_TURN_MUSIC_RANGE_END),
 	_next_x(0),
 	_next_y(0),
 	_selected(false)
@@ -59,8 +59,16 @@ XOActionLogic::XOActionLogic(const std::shared_ptr<XOIOutput> &output,
 	_settings = _output->create_menu();
 	_settings->register_element({ "1", "zoom_in", [this] {settings_zoom_in(); } });
 	_settings->register_element({ "2", "zoom_out", [this] {settings_zoom_out(); } });
-	_settings->register_element({ "3 back to main menu button", "back", [this] {this->settings_back(); } });
+	_settings->register_element({ "3", "map_size", [this] {settings_map_size(); } });
+	_settings->register_element({ "4 back to main menu button", "back", [this] {this->settings_back(); } });
 	_settings->main(false);
+
+	_settings_size = _output->create_menu();
+	_settings_size->register_element({ "1", "3x3", [this] { set_map_size(3, 3); main_menu_settings(); } });
+	_settings_size->register_element({ "2", "4x4", [this] { set_map_size(4, 4); main_menu_settings(); } });
+	_settings_size->register_element({ "3", "5x3", [this] { set_map_size(5, 3); main_menu_settings(); } });
+	_settings_size->register_element({ "4", "back", [this] { main_menu_settings(); } });
+	_settings_size->main(false);
 
 	_output->show(_main_menu);
 
@@ -69,7 +77,7 @@ XOActionLogic::XOActionLogic(const std::shared_ptr<XOIOutput> &output,
 	_message_ready->time(xo::conf::MESSAGE_TIME);
 	_message_ready->register_element({ "after", "", [this] {
 		_output->show(_message_hero_steady);
-	}});
+	} });
 
 	_message_hero_steady = _output->create_message();
 	_message_hero_steady->text("steady");
@@ -90,7 +98,7 @@ XOActionLogic::XOActionLogic(const std::shared_ptr<XOIOutput> &output,
 	_message_player_o->time(xo::conf::MESSAGE_TIME);
 	_message_player_o->register_element({ "after", "", [this] {
 		_resume_xo_map();
-	}});
+	} });
 
 	_message_player_x = _output->create_message();
 	_message_player_x->text("player_x");
@@ -154,6 +162,7 @@ void xo::XOActionLogic::direct_execution()
 
 void XOActionLogic::main_menu_play()
 {
+	_xo_game_logic->restart_game(3,3, PlayerSymbol::circle, 3);
 	_hero_game_logic->reset();
 	_game_map_hero->reset();
 	_game_map_xo->clear_selection();
@@ -203,6 +212,11 @@ void XOActionLogic::settings_zoom_out()
 	_output->scale(_scale);
 }
 
+void xo::XOActionLogic::settings_map_size()
+{
+	_output->show(_settings_size);
+}
+
 void XOActionLogic::game_hero_key(int key, bool down)
 {
 	if (down)
@@ -213,7 +227,9 @@ void XOActionLogic::game_hero_key(int key, bool down)
 		if (note)
 		{
 			OutputDebugStringA((std::stringstream() << note->time << '\n').str().c_str());
-
+		}
+		else
+		{
 			_sound_effect_player->load(conf::SOUND_EFFECT_CLICK_ARRAY[key - 1]);
 			_sound_effect_player->play();
 		}
@@ -265,6 +281,13 @@ void XOActionLogic::on_xo_map_field_selected(int x, int y)
 	};
 }
 
+void xo::XOActionLogic::set_map_size(int x, int y)
+{
+	_xo_game_logic->restart_game(x, y, PlayerSymbol::circle, 3);
+	_game_map_xo->width(x);
+	_game_map_xo->height(y);
+}
+
 void XOActionLogic::_resume_xo_map()
 {
 	OutputDebugStringA("player_one_message:after\n");
@@ -291,7 +314,7 @@ void xo::XOActionLogic::_on_hero_end(int x, int y)
 			{
 				_output->show(_message_hero_wins_player_o);
 			}
-			else if(winner == PlayerSymbol::cross)
+			else if (winner == PlayerSymbol::cross)
 			{
 				_output->show(_message_hero_wins_player_x);
 			}
@@ -315,5 +338,5 @@ void xo::XOActionLogic::_on_hero_end(int x, int y)
 void XOActionLogic::on_note_omitted(const Note &note)
 {
 	_game_map_hero->life(_hero_game_logic->progress());
-	OutputDebugStringA((std::stringstream() << "on_note_omitted " << note.tone << ' ' <<note.time << '\n').str().c_str());
+	OutputDebugStringA((std::stringstream() << "on_note_omitted " << note.tone << ' ' << note.time << '\n').str().c_str());
 }

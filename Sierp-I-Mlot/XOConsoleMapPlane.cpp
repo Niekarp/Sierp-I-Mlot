@@ -10,10 +10,7 @@ XOConsoleMapPlane::XOConsoleMapPlane(int cols, int rows) :
 	_color_foreground(0),
 	_frame(0)
 {
-	_fields.resize(cols * rows);
-	std::fill(_fields.begin(), _fields.end(), xo::PlayerSymbol::none);
-	_selected_fields.resize(cols * rows);
-	std::fill(_selected_fields.begin(), _selected_fields.end(), xo::PlayerSymbol::none);
+	colrow(cols, rows);
 	_x_plane = std::make_shared<CenteredFramedPlane>();
 }
 
@@ -186,3 +183,13 @@ void XOConsoleMapPlane::click(std::function<void(int, int)> callback)
 	_callback_click = callback;
 }
 
+void XOConsoleMapPlane::colrow(int cols, int rows)
+{
+	_cols = cols;
+	_rows = rows;
+
+	_fields.resize(cols * rows);
+	std::fill(_fields.begin(), _fields.end(), xo::PlayerSymbol::none);
+	_selected_fields.resize(cols * rows);
+	std::fill(_selected_fields.begin(), _selected_fields.end(), xo::PlayerSymbol::none);
+}

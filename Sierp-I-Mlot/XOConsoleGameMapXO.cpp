@@ -9,7 +9,9 @@ using namespace xo;
 
 XOConsoleGameMapXO::XOConsoleGameMapXO() :
 	_field_x_path(""),
-	_field_o_path("")
+	_field_o_path(""),
+	_width(0),
+	_height(0)
 {
 	_map_plane = std::make_shared<XOConsoleMapPlane>();
 	_map_plane->size({ conf::GAME_MAP_XO_SIZE_X, conf::GAME_MAP_XO_SIZE_Y });
@@ -88,6 +90,7 @@ size_t XOConsoleGameMapXO::width()
 void XOConsoleGameMapXO::width(size_t new_width)
 {
 	_width = new_width;
+	_map_plane->colrow(_width, _height);
 }
 
 size_t XOConsoleGameMapXO::height()
@@ -98,6 +101,7 @@ size_t XOConsoleGameMapXO::height()
 void XOConsoleGameMapXO::height(size_t new_height)
 {
 	_height = new_height;
+	_map_plane->colrow(_width, _height);
 }
 
 void XOConsoleGameMapXO::put(PlayerSymbol symbol, size_t x, size_t y)
