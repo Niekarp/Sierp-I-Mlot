@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "HeroProgressBarPlane.h"
 
+static const int PARTICLE_MAX_R = 20;
+static const int PARTICLE_MIN_R = 6;
 static const int PROGRESS_COLORS_SIZE = 6;
 static const WORD PROGRESS_COLORS[PROGRESS_COLORS_SIZE] =
 {
@@ -44,6 +46,7 @@ void xo::HeroProgressBarPlane::draw(const std::shared_ptr<Console::Buffer> &buff
 	auto screen_w = buffer->screen_width();
 	auto screen_h = buffer->screen_height();
 
+
 	auto bx = 0;
 	auto by = _position.y;
 	auto ex = screen_w - 1;
@@ -61,10 +64,25 @@ void xo::HeroProgressBarPlane::draw(const std::shared_ptr<Console::Buffer> &buff
 		buffer->put(ix, cy, _frame_chr, PROGRESS_COLORS[ abs((int)((ix - _frame / 4.0) / 4.0)) % PROGRESS_COLORS_SIZE]);
 	}
 
-	auto particles1_x = bx + (screen_w / 2 - bx) * (1.f - _progress);
-	auto particles1_y = by + (ey - by) * (sin((particles1_x - _frame / 4.0) / 4.0) + 1) / 2 - 1;
-	auto particles2_x = screen_w / 2 + (ex - screen_w / 2) * _progress;
-	auto particles2_y = by + (ey - by) * (sin((particles2_x - _frame / 4.0) / 4.0) + 1) / 2 - 1;
+	auto p1cx = bx + (screen_w / 2 - bx) * (1.f - _progress);
+	auto p1cy = by + (ey - by) * (sin((p1cx - _frame / 4.0) / 4.0) + 1) / 2 - 1;
+	auto p2cx = screen_w / 2 + (ex - screen_w / 2) * _progress;
+	auto p2cy = by + (ey - by) * (sin((p2cx - _frame / 4.0) / 4.0) + 1) / 2 - 1;
+
+	auto note_r = 10;
+	auto nbx = p1cx - note_r;
+	auto pby = p1cy - 2 * note_r / 5;
+	auto pex = p1cx + note_r;
+	auto pey = p1cy + 2 * note_r / 5;
+
+	for (auto ix = nbx; ix <= pex; ++ix)
+	{
+		for (auto iy = pby; iy <= pey; ++iy)
+		{
+			
+			//buffer->put(ix, iy, ' ', BACKGROUND_BLUE);
+		}
+	}
 
 
 	/*for (auto ix = bx; ix <= ex; ++ix)
