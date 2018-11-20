@@ -111,7 +111,7 @@ void IntroAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer, size_t
 		_animated_image4->position(
 		{
 			cx - _animated_image4->size().x / 2,
-			cy - _animated_image4->size().y / 2 - 22
+			cy - _animated_image4->size().y / 2 - 20
 		});	
 	}
 	else if (frame < frame_key5)
@@ -152,7 +152,7 @@ void IntroAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer, size_t
 		_animated_image4->position(
 		{
 			cx - _animated_image4->size().x / 2,
-			cy - _animated_image4->size().y / 2 - 22
+			cy - _animated_image4->size().y / 2 - 20
 		});
 		/*
 				_image3->position(
