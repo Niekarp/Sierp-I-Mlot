@@ -45,10 +45,12 @@ namespace xo
 		const int GAME_HERO_PAUSE_BEFORE_TURN = 2000;
 		const int GAME_HERO_PAUSE_BEFORE_FIRST_NOTE = 2000;
 
-		const char *const SOUND_EFFECT_CLICK1 = "resources/effects/1.WAV";
-		const char *const SOUND_EFFECT_CLICK2 = "resources/effects/2.WAV";
-		const char *const SOUND_EFFECT_CLICK3 = "resources/effects/3.WAV";
-		const char *const SOUND_EFFECT_CLICK4 = "resources/effects/4.WAV";
+		const char *const SOUND_EFFECT_CLICK_ARRAY[] = {
+			"resources/sounds/sound1.wav",
+			"resources/sounds/sound2.wav",
+			"resources/sounds/sound3.wav",
+			"resources/sounds/sound4.wav"
+		};
 
 		const int GAME_XO_SELECT_FLASHING_SPEED = 10;
 		const int GAME_XO_SELECT_TIME = 2000;

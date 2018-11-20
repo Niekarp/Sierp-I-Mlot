@@ -213,6 +213,9 @@ void XOActionLogic::game_hero_key(int key, bool down)
 		if (note)
 		{
 			OutputDebugStringA((std::stringstream() << note->time << '\n').str().c_str());
+
+			_sound_effect_player->load(conf::SOUND_EFFECT_CLICK_ARRAY[key - 1]);
+			_sound_effect_player->play();
 		}
 
 		_game_map_hero->life(_hero_game_logic->progress());
