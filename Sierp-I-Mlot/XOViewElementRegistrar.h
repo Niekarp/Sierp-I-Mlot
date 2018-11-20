@@ -20,6 +20,6 @@ namespace xo
 	private:
 		std::map<std::string, std::vector<XOViewElement>> _elements;
 		HANDLE _call_mutex;
-		HANDLE _call_thread;
+		DWORD _call_thread;
 	};
 }

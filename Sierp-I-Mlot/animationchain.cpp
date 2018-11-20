@@ -79,7 +79,7 @@ void AnimationChain::draw(const std::shared_ptr<Console::Buffer>& buffer, size_t
 	{
 		if (_on_end_callback)
 		{
-			_on_end_callback(_current_animation_index);
+  			_on_end_callback(_current_animation_index);
 		}
 		_current_animation_index += 1;
 		_current_overlap_frame_index = 0;
@@ -94,7 +94,7 @@ void AnimationChain::draw(const std::shared_ptr<Console::Buffer>& buffer, size_t
 		}
 	}
 
-	CHKERR_BOOL(ReleaseMutex(_draw_mutex));
+	CHKERR_MUTEX(ReleaseMutex(_draw_mutex));
 }
 
 bool AnimationChain::end()
@@ -121,4 +121,9 @@ void AnimationChain::overlap(size_t n_overlap_frames)
 void AnimationChain::on_end(std::function<void(size_t animation_index)> callback)
 {
 	_on_end_callback = callback;
+}
+
+int AnimationChain::frames_size()
+{
+	return _animations.size();
 }

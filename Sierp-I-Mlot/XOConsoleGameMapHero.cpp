@@ -24,10 +24,24 @@ XOConsoleGameMapHero::XOConsoleGameMapHero() :
 	_key_up_callback(std::bind(&XOConsoleGameMapHero::_on_key,
 		this, std::placeholders::_1, false)),
 	_key_callback_binded(false),
-	_frame(0)
+	_frame(0),
+	_omission_time(0),
+	_play(false)
 {
-	_note_image = std::make_shared<FileImagePlane>("resources/note.txt");
+	_note_image = std::make_shared<FileImagePlane>(conf::FILE_NOTE);
 	_note_image->color(FOREGROUND_GREEN | BACKGROUND_RED | BACKGROUND_INTENSITY);
+
+	_life_bar = std::make_shared<HeroLifeBar>();
+	_life_bar->size({ conf::GAME_HERO_LIFE_BAR_SIZE_X, conf::GAME_HERO_LIFE_BAR_SIZE_Y });
+	_life_bar->position({ conf::GAME_HERO_LIFE_BAR_OFFSET_X, 0 });
+	_life_bar->progress(1.);
+	_life_bar->frame(' ', 0);
+
+	_progress_bar = std::make_shared<HeroProgressBarPlane>();
+	_progress_bar->size({ conf::GAME_HERO_PROGRESS_BAR_SIZE_X, conf::GAME_HERO_PROGRESS_BAR_SIZE_Y });
+	_progress_bar->position({ 0, conf::GAME_HERO_PROGRESS_BAR_OFFSET_Y });
+	_progress_bar->frame(' ', 0);
+	_progress_bar->progress(1.);
 }
 
 
@@ -40,10 +54,12 @@ void XOConsoleGameMapHero::register_element(const XOViewElement &element)
 	_elements.push_back(element);
 }
 
-void XOConsoleGameMapHero::put(const XOConsoleGameMapHero::Note &note)
+void xo::XOConsoleGameMapHero::start(long long start, long long omitt, long long duration)
 {
-	_notes.push_back(note);
-	//_notes.sort([](auto a, auto b) { return a.time < b.time; });
+	_omission_time = omitt;
+	_duration = duration;
+	_start_point = std::chrono::system_clock::now();
+	_play = true;
 }
 
 XOConsoleGameMapHero::Position XOConsoleGameMapHero::position()
@@ -71,108 +87,60 @@ inline static int _get_guitar_string_x(int y, int string_n,
 	return (int)(bx + (string_n + 0.5f) * wx / N_STRINGS);
 }
 
-inline static void _draw_guitar_neck(const std::shared_ptr<Console::Buffer>& buffer, int by)
+static struct anim_helper_hero_map
 {
-	auto ey = buffer->screen_height() - 1;
+	const std::shared_ptr<Console::Buffer>&buffer;
+	const std::shared_ptr<NoteContainer> &notes;
+	long long duration;
+	long long ommision_time;
 
-	for (auto iy = by; iy <= ey; ++iy)
+	void _draw_guitar_neck(int by)
 	{
-		auto wx = MAP_WIDTH_TOP + iy * (MAP_WIDTH_BOTTOM - MAP_WIDTH_TOP) / ey;
-		auto bx = buffer->screen_width() / 2 - wx / 2;
-		auto ex = buffer->screen_width() / 2 + wx / 2;
+		auto ey = buffer->screen_height() - 1;
 
-		buffer->put(bx, iy, ' ', BACKGROUND_RED);
-		buffer->put(bx + 1, iy, ' ', BACKGROUND_RED);
-		buffer->put(ex, iy, ' ', BACKGROUND_RED);
-		buffer->put(ex - 1, iy, ' ', BACKGROUND_RED);
-
-		for (auto ix = bx + 2; ix <= ex - 2; ++ix)
-		{
-			buffer->put(ix, iy, ' ', BACKGROUND_RED | BACKGROUND_INTENSITY);
-		}
-	}
-}
-
-inline static void _draw_guitar_strings(const std::shared_ptr<Console::Buffer>& buffer, int by)
-{
-	auto screen_width = buffer->screen_width();
-	auto screen_height = buffer->screen_height();
-
-	for (int iy = by; iy < buffer->screen_height(); ++iy)
-	{
-		for (int istring = 0; istring < N_STRINGS; ++istring)
-		{
-			auto ix = _get_guitar_string_x(iy, istring, screen_width, screen_height);
-			buffer->put(ix, iy, ' ', 0);
-		}
-	}
-}
-
-inline static void _put_note(const std::shared_ptr<Console::Buffer>& buffer,
-	int string_n, int offset)
-{
-	auto screen_width = buffer->screen_width();
-	auto screen_height = buffer->screen_height();
-
-	auto cy = screen_height - 1 - offset;
-	auto cx = _get_guitar_string_x(cy, string_n, screen_width, screen_height);
-
-	auto note_r = (NOTE_MIN_R + cy * (NOTE_MAX_R - NOTE_MIN_R) / screen_height) / 2;
-	auto bx = cx - note_r;
-	auto by = cy - 2 * note_r / 5;
-	auto ex = cx + note_r;
-	auto ey = cy + 2 * note_r / 5;
-
-	for (auto ix = bx; ix <= ex; ++ix)
-	{
 		for (auto iy = by; iy <= ey; ++iy)
 		{
-			auto r = (int)sqrt((ix - cx) * (ix - cx) + 4 * (iy - cy) * (iy - cy));
-			if (r > 3 * note_r / 4)
+			auto wx = MAP_WIDTH_TOP + iy * (MAP_WIDTH_BOTTOM - MAP_WIDTH_TOP) / ey;
+			auto bx = buffer->screen_width() / 2 - wx / 2;
+			auto ex = buffer->screen_width() / 2 + wx / 2;
+
+			buffer->put(bx, iy, ' ', BACKGROUND_RED);
+			buffer->put(bx + 1, iy, ' ', BACKGROUND_RED);
+			buffer->put(ex, iy, ' ', BACKGROUND_RED);
+			buffer->put(ex - 1, iy, ' ', BACKGROUND_RED);
+
+			for (auto ix = bx + 2; ix <= ex - 2; ++ix)
 			{
-				continue;
+				buffer->put(ix, iy, ' ', BACKGROUND_RED | BACKGROUND_INTENSITY);
 			}
-			else if (r >= 3 * note_r / 4 - 1)
-			{
-				buffer->put(ix, iy, ' ', NOTE_COLORS[string_n] | BACKGROUND_INTENSITY);
-				continue;
-			}
-			buffer->put(ix, iy, ' ', NOTE_COLORS[string_n]);
 		}
 	}
-}
 
-inline static void _draw_notes(const std::shared_ptr<Console::Buffer>& buffer,
-	const std::vector<XOConsoleGameMapHero::Note> &_notes, 
-	const std::chrono::system_clock::time_point &_start_point)
-{
-	auto duration = std::chrono::system_clock::now() - _start_point;
-	auto elapse = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-	auto screen_height = buffer->screen_height();
-
-	for (auto &note : _notes)
+	void _draw_guitar_strings(int by)
 	{
-		if (note.time < elapse - NOTE_START_TIME / 8)
+		auto screen_width = buffer->screen_width();
+		auto screen_height = buffer->screen_height();
+
+		for (int iy = by; iy < buffer->screen_height(); ++iy)
 		{
-			continue;
-		}
-		else if (note.time <= elapse + NOTE_START_TIME)
-		{
-			_put_note(buffer, note.tone, (note.time - elapse) * screen_height / NOTE_START_TIME);
+			for (int istring = 0; istring < N_STRINGS; ++istring)
+			{
+				auto ix = _get_guitar_string_x(iy, istring, screen_width, screen_height);
+				buffer->put(ix, iy, ' ', 0);
+			}
 		}
 	}
-}
 
-inline static void _draw_buttons(const std::shared_ptr<Console::Buffer>& buffer,
-	const std::array<bool, N_STRINGS> &button_states)
-{
-	auto screen_width = buffer->screen_width();
-	auto screen_height = buffer->screen_height();
-
-	for (int stringi = 0; stringi < N_STRINGS; ++stringi)
+	void _put_note(const Note &note)//int string_n, int offset, long long destroy_time)
 	{
-		auto cy = screen_height - 1;
-		auto cx = _get_guitar_string_x(cy, stringi, screen_width, screen_height);
+		auto screen_width = buffer->screen_width();
+		auto screen_height = buffer->screen_height();
+		auto string_n = note.tone;
+		auto offset = (note.time - duration) * screen_height / NOTE_START_TIME;
+		auto destroy_time = note.destroy_time;
+
+		auto cy = screen_height - 1 - offset;
+		auto cx = _get_guitar_string_x(cy, string_n, screen_width, screen_height);
 
 		auto note_r = (NOTE_MIN_R + cy * (NOTE_MAX_R - NOTE_MIN_R) / screen_height) / 2;
 		auto bx = cx - note_r;
@@ -180,35 +148,156 @@ inline static void _draw_buttons(const std::shared_ptr<Console::Buffer>& buffer,
 		auto ex = cx + note_r;
 		auto ey = cy + 2 * note_r / 5;
 
-		for (auto ix = bx; ix <= ex; ++ix)
+		if (note.destroy_time != -1)
 		{
-			for (auto iy = by; iy <= ey; ++iy)
+			for (auto ix = bx; ix <= ex; ++ix)
 			{
-				auto r = (int)sqrt((ix - cx) * (ix - cx) + 4 * (iy - cy) * (iy - cy));
-				if (r > 3 * note_r / 4)
+				for (auto iy = by; iy <= ey; ++iy)
 				{
-					continue;
+					auto r = sqrt((ix - cx) * (ix - cx) + 4 * (iy - cy) * (iy - cy));
+
+
+					double normalized_x;
+					double normalized_y;
+					if (r == 0)
+					{
+
+						normalized_x = 0;
+						normalized_y = 0;
+					}
+					else
+					{
+
+						normalized_x = (ix - cx) / r;
+						normalized_y = (iy - cy) / r;
+					}
+
+					auto ix2 = ix + normalized_x * (duration - note.destroy_time) / 20;
+					auto iy2 = iy + normalized_y * (duration - note.destroy_time) / 20;
+
+					if ((ix2 - cx) * (ix2 - cx) + (iy2 - cy) * (iy2 - cy) > 400)
+					{
+						continue;
+					}
+
+					if (r > 3 * note_r / 4)
+					{
+						continue;
+					}
+					else if (r >= 3 * note_r / 4 - 1)
+					{
+						buffer->put(ix2, iy2, ' ', NOTE_COLORS[string_n] | BACKGROUND_INTENSITY);
+						continue;
+					}
+					buffer->put(ix2, iy2, ' ', NOTE_COLORS[string_n]);
 				}
-				else if (r >= 3 * note_r / 4 - 1)
+			}
+		}
+		else {
+			for (auto ix = bx; ix <= ex; ++ix)
+			{
+				for (auto iy = by; iy <= ey; ++iy)
 				{
-					buffer->put(ix, iy, ' ', NOTE_COLORS[stringi]);
-					continue;
-				}
-				if (button_states[stringi])
-				{
-					buffer->put(ix, iy, ' ', NOTE_COLORS[stringi] | BACKGROUND_INTENSITY);
+					auto r = (int)sqrt((ix - cx) * (ix - cx) + 4 * (iy - cy) * (iy - cy));
+					if (r > 3 * note_r / 4)
+					{
+						continue;
+					}
+					else if (r >= 3 * note_r / 4 - 1)
+					{
+						buffer->put(ix, iy, ' ', NOTE_COLORS[string_n] | BACKGROUND_INTENSITY);
+						continue;
+					}
+					buffer->put(ix, iy, ' ', NOTE_COLORS[string_n]);
 				}
 			}
 		}
 	}
-}
+
+	void _draw_notes()
+	{
+		auto screen_height = buffer->screen_height();
+
+		for (auto i = 0; i < notes->size(); ++i)
+		{
+			if (notes->at(i).time < ommision_time)
+			{
+				continue;
+			}
+			else if (notes->at(i).time <= duration + NOTE_START_TIME)
+			{
+				_put_note(notes->at(i));
+			}
+		}
+	}
+
+	void _draw_buttons(const std::array<bool, N_STRINGS> &button_states)
+	{
+		auto screen_width = buffer->screen_width();
+		auto screen_height = buffer->screen_height();
+
+		for (int stringi = 0; stringi < N_STRINGS; ++stringi)
+		{
+			auto cy = screen_height - 1;
+			auto cx = _get_guitar_string_x(cy, stringi, screen_width, screen_height);
+
+			auto note_r = (NOTE_MIN_R + cy * (NOTE_MAX_R - NOTE_MIN_R) / screen_height) / 2;
+			auto bx = cx - note_r;
+			auto by = cy - 2 * note_r / 5;
+			auto ex = cx + note_r;
+			auto ey = cy + 2 * note_r / 5;
+
+			for (auto ix = bx; ix <= ex; ++ix)
+			{
+				for (auto iy = by; iy <= ey; ++iy)
+				{
+					auto r = (int)sqrt((ix - cx) * (ix - cx) + 4 * (iy - cy) * (iy - cy));
+					if (r > 3 * note_r / 4)
+					{
+						continue;
+					}
+					else if (r >= 3 * note_r / 4 - 1)
+					{
+						buffer->put(ix, iy, ' ', NOTE_COLORS[stringi]);
+						continue;
+					}
+					if (button_states[stringi])
+					{
+						buffer->put(ix, iy, ' ', NOTE_COLORS[stringi] | BACKGROUND_INTENSITY);
+					}
+				}
+			}
+		}
+	}
+};
+
 
 void XOConsoleGameMapHero::draw(const std::shared_ptr<Console::Buffer>& buffer)
 {
-	_draw_guitar_neck(buffer, 100 - _frame);
-	_draw_guitar_strings(buffer, 100 - _frame);
-	_draw_notes(buffer, _notes, _start_point);
-	_draw_buttons(buffer, _button_states);
+
+	auto now = std::chrono::system_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - _start_point);
+
+	anim_helper_hero_map anim_proc
+	{
+		buffer,				// const std::shared_ptr<Console::Buffer>&buffer;
+		_notes,				// const std::shared_ptr<NoteContainer> &notes;
+		duration.count(),	// const std::chrono::system_clock::time_point &start_point;
+		_omission_time		// long long ommision_time;
+	};
+
+	anim_proc._draw_guitar_neck(100 - _frame);
+	anim_proc._draw_guitar_strings(100 - _frame);
+
+	if (_play)
+	{
+		anim_proc._draw_notes();
+	}
+	anim_proc._draw_buttons(_button_states);
+	_life_bar->draw(buffer);
+
+	_progress_bar->progress(1.f - 1.f * duration.count() / _duration);
+	_progress_bar->draw(buffer);
 
 	_frame++;
 }
@@ -230,6 +319,7 @@ void XOConsoleGameMapHero::draw_on(const std::shared_ptr<Console> &console)
 		game_animation->start_frame(200);
 		game_animation->speed(3);
 		game_animation->center(0, -50);
+		game_animation->player_symbol(_player_symbol);
 		chain_animation->add(game_animation);
 	}
 
@@ -253,12 +343,37 @@ void XOConsoleGameMapHero::_on_key(int key, bool down)
 	}
 }
 
+void XOConsoleGameMapHero::feed(const std::shared_ptr<NoteContainer>& notes)
+{
+	_notes = notes;
+}
+
+void XOConsoleGameMapHero::player_symbol(xo::PlayerSymbol s)
+{
+	_player_symbol = s;
+}
+
+void XOConsoleGameMapHero::reset()
+{
+	_frame = 0;
+	if (_notes)
+	{
+		_notes->clear();
+	}
+	_play = false;
+}
+
+void XOConsoleGameMapHero::progress(float p)
+{
+	_progress_bar->progress(p);
+}
+
+void XOConsoleGameMapHero::life(float p)
+{
+	_life_bar->progress(p);
+}
+
 void XOConsoleGameMapHero::button(int string_n, bool pressed)
 {
 	_button_states[string_n] = pressed;
-}
-
-void XOConsoleGameMapHero::start(long long wait)
-{
-	_start_point = std::chrono::system_clock::now() + std::chrono::milliseconds(wait);
 }

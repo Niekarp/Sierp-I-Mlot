@@ -24,6 +24,7 @@ namespace xo
 		virtual void draw(const std::shared_ptr<Console::Buffer>& buffer, size_t frame) override;
 		virtual bool end() override;
 		virtual bool continue_() override;
+		virtual void type(Type) override;
 
 		void draw_on(const std::shared_ptr<Console> &);
 
@@ -32,5 +33,6 @@ namespace xo
 		std::string _msg;
 		size_t _time_ms;
 		bool _end;
+		Type _type;
 	};
 }

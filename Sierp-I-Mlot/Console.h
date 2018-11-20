@@ -63,6 +63,8 @@ public:
 	void key_down_event(const std::function<void(int key)> &callback);
 	void key_up_event(const std::function<void(int key)> &callback);
 
+	void execute(const std::function<void()> &delegate);
+
 	struct _Context
 	{
 		Console* console;
@@ -103,12 +105,14 @@ private:
 	TP_CALLBACK_ENVIRON _callback_environ;
 	PTP_CLEANUP_GROUP _cleanup_group;
 	HANDLE _workers_mutex;
+	HANDLE _do_every_mutex;
 	std::array<_WorkerInfo, MAX_WORKERS_THREADS> _workers;
 	int _workers_next_index;
 	HANDLE _queue_timer;
 
 	std::vector<std::shared_ptr<IConsolePlane>> _planes;
 	std::shared_ptr<IAnimation> _animation;
+
 public:
 	void _refresh_buffer_size();
 	void _thread_start();
@@ -117,4 +121,7 @@ public:
 	
 	std::function<void(size_t)> _do_every_trigger;
 	size_t _animation_frame;
+	std::vector<std::function<void()>> _delegates;
+	HANDLE _delegates_mutex;
+	HANDLE _delegate_execution_event;
 };

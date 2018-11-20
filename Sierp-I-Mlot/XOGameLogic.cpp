@@ -97,6 +97,16 @@ namespace xo
 		return false;
 	}
 
+	bool XOGameLogic::peek_move(unsigned x, unsigned y)
+	{
+		auto square_index = x + (y * _board_info.height);
+		if (_board_info.squares_states.at(square_index) == SquareState::none)
+		{
+			return true;
+		}
+		return false;
+	}
+
 	void xo::XOGameLogic::restart_game(unsigned board_width, unsigned board_height, PlayerSymbol starting_player, unsigned initial_winning_streak)
 	{
 		XOGameLogic new_game = XOGameLogic(board_width, board_height, starting_player, initial_winning_streak);
@@ -148,8 +158,8 @@ namespace xo
 							plr = L"kó³ek";
 						}
 						
-						std::wstring ws = L"Omaj " + plr +  L" wygra³!\nTa gra dzia³a!!";
-						MessageBox(0, ws.c_str(), NULL, MB_OK);
+						//std::wstring ws = L"Omaj " + plr +  L" wygra³!\nTa gra dzia³a!!";
+						//MessageBox(0, ws.c_str(), NULL, MB_OK);
 						this->_change_player();
 						return;
 					}
@@ -180,6 +190,11 @@ namespace xo
 	GameState XOGameLogic::current_state()
 	{
 		return _current_state;
+	}
+
+	void XOGameLogic::pass_turn()
+	{
+		_change_player();
 	}
 
 	PlayerSymbol XOGameLogic::_change_player()

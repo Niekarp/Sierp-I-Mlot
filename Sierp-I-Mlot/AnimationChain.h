@@ -13,6 +13,7 @@ struct AnimationChain :
 	void add(const std::shared_ptr<IAnimation> &animation);
 	void overlap(size_t n_overlap_frames);
 	void on_end(std::function<void(size_t animation_index)> callback);
+	int frames_size();
 
 private:
 	struct AnimationMeta

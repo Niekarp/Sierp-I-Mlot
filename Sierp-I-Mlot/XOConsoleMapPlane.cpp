@@ -7,10 +7,13 @@ XOConsoleMapPlane::XOConsoleMapPlane(int cols, int rows) :
 	_size({}),
 	_position({}),
 	_color_background(0),
-	_color_foreground(0)
+	_color_foreground(0),
+	_frame(0)
 {
 	_fields.resize(cols * rows);
-	std::fill(_fields.begin(), _fields.end(), -1);
+	std::fill(_fields.begin(), _fields.end(), xo::PlayerSymbol::none);
+	_selected_fields.resize(cols * rows);
+	std::fill(_selected_fields.begin(), _selected_fields.end(), xo::PlayerSymbol::none);
 	_x_plane = std::make_shared<CenteredFramedPlane>();
 }
 
@@ -79,9 +82,9 @@ void XOConsoleMapPlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 	{
 		for (int row = 0; row < _rows; ++row)
 		{
-			if (_fields[row * _cols + col] != -1)
+			if (_fields[row * _cols + col] != xo::PlayerSymbol::none)
 			{
-				auto &field_image = _images[_fields[row * _cols + col]];
+				auto &field_image = _images[(int)_fields[row * _cols + col]];
 				field_image->position({ 
 					bx + (int)((col + 0.5) * col_w - field_image->size().x / 2),
 					by + (int)((row + 0.5) * row_h) - field_image->size().y / 2 });
@@ -89,6 +92,27 @@ void XOConsoleMapPlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 			}		
 		}
 	}
+
+	// Xs and Os select
+	if (_frame / xo::conf::GAME_XO_SELECT_FLASHING_SPEED % 2)
+	{
+		for (int col = 0; col < _cols; ++col)
+		{
+			for (int row = 0; row < _rows; ++row)
+			{
+				if (_selected_fields[row * _cols + col] != xo::PlayerSymbol::none)
+				{
+					auto &field_image = _images[(int)_selected_fields[row * _cols + col]];
+					field_image->position({
+						bx + (int)((col + 0.5) * col_w - field_image->size().x / 2),
+						by + (int)((row + 0.5) * row_h) - field_image->size().y / 2 });
+					field_image->draw(buffer);
+				}
+			}
+		}
+	}
+
+	_frame += 1;
 }
 
 void XOConsoleMapPlane::click(IConsolePlane::Position position, DWORD btn, DWORD flag)
@@ -124,7 +148,7 @@ void XOConsoleMapPlane::background(WORD color)
 	_color_background = color;
 }
 
-void XOConsoleMapPlane::put(int col, int row, int f)
+void XOConsoleMapPlane::put(int col, int row, xo::PlayerSymbol f)
 {
 	if (col >= _cols) 
 	{
@@ -136,6 +160,20 @@ void XOConsoleMapPlane::put(int col, int row, int f)
 	}
 	
 	_fields[row * _cols + col] = f;
+}
+
+void XOConsoleMapPlane::select(int col, int row, xo::PlayerSymbol f)
+{
+	if (col >= _cols)
+	{
+		return;
+	}
+	if (row >= _rows)
+	{
+		return;
+	}
+
+	_selected_fields[row * _cols + col] = f;
 }
 
 void XOConsoleMapPlane::images(const std::vector<std::shared_ptr<FileImagePlane>>& images)

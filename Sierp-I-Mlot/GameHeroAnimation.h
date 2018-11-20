@@ -1,5 +1,6 @@
 #pragma once
 #include "IAnimation.h"
+#include "XOGameLogic.h"
 
 namespace xo
 {
@@ -17,13 +18,13 @@ namespace xo
 		void speed(int);
 		void start_frame(int);
 		void center(int x, int y);
-		void turn(int);
+		void player_symbol(xo::PlayerSymbol symbol);
 
 	private:
 		int _speed;
 		int _start_frame;
 		int _center_x;
 		int _center_y;
-		int _turn;
+		xo::PlayerSymbol _player_symbol;
 	};
 }

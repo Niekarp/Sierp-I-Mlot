@@ -3,26 +3,26 @@
 
 using namespace xo;
 
-ChartReader::ChartReader(const std::string & filename)
+ChartReader::ChartReader()
 {
-	load(filename);
+	_notes = std::make_shared<NoteContainer>();
 }
 
 void ChartReader::load(const std::string & filename)
 {
+	_notes->clear();
 	std::fstream input_file(filename, std::ios::in);
-	XOIGameMapHero::Note note;
+	Note note{};
 	while (input_file >> note.tone >> note.time) 
 	{
+		note.destroy_time = -1;
 		note.tone -= 1;
-		_notes.push_back(note);
+		_notes->push(note);
 	}
 }
 
-void xo::ChartReader::put_notes_on(const std::shared_ptr<XOIGameMapHero>& game_map)
+std::shared_ptr<NoteContainer> xo::ChartReader::notes()
 {
-	for (auto &note : _notes)
-	{
-		game_map->put(note);
-	}
+	_notes->arrange();
+	return _notes;
 }

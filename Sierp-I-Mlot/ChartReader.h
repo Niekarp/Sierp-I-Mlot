@@ -1,16 +1,17 @@
 #pragma once
 #include "XOIGameMapHero.h"
+#include "NoteContainer.h"
 
 namespace xo
 {
 	class ChartReader
 	{
 	public:
-		ChartReader(const std::string &filename);
+		ChartReader();
 		void load(const std::string &filename);
-		void put_notes_on(const std::shared_ptr<XOIGameMapHero> &);
+		std::shared_ptr<NoteContainer> notes();
 
 	private:
-		std::vector<XOIGameMapHero::Note> _notes;
+		std::shared_ptr<NoteContainer> _notes;
 	};
 }

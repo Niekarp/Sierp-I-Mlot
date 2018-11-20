@@ -2,6 +2,7 @@
 #include "IClickableConsolePlane.h"
 #include "CenteredFramedPlane.h"
 #include "FileImagePlane.h"
+#include "XOGameLogic.h"
 
 class XOConsoleMapPlane :
 	public virtual IClickableConsolePlane
@@ -19,7 +20,8 @@ public:
 	void size(const Position &);
 	void foreground(WORD color);
 	void background(WORD color);
-	void put(int col, int row, int f);
+	void put(int col, int row, xo::PlayerSymbol f);
+	void select(int col, int row, xo::PlayerSymbol f);
 	void images(const std::vector<std::shared_ptr<FileImagePlane>> &);
 	void click(std::function<void(int, int)> callback);
 
@@ -30,8 +32,10 @@ private:
 	Position _position;
 	WORD _color_foreground;
 	WORD _color_background;
-	std::vector<int> _fields;
+	std::vector<xo::PlayerSymbol> _fields;
+	std::vector<xo::PlayerSymbol> _selected_fields;
 	std::shared_ptr<CenteredFramedPlane> _x_plane;
 	std::vector<std::shared_ptr<FileImagePlane>> _images;
 	std::function<void(int, int)> _callback_click;
+	long long _frame;
 };

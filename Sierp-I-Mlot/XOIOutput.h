@@ -3,10 +3,12 @@
 #include "XOIGameMapXO.h"
 #include "XOIGameMapHero.h"
 #include "XOIMessage.h"
+#include "XOIDelegateExecutor.h"
 
 namespace xo
 {
-	class XOIOutput
+	class XOIOutput :
+		public XOIDelegateExecutor
 	{
 	public:
 		virtual std::shared_ptr<XOIMenu> create_menu() = 0;
@@ -23,7 +25,5 @@ namespace xo
 		virtual void stop() = 0;
 
 		virtual void scale(float) = 0;
-	private:
-		virtual void _amaze_them_with_the_intro(const std::shared_ptr<XOIMenu> &) = 0;
 	};
 }

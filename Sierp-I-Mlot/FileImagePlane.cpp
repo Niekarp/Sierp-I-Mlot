@@ -4,24 +4,42 @@
 FileImagePlane::FileImagePlane(const std::string &filename) :
 	_pattern_size({ 1, 1 }),
 	_pattern_pos({}),
-	_color(0)
+	_real_pattern_pos{},
+	_color(0),
+	_gravity(Gravity::DEFAULT),
+	_clicked(false),
+	_real_pattern_size{}
 {
 	load(filename);
 }
 
 FileImagePlane::Position FileImagePlane::position()
 {
-	return _pattern_pos;
+	if (_gravity == Gravity::DEFAULT)
+	{
+		return _pattern_pos;
+	}
+	else if (_gravity == Gravity::LEFTDOWN)
+	{
+		return { _real_pattern_pos.x + _real_pattern_size.x / 2, _real_pattern_pos.y + _real_pattern_size.y / 2 };
+	}
 }
 
 FileImagePlane::Position FileImagePlane::size()
 {
-	return _pattern_size;
+	if (_gravity == Gravity::DEFAULT)
+	{
+		return _pattern_size;
+	}
+	else if (_gravity == Gravity::LEFTDOWN)
+	{
+		return _real_pattern_size;
+	}
 }
 
 FileImagePlane::PlaneType FileImagePlane::type()
 {
-	return PlaneType::POSITIONABLE;
+	return PlaneType::CENTERED;
 }
 
 void FileImagePlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
@@ -31,26 +49,49 @@ void FileImagePlane::draw(const std::shared_ptr<Console::Buffer>& buffer)
 	auto screen_width = buffer->screen_width();
 	auto screen_height = buffer->screen_height();
 
-	for (int i = 0; i < width; ++i)
+	int bx = 0;
+	int by = 0;
+	int ex = 0;
+	int ey = 0;
+
+	if (_gravity == Gravity::DEFAULT)
 	{
-		if (i + _pattern_pos.x < 0 || i + _pattern_pos.x > screen_width - 1)
+		bx = _pattern_pos.x;
+		by = _pattern_pos.y;
+		ex = bx + _pattern_size.x - 1;
+		ey = by + _pattern_size.y - 1;
+	}
+	else if (_gravity == Gravity::LEFTDOWN)
+	{		
+		bx = _pattern_pos.x;
+		by = screen_height - _pattern_size.y - _pattern_pos.y;
+		ex = bx + _pattern_size.x - 1;
+		ey = by + _pattern_size.y - 1;
+
+		_real_pattern_pos.x = bx;
+		_real_pattern_pos.y = by;
+		_real_pattern_size.x = ex - bx;
+		_real_pattern_size.y = ey - by;
+	}
+
+	for (int ix = bx; ix <= ex; ++ix)
+	{
+		for (int iy = by; iy <= ey; ++iy)
 		{
-			continue;
-		}
-		for (int j = 0; j < height; ++j)
-		{
-			if (j + _pattern_pos.y < 0 || j + _pattern_pos.y > screen_height - 1)
-			{
-				continue;
-			}
-			auto chr = _pattern[j * _pattern_size.x + i];
+			auto chr = _pattern[(iy - by) * _pattern_size.x + (ix - bx)];
 			if (chr != ' ')
 			{
 				chr = chr == '#' ? ' ' : chr;
-				buffer->put(i + _pattern_pos.x, j + _pattern_pos.y, chr, _color);
+				auto color = _color;
+				if (_clicked)
+				{
+					color ^= BACKGROUND_INTENSITY;
+				}
+				buffer->put(ix , iy, chr, color);
 			}
 		}
 	}
+
 }
 
 void FileImagePlane::position(Position pos)
@@ -85,4 +126,28 @@ void FileImagePlane::load(const std::string &filename)
 void FileImagePlane::color(WORD color)
 {
 	_color = color;
+}
+
+void FileImagePlane::gravity(Gravity g)
+{
+	_gravity = g;
+}
+
+void FileImagePlane::click_event(const std::function<void()> &callback)
+{
+	_click_callback = callback;
+}
+
+void FileImagePlane::click(IConsolePlane::Position position, DWORD btn, DWORD flag)
+{
+	_clicked = true;
+}
+
+void FileImagePlane::click_release()
+{
+	_clicked = false;
+	if (_click_callback)
+	{
+		_click_callback();
+	}
 }

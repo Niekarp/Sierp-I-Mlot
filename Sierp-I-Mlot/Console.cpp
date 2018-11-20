@@ -93,13 +93,16 @@ void Console::_setup_threadpool()
 	}
 
 	_workers_mutex = CreateMutex(NULL, FALSE, NULL);
+	_delegates_mutex = CreateMutex(NULL, FALSE, NULL);
+	_do_every_mutex = CreateMutex(NULL, FALSE, NULL);
+	_delegate_execution_event = CreateEvent(NULL, FALSE, FALSE, NULL);
 }
 
 void Console::_thread_start()
 {
 	_context.threadDrawStop = false;
 	_context.threadInputStop = false;
-	CHKERR_BOOL(ReleaseMutex(_workers_mutex));
+	CHKERR_MUTEX(ReleaseMutex(_workers_mutex));
 }
 
 void Console::_thread_stop()
@@ -273,7 +276,7 @@ int Console::height() const
 void Console::draw_async(
 	std::function<void(const std::shared_ptr<Buffer> &buffer)> callback)
 {
-	WaitForSingleObject(_workers_mutex, INFINITE);
+	CHKERR_DWORD(WaitForSingleObject(_workers_mutex, INFINITE));
 	for (;;)
 	{
 		auto &worker_info = _workers[_workers_next_index];
@@ -286,14 +289,16 @@ void Console::draw_async(
 			break;
 		}
 	}
-	CHKERR_BOOL(ReleaseMutex(_workers_mutex));
+	CHKERR_MUTEX(ReleaseMutex(_workers_mutex));
 }
 
 void Console::do_every(int period_ms, std::function<void(size_t)> trigger)
 {
+	CHKERR_DWORD(WaitForSingleObject(_do_every_mutex, INFINITE));
+
 	if (_queue_timer != NULL)
 	{
-		DeleteTimerQueueTimer(NULL, _queue_timer, NULL);
+		CHKERR_DWORD_DeleteTimerQueueTimer(DeleteTimerQueueTimer(NULL, _queue_timer, NULL));//wywala sie _queue_timer = 0
 		_animation_frame = 0;
 	}
 
@@ -304,6 +309,8 @@ void Console::do_every(int period_ms, std::function<void(size_t)> trigger)
 		console->_do_every_trigger(console->_animation_frame);
 		console->_animation_frame += 1;
 	}, this, period_ms, period_ms, WT_EXECUTEDEFAULT));
+
+	CHKERR_MUTEX(ReleaseMutex(_do_every_mutex));
 }
 
 void Console::animate_async(const std::shared_ptr<IAnimation>& animation,
@@ -372,6 +379,15 @@ void Console::key_up_event(const std::function<void(int key)>& callback)
 	_context.key_up_callbacks.push_back(callback);
 }
 
+void Console::execute(const std::function<void()>& delegate)
+{
+	CHKERR_DWORD(WaitForSingleObject(_delegates_mutex, INFINITE));
+	_delegates.push_back(delegate);
+	CHKERR_MUTEX(ReleaseMutex(_delegates_mutex));
+
+	SetEvent(_delegate_execution_event);
+}
+
 static VOID WINAPI _SetupConsole(Console::_Context *context)
 {
 	CHKERR_BOOL(SetConsoleOutputCP(852));
@@ -405,7 +421,18 @@ static DWORD WINAPI _ConsoleInputRoutine(Console::_Context &context)
 {
 	while (context.console->running())
 	{
-		CHKERR_DWORD(WaitForSingleObject(context.hStdIn, INFINITE));
+		HANDLE event_objects[] = { context.hStdIn,
+			context.console->_delegate_execution_event};
+		CHKERR_DWORD(WaitForMultipleObjects(2, event_objects, FALSE, INFINITE));
+
+		if (context.console->_delegates.size() > 0)
+		{
+			CHKERR_DWORD(WaitForSingleObject(context.console->_delegates_mutex, INFINITE));
+			auto delegate = context.console->_delegates.back();
+			context.console->_delegates.pop_back();
+			delegate();
+			CHKERR_MUTEX(ReleaseMutex(context.console->_delegates_mutex));
+		}		
 
 		DWORD numOfEvents;
 		CHKERR_BOOL(GetNumberOfConsoleInputEvents(context.hStdIn, &numOfEvents));
@@ -481,6 +508,10 @@ static BOOLEAN WINAPI _HandleConsoleInputRecord(Console::_Context &context, cons
 						record.Event.MouseEvent.dwEventFlags);
 					context.clicked_clickable_planes.push_back(clickable_plane);
 				}
+			}
+			else if (clickable_plane->type() == IConsolePlane::PlaneType::POSITIONABLE)
+			{
+
 			}
 		}
 		for (auto &callback : context.mouse_click_callbacks)

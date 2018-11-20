@@ -3,6 +3,7 @@
 #include "XOIMenu.h"
 #include "XOIGameMapXO.h"
 #include "Console.h"
+#include "AnimationChain.h"
 
 namespace xo
 {
@@ -26,13 +27,17 @@ namespace xo
 
 		void scale(float) override;
 
+		void execute(const std::function<void()> &) override;
+
 	private:
-		void _amaze_them_with_the_intro(const std::shared_ptr<XOIMenu> &) override;
+		void _amaze_them_with_the_intro(const std::shared_ptr<XOIMenu> &);
+		void _open_menu_animation(const std::shared_ptr<XOIMenu> &, const std::shared_ptr<AnimationChain> &, bool reopen);
 		void _run_background_animation();
 
 		std::shared_ptr<Console> _console;
 		float _scale;
 		bool _background_animation;
 		bool _everyone_stunned;
+		bool _transition_from_menu;
 	};
 }

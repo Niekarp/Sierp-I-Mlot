@@ -119,7 +119,7 @@ static struct _animation_helper_xo
 	int frame_start;
 	int n_rows;
 	float wave_cof;
-	int turn;
+	xo::PlayerSymbol player_symbol;
 
 private:
 	WORD _get_color(int i, int j)
@@ -132,7 +132,7 @@ private:
 		{
 			return 0;
 		}
-		auto pattern = BACKGROUND_PATTERN[turn][j % BACKGROUND_PATTERN_HEIGHT][i % BACKGROUND_PATTERN_WIDTH];
+		auto pattern = BACKGROUND_PATTERN[(int)player_symbol][j % BACKGROUND_PATTERN_HEIGHT][i % BACKGROUND_PATTERN_WIDTH];
 		auto color_pos = center_len + frame / 2.;
 		auto color = BACKGROUND_COLORS[0][(int)color_pos / BACKGROUND_PATTERN_HEIGHT % BACKGROUND_COLORS_SIZE];
 		if (pattern) color |= BACKGROUND_INTENSITY;
@@ -201,10 +201,10 @@ public:
 	}
 };
 
-xo::GameXOAnimation::GameXOAnimation(int start_frame, int turn) :
+xo::GameXOAnimation::GameXOAnimation(int start_frame) :
 	_speed(1),
 	_start_frame(start_frame),
-	_turn(turn)
+	_player_symbol(PlayerSymbol::circle)
 {
 }
 
@@ -222,7 +222,7 @@ void xo::GameXOAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer, s
 		_start_frame,							// int frame_start;
 		10,										// int n_rows;
 		20.f,									// float wave_cof;
-		_turn};									// int turn;
+		_player_symbol };									// int turn;
 	
 
 	anim_helper.draw();
@@ -241,4 +241,9 @@ bool xo::GameXOAnimation::continue_()
 void xo::GameXOAnimation::speed(int s)
 {
 	_speed = s;
+}
+
+void xo::GameXOAnimation::player_symbol(xo::PlayerSymbol s)
+{
+	_player_symbol = s;
 }

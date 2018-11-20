@@ -1,15 +1,10 @@
 #pragma once
 
 #include <utility>
+#include "PlayerSymbol.h"
 
 namespace xo
 {
-	enum class PlayerSymbol
-	{
-		none = -1,
-		cross = 0,
-		circle = 1,
-	};
 	typedef PlayerSymbol SquareState;
 
 	enum class GameState
@@ -34,11 +29,13 @@ namespace xo
 		XOGameLogic(unsigned initial_width, unsigned initial_height, PlayerSymbol initial_player, unsigned initial_winning_streak);
 
 		bool play_move(unsigned x, unsigned y);
+		bool peek_move(unsigned x, unsigned y);
 		void restart_game(unsigned board_width, unsigned board_height, PlayerSymbol starting_player, unsigned initial_winning_streak);
 
 		PlayerSymbol player_to_play_next();
 		PlayerSymbol winner();
 		GameState current_state();
+		void pass_turn();
 
 		// prints text representation of the game
 		void print_status();

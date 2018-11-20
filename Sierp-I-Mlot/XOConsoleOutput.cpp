@@ -24,7 +24,8 @@ namespace xo
 {
 	XOConsoleOutput::XOConsoleOutput() :
 		_scale(1),
-		_background_animation(true)
+		_background_animation(true),
+		_transition_from_menu(true)
 	{
 		_everyone_stunned = false;
 
@@ -57,8 +58,7 @@ namespace xo
 	}
 	
 	void XOConsoleOutput::show(const std::shared_ptr<XOIMenu>& menu)
-	{
-		_run_background_animation();
+	{		
 		if (_everyone_stunned == false)
 		{
 			const std::shared_ptr<XOIMenu> &then_menu = menu;
@@ -67,9 +67,16 @@ namespace xo
 			_everyone_stunned = true;
 			return;
 		}
+		else if (!_transition_from_menu)
+		{
+			auto chain = std::make_shared<AnimationChain>();
+			_open_menu_animation(menu, chain, true);
+			_console->animate_async(chain, conf::ANIMATION_FRAME_FREQUENCY);
+		}
 		auto console_menu = std::dynamic_pointer_cast<XOConsoleMenu>(menu);
 		console_menu->clear(_console);
 		console_menu->draw_on(_console);
+		_transition_from_menu = true;
 	}
 	
 	void XOConsoleOutput::show(const std::shared_ptr<XOIGameMapXO> &game_map)
@@ -77,6 +84,7 @@ namespace xo
 		_run_background_animation();
 		auto console_game_map = std::dynamic_pointer_cast<XOConsoleGameMapXO>(game_map);
 		console_game_map->draw_on(_console);
+		_transition_from_menu = false;
 	}
 
 	void XOConsoleOutput::show(const std::shared_ptr<XOIGameMapHero> &game_map)
@@ -84,6 +92,8 @@ namespace xo
 		_run_background_animation();
 		auto console_game_map = std::dynamic_pointer_cast<XOConsoleGameMapHero>(game_map);
 		console_game_map->draw_on(_console);
+		_background_animation = false;
+		_transition_from_menu = false;
 	}
 
 	void XOConsoleOutput::show(const std::shared_ptr<XOIMessage> &message)
@@ -91,6 +101,7 @@ namespace xo
 		_background_animation = false;
 		auto console_message = std::dynamic_pointer_cast<XOConsoleMessage>(message);
 		console_message->draw_on(_console);
+		_transition_from_menu = false;
 	}
 	
 	void XOConsoleOutput::run()
@@ -187,24 +198,12 @@ namespace xo
 		animated_image4->load_frame("resources/pblogo23.txt");
 
 		auto intro_animation = std::make_shared<IntroAnimation>(image1, image2, image3, animated_image4);
-		auto menu_animation = std::make_shared<SuperWaveAnimation>(1350, 8);
-		menu_animation->speed(3);
-		auto intro_menu_animation = std::make_shared<IntroMenuAnimation>(IConsolePlane::Position{ 60, 40 });
-		intro_menu_animation->fill((char)178, BACKGROUND_BLUE | BACKGROUND_INTENSITY);
+		
 		auto chain = std::make_shared<AnimationChain>();
 
 		chain->add(intro_animation);
-		chain->add(menu_animation);
-		chain->add(intro_menu_animation);
+		_open_menu_animation(menu_after_intro, chain, false);
 		chain->overlap(100);
-		chain->on_end([&menu_after_intro, this](auto animation_index)
-		{
-			if (animation_index == 2)
-			{
-				this->show(menu_after_intro);
-				// std::static_pointer_cast<XOConsoleMenu>(menu_after_intro)->draw_on(_console);
-			}
-		});
 
 		_console->animate_async(chain, xo::conf::ANIMATION_FRAME_FREQUENCY);
 		_console->key_down_event([this](auto key)
@@ -218,6 +217,34 @@ namespace xo
 		_background_animation = true;
 
 		// _console->exec();
+	}
+
+	void XOConsoleOutput::_open_menu_animation(const std::shared_ptr<XOIMenu> &menu,
+		const std::shared_ptr<AnimationChain> &chain, bool reopen)
+	{
+		std::shared_ptr<SuperWaveAnimation> menu_animation;
+		if (reopen)
+		{
+			menu_animation = std::make_shared<SuperWaveAnimation>(400, 8);
+		}
+		else
+		{
+			menu_animation = std::make_shared<SuperWaveAnimation>(1350, 8);
+		}
+		menu_animation->speed(3);
+		auto intro_menu_animation = std::make_shared<IntroMenuAnimation>(IConsolePlane::Position{ 60, 40 });
+		intro_menu_animation->fill((char)178, BACKGROUND_BLUE | BACKGROUND_INTENSITY);
+
+		chain->add(menu_animation);
+		chain->add(intro_menu_animation);
+		chain->on_end([&menu, this](auto animation_index)
+		{
+			if (animation_index == 2)
+			{
+				this->show(menu);
+				// std::static_pointer_cast<XOConsoleMenu>(menu_after_intro)->draw_on(_console);
+			}
+		});
 	}
 	void XOConsoleOutput::_run_background_animation()
 	{
@@ -233,5 +260,9 @@ namespace xo
 		auto chain_animation = std::make_shared<AnimationChain>();
 		//chain_animation->add(menu_animation);
 		_console->animate_async(chain_animation, xo::conf::ANIMATION_FRAME_FREQUENCY);
+	}
+	void XOConsoleOutput::execute(const std::function<void()> &delegate)
+	{
+		_console->execute(delegate);
 	}
 }

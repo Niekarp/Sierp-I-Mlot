@@ -1,5 +1,6 @@
 #pragma once
 #include "IAnimation.h"
+#include "XOGameLogic.h"
 
 namespace xo
 {
@@ -7,7 +8,7 @@ namespace xo
 		public IAnimation
 	{
 	public:
-		GameXOAnimation(int start_frame, int turn);
+		GameXOAnimation(int start_frame);
 
 		// Inherited via IAnimation
 		virtual void draw(const std::shared_ptr<Console::Buffer>& buffer, size_t frame) override;
@@ -15,10 +16,11 @@ namespace xo
 		virtual bool continue_() override;
 
 		void speed(int);
+		void player_symbol(xo::PlayerSymbol);
 
 	private:
 		int _speed;
 		int _start_frame;
-		int _turn;
+		xo::PlayerSymbol _player_symbol;
 	};
 }

@@ -13,6 +13,9 @@ namespace xo
 		virtual size_t height() = 0;
 		virtual void height(size_t) = 0;
 		virtual void put(PlayerSymbol symbol, size_t x, size_t y) = 0;
+		virtual void select(PlayerSymbol symbol, size_t x, size_t y) = 0;
 		virtual void clear_fields() = 0;
+		virtual void clear_selection() = 0;
+		virtual void player_symbol(PlayerSymbol) = 0;
 	};
 }

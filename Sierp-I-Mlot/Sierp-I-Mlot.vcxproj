@@ -75,12 +75,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Source\portaudio\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Source\portaudio\build\msvc\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\Source\portaudio\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Source\portaudio\build\msvc\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -95,6 +99,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -162,6 +167,11 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="GameHeroAnimation.h" />
     <ClInclude Include="GameXOAnimation.h" />
+    <ClInclude Include="HeroLifeBar.h" />
+    <ClInclude Include="HeroProgressBarPlane.h" />
+    <ClInclude Include="NoteContainer.h" />
+    <ClInclude Include="PlayerSymbol.h" />
+    <ClInclude Include="XOIBackgroundService.h" />
     <ClInclude Include="XOConsoleMessage.h" />
     <ClInclude Include="FileImagePlane.h" />
     <ClInclude Include="FramePlaneFrameCreator.h" />
@@ -170,6 +180,8 @@
     <ClInclude Include="XOConsoleGameMapXO.h" />
     <ClInclude Include="XOConsoleMapPlane.h" />
     <ClInclude Include="XOConsoleMenu.h" />
+    <ClInclude Include="XOHeroGameLogic.h" />
+    <ClInclude Include="XOIDelegateExecutor.h" />
     <ClInclude Include="XOIGameMapHero.h" />
     <ClInclude Include="XOIGameMapXO.h" />
     <ClInclude Include="XOIMenu.h" />
@@ -195,6 +207,7 @@
     <ClInclude Include="XOGameLogic.h" />
     <ClInclude Include="XOInput.h" />
     <ClInclude Include="XOIView.h" />
+    <ClInclude Include="XOTimer.h" />
     <ClInclude Include="XOViewElement.h" />
     <ClInclude Include="XOViewElementRegistrar.h" />
     <ClInclude Include="XOViewManager.h" />
@@ -209,6 +222,11 @@
     <ClCompile Include="ConsoleAnimationTest.cpp" />
     <ClCompile Include="GameHeroAnimation.cpp" />
     <ClCompile Include="GameXOAnimation.cpp" />
+    <ClCompile Include="HeroLifeBar.cpp" />
+    <ClCompile Include="HeroProgressBarPlane.cpp" />
+    <ClCompile Include="NoteContainer.cpp" />
+    <ClCompile Include="XOHeroGameLogic.cpp" />
+    <ClCompile Include="XOTimer.cpp" />
     <ClCompile Include="XOViewElementRegistrar.cpp" />
     <ClCompile Include="XOConsoleMessage.cpp" />
     <ClCompile Include="FileImagePlane.cpp" />

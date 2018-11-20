@@ -25,6 +25,11 @@ void XOConsoleMessage::text(const std::string & msg)
 
 void xo::XOConsoleMessage::draw(const std::shared_ptr<Console::Buffer>& buffer, size_t frame)
 {
+	if (_end)
+	{
+		return;
+	}
+
 	auto bx = 0;
 	auto by = 0;
 	auto ex = buffer->screen_width();
@@ -37,15 +42,16 @@ void xo::XOConsoleMessage::draw(const std::shared_ptr<Console::Buffer>& buffer, 
 			buffer->put(ix, iy, ' ');
 		}
 	}
-
+	
 	_text_plane->position({ (ex - bx) / 2 - _text_plane->size().x / 2,
 		(ey - by) / 2 - _text_plane->size().y / 2 });
 	_text_plane->draw(buffer);
 
 	if (frame * xo::conf::ANIMATION_FRAME_FREQUENCY >= _time_ms)
 	{
+		OutputDebugStringA("XOConsoleMessage:call after\n");
 		_end = true;
-		element_call("after");
+  		element_call("after");
 	}
 }
 
@@ -59,14 +65,40 @@ bool xo::XOConsoleMessage::continue_()
 	return false;
 }
 
+void xo::XOConsoleMessage::type(Type t)
+{
+	_type = t;
+
+	switch (_type)
+	{
+	case Type::DEFAULT:
+		_text_plane->foreground(0, FOREGROUND_RED | FOREGROUND_BLUE
+			| FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		break;
+	case Type::SUCCESS:
+		_text_plane->foreground(0, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		break;
+	case Type::FAIL:
+		_text_plane->foreground(0, FOREGROUND_RED | FOREGROUND_INTENSITY);
+		break;
+	case Type::SPECIAL:
+		_text_plane->foreground(0, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		break;
+	}
+}
+
 void xo::XOConsoleMessage::draw_on(const std::shared_ptr<Console>& console)
 {
+	_end = false;
 	console->clear_planes();
 	auto animation_chain = std::make_shared<AnimationChain>();
 	animation_chain->add(shared_from_this());
-	animation_chain->on_end([this](auto frame) {
-		element_call("after");
-	});
+	/*animation_chain->on_end([this, animation_chain](auto frame) {
+		if (frame == animation_chain->frames_size() - 1)
+		{
+			element_call("after");
+		}
+	});*/
 
 	console->animate_async(animation_chain, xo::conf::ANIMATION_FRAME_FREQUENCY);
 }

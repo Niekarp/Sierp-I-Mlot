@@ -121,7 +121,7 @@ static struct _animation_helper_hero
 	int n_rows;
 	int center_screen_x;
 	int center_screen_y;
-	int turn;
+	xo::PlayerSymbol player_symbol;
 
 private:
 	WORD _get_color(int i, int j)
@@ -132,7 +132,7 @@ private:
 		{
 			return 0;
 		}
-		auto pattern = BACKGROUND_PATTERN[turn][j % BACKGROUND_PATTERN_HEIGHT][i % BACKGROUND_PATTERN_WIDTH];
+		auto pattern = BACKGROUND_PATTERN[(int)player_symbol][j % BACKGROUND_PATTERN_HEIGHT][i % BACKGROUND_PATTERN_WIDTH];
 		auto color_pos = center_len / 2 - frame / 4;
 		auto color = BACKGROUND_COLORS[pattern][abs(color_pos / BACKGROUND_PATTERN_HEIGHT % BACKGROUND_COLORS_SIZE)];
 		return color;
@@ -204,7 +204,7 @@ xo::GameHeroAnimation::GameHeroAnimation() :
 	_start_frame(0),
 	_center_x(0),
 	_center_y(0),
-	_turn(0)
+	_player_symbol(PlayerSymbol::circle)
 {
 }
 
@@ -224,7 +224,7 @@ void xo::GameHeroAnimation::draw(const std::shared_ptr<Console::Buffer>& buffer,
 		8,
 		screen_w / 2 + _center_x,
 		screen_h / 2 + _center_y,
-		_turn
+		_player_symbol
 	};
 
 	anim_helper.draw();
@@ -256,7 +256,7 @@ void xo::GameHeroAnimation::center(int x, int y)
 	_center_y = y;
 }
 
-void xo::GameHeroAnimation::turn(int turn)
+void xo::GameHeroAnimation::player_symbol(xo::PlayerSymbol symbol)
 {
-	_turn = turn;
+	_player_symbol = symbol;
 }

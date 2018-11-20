@@ -60,17 +60,17 @@
     <Filter Include="Source Files\Presentation\Console">
       <UniqueIdentifier>{03944fde-8591-4c94-8c47-6387311f1187}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Console\XO">
-      <UniqueIdentifier>{9731fcf5-0959-4bc5-ad73-8eabb5c2776c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Console\XO">
-      <UniqueIdentifier>{5c11109a-d57c-4745-8109-3bf8fce27463}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Console\Animation">
       <UniqueIdentifier>{6dfa6931-be23-4c2b-ba3c-8ecc0a67d0eb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Console\Animation">
       <UniqueIdentifier>{88da9141-f2d5-4914-b6fc-912e79df23d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Console\Plane">
+      <UniqueIdentifier>{b47eb3c7-d2f7-41e2-848b-ec6f05674b35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Console\Plane">
+      <UniqueIdentifier>{ef983db3-ea95-41c7-8633-0c99d3cb6b2e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -95,31 +95,7 @@
     <ClInclude Include="XOViewManager.h">
       <Filter>Deprecated</Filter>
     </ClInclude>
-    <ClInclude Include="TextConsolePlane.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="ButtonPlane.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="CenteredFramedPlane.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
     <ClInclude Include="Console.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="FileImagePlane.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="FramePlaneFrameCreator.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="IAnimation.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="IClickableConsolePlane.h">
-      <Filter>Header Files\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="IConsolePlane.h">
       <Filter>Header Files\Console</Filter>
     </ClInclude>
     <ClInclude Include="Note.h">
@@ -148,9 +124,6 @@
     </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>Deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="XOConsoleMapPlane.h">
-      <Filter>Header Files\Console\XO</Filter>
     </ClInclude>
     <ClInclude Include="XOIGameMapXO.h">
       <Filter>Header Files\Presentation\Abstract</Filter>
@@ -209,6 +182,57 @@
     <ClInclude Include="GameHeroAnimation.h">
       <Filter>Header Files\Console\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="XOHeroGameLogic.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="XOIDelegateExecutor.h">
+      <Filter>Header Files\Presentation\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="XOIBackgroundService.h">
+      <Filter>Header Files\Presentation\Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="XOTimer.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimation.h">
+      <Filter>Header Files\Console\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="FileImagePlane.h">
+      <Filter>Header Files\Console\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="CenteredFramedPlane.h">
+      <Filter>Header Files\Console\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="FramePlaneFrameCreator.h">
+      <Filter>Header Files\Console\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="IClickableConsolePlane.h">
+      <Filter>Header Files\Console\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="IConsolePlane.h">
+      <Filter>Header Files\Console\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="TextConsolePlane.h">
+      <Filter>Header Files\Console\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="XOConsoleMapPlane.h">
+      <Filter>Header Files\Console\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="HeroLifeBar.h">
+      <Filter>Header Files\Console\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonPlane.h">
+      <Filter>Header Files\Console\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="HeroProgressBarPlane.h">
+      <Filter>Header Files\Console\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="NoteContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSymbol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XOInput.cpp">
@@ -238,25 +262,10 @@
     <ClCompile Include="Source.cpp">
       <Filter>Deprecated</Filter>
     </ClCompile>
-    <ClCompile Include="ButtonPlane.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="CenteredFramedPlane.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
     <ClCompile Include="Console.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleAnimationTest.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="FileImagePlane.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="FramePlaneFrameCreator.cpp">
-      <Filter>Source Files\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="TextConsolePlane.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
     <ClCompile Include="XOConsoleOutput.cpp">
@@ -267,9 +276,6 @@
     </ClCompile>
     <ClCompile Include="Menu.cpp">
       <Filter>Deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="XOConsoleMapPlane.cpp">
-      <Filter>Source Files\Console\XO</Filter>
     </ClCompile>
     <ClCompile Include="XOConsoleGameMapXO.cpp">
       <Filter>Source Files\Presentation\Console</Filter>
@@ -307,10 +313,43 @@
     <ClCompile Include="SuperWaveAnimation.cpp">
       <Filter>Source Files\Console\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="GameXOAnimation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameHeroAnimation.cpp">
+      <Filter>Source Files\Console\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="GameXOAnimation.cpp">
+      <Filter>Source Files\Console\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="XOHeroGameLogic.cpp">
+      <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="XOTimer.cpp">
+      <Filter>Source Files\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonPlane.cpp">
+      <Filter>Source Files\Console\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="CenteredFramedPlane.cpp">
+      <Filter>Source Files\Console\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="FileImagePlane.cpp">
+      <Filter>Source Files\Console\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="FramePlaneFrameCreator.cpp">
+      <Filter>Source Files\Console\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="HeroLifeBar.cpp">
+      <Filter>Source Files\Console\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="TextConsolePlane.cpp">
+      <Filter>Source Files\Console\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="XOConsoleMapPlane.cpp">
+      <Filter>Source Files\Console\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="HeroProgressBarPlane.cpp">
+      <Filter>Source Files\Console\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="NoteContainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

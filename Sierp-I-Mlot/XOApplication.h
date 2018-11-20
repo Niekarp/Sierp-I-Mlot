@@ -5,6 +5,7 @@
 #include "XOIOutput.h"
 #include "XOActionLogic.h"
 #include "XOGameLogic.h"
+#include "XOHeroGameLogic.h"
 
 namespace xo {
 	class XOApplication
@@ -18,7 +19,8 @@ namespace xo {
 		static std::shared_ptr<XOApplication> _instance;
 
 		std::shared_ptr<XOIOutput> _output;
-		XOActionLogic _action_logic;
-		XOGameLogic _game_logic;
+		std::shared_ptr<XOActionLogic> _action_logic;
+		std::shared_ptr<XOGameLogic> _xo_game_logic;
+		std::shared_ptr<XOHeroGameLogic> _hero_game_logic;
 	};
 }
