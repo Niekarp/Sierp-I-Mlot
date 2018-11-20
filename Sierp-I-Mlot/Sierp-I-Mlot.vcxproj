@@ -171,6 +171,8 @@
     <ClInclude Include="HeroProgressBarPlane.h" />
     <ClInclude Include="NoteContainer.h" />
     <ClInclude Include="PlayerSymbol.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="XOIBackgroundService.h" />
     <ClInclude Include="XOConsoleMessage.h" />
     <ClInclude Include="FileImagePlane.h" />
@@ -257,6 +259,12 @@
     <ClCompile Include="XOGameLogic.cpp" />
     <ClCompile Include="XOInput.cpp" />
     <ClCompile Include="XOViewManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Sierp-I-Mlot.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="exe_icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

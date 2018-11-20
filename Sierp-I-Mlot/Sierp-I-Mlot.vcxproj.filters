@@ -72,6 +72,9 @@
     <Filter Include="Source Files\Console\Plane">
       <UniqueIdentifier>{ef983db3-ea95-41c7-8633-0c99d3cb6b2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{762c7b7a-734b-495e-92e0-a3a258ec8a31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XOInput.h">
@@ -233,6 +236,12 @@
     <ClInclude Include="PlayerSymbol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XOInput.cpp">
@@ -352,5 +361,15 @@
     <ClCompile Include="NoteContainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Sierp-I-Mlot.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="exe_icon.ico">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>
