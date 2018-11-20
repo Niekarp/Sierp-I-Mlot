@@ -21,6 +21,8 @@ namespace xo
 		void progress(float);
 
 	private:
+		void _draw_particles(const std::shared_ptr<Console::Buffer> &buffer, float pbx,
+			float pby, float pex, float pey, float p1cx, float p1cy);
 		Position _position;
 		Position _size;
 		char _frame_chr;
