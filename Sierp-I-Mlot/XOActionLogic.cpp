@@ -197,6 +197,9 @@ void XOActionLogic::main_menu_exit()
 
 void XOActionLogic::settings_back()
 {
+	_music_player->stop();
+	_music_player->load(conf::FILE_MUSIC_INTRO);
+	_music_player->play();
 	_output->show(_main_menu);
 }
 
