@@ -11,7 +11,8 @@ XOHeroGameLogic::XOHeroGameLogic() :
 	_current_progress(50),
 	_ommision_time(0),
 	_queue_timer(0),
-	_play(false)
+	_play(false),
+	_start(false)
 {
 }
 
@@ -54,7 +55,16 @@ void XOHeroGameLogic::on_note_omitted(const std::function<void(const Note&)>& ca
 
 Note *XOHeroGameLogic::button_pressed(int button)
 {
+	if (!_play)
+	{
+		_add_points(conf::GAME_HERO_PROGRESS_PENALTY_WRONG_CLICK);
+		return nullptr;
+	}
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - _start_point);
+	if (duration.count() <= _ommision_time)
+	{
+		return nullptr;
+	}
 
 	for (auto i = _last_nearest_note_index; i < _notes->size(); ++i)
 	{
@@ -184,11 +194,6 @@ void XOHeroGameLogic::_feed_with_next_notes()
 
 void XOHeroGameLogic::_on_note_omitted(const Note &note)
 {
-	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - _start_point);
-	if (duration.count() - note.time <= _ommision_time)
-	{
-		return;
-	}
 	_add_points(conf::GAME_HERO_PROGRESS_PENALTY_DROP);
 	for (auto &callback : _omitted_callbacks)
 	{
