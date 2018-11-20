@@ -162,7 +162,6 @@ void xo::XOActionLogic::direct_execution()
 
 void XOActionLogic::main_menu_play()
 {
-	_xo_game_logic->restart_game(3,3, PlayerSymbol::circle, 3);
 	_hero_game_logic->reset();
 	_game_map_hero->reset();
 	_game_map_xo->clear_selection();

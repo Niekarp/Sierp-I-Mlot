@@ -184,6 +184,11 @@ void XOHeroGameLogic::_feed_with_next_notes()
 
 void XOHeroGameLogic::_on_note_omitted(const Note &note)
 {
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - _start_point);
+	if (duration.count() - note.time <= _ommision_time)
+	{
+		return;
+	}
 	_add_points(conf::GAME_HERO_PROGRESS_PENALTY_DROP);
 	for (auto &callback : _omitted_callbacks)
 	{
