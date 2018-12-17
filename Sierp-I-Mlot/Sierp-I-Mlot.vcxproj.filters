@@ -218,6 +218,9 @@
     <ClInclude Include="XOConsoleApplication.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
+    <ClInclude Include="IFramedPlane.h">
+      <Filter>Header Files\Console\Plane</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

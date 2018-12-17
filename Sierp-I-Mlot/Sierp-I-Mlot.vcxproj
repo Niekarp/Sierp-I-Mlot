@@ -169,6 +169,7 @@
     <ClInclude Include="GameXOAnimation.h" />
     <ClInclude Include="HeroLifeBar.h" />
     <ClInclude Include="HeroProgressBarPlane.h" />
+    <ClInclude Include="IFramedPlane.h" />
     <ClInclude Include="NoteContainer.h" />
     <ClInclude Include="PlayerSymbol.h" />
     <ClInclude Include="resource.h" />
