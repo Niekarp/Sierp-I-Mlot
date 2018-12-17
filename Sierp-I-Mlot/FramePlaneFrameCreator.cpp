@@ -3,7 +3,7 @@
 
 
 FramePlaneFrameCreator::FramePlaneFrameCreator(
-	const std::shared_ptr<CenteredFramedPlane>& frame_plane) :
+	const std::shared_ptr<xo::IFramedPlane>& frame_plane) :
 	_frame_plane(frame_plane)
 {
 }
