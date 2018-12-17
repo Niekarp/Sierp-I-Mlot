@@ -1,8 +1,10 @@
 #pragma once
 #include "IConsolePlane.h"
+#include "IFramedPlane.h"
 
 struct CenteredFramedPlane :
-	public virtual IConsolePlane
+	public virtual IConsolePlane,
+	public xo::IFramedPlane
 {
 	CenteredFramedPlane(float position = 0);
 	Position position() override;
@@ -13,10 +15,10 @@ struct CenteredFramedPlane :
 	void size(Position);
 	void frame_color(WORD color);
 	void fill_color(WORD color);
-	void fill_char(char fill_char);
-	void frame_chars(char left_chr, char top_chr, char right_chr, char bottom_chr);
+	void fill_char(char fill_char) override;
+	void frame_chars(char left_chr, char top_chr, char right_chr, char bottom_chr) override;
 	void corner_chars(char left_top_chr, char right_top_chr, char left_bottom_chr,
-		char right_bottom_chr);
+		char right_bottom_chr) override;
 	void shadow(char chr, WORD color);
 
 protected:
