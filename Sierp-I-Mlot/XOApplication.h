@@ -11,13 +11,15 @@ namespace xo {
 	class XOApplication
 	{
 	public:
-		static std::shared_ptr<XOApplication> get_instance();
-
-		void run();
-	private:
 		XOApplication();
-		static std::shared_ptr<XOApplication> _instance;
 
+		void initiate();
+		void run();
+
+	protected:
+		virtual std::shared_ptr<XOIOutput> create_output() = 0;
+
+	private:
 		std::shared_ptr<XOIOutput> _output;
 		std::shared_ptr<XOActionLogic> _action_logic;
 		std::shared_ptr<XOGameLogic> _xo_game_logic;

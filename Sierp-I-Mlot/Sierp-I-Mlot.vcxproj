@@ -23,7 +23,7 @@
     <ProjectGuid>{4AF7A22C-19F1-4536-9E26-769C383C547F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SierpIMlot</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -173,6 +173,7 @@
     <ClInclude Include="PlayerSymbol.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
+    <ClInclude Include="XOConsoleApplication.h" />
     <ClInclude Include="XOIBackgroundService.h" />
     <ClInclude Include="XOConsoleMessage.h" />
     <ClInclude Include="FileImagePlane.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="HeroLifeBar.cpp" />
     <ClCompile Include="HeroProgressBarPlane.cpp" />
     <ClCompile Include="NoteContainer.cpp" />
+    <ClCompile Include="XOConsoleApplication.cpp" />
     <ClCompile Include="XOHeroGameLogic.cpp" />
     <ClCompile Include="XOTimer.cpp" />
     <ClCompile Include="XOViewElementRegistrar.cpp" />

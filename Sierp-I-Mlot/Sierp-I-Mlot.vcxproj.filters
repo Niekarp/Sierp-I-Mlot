@@ -242,6 +242,9 @@
     <ClInclude Include="resource1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="XOConsoleApplication.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XOInput.cpp">
@@ -359,6 +362,9 @@
       <Filter>Source Files\Console\Plane</Filter>
     </ClCompile>
     <ClCompile Include="NoteContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XOConsoleApplication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
