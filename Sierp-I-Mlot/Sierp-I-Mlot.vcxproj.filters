@@ -221,6 +221,9 @@
     <ClInclude Include="IFramedPlane.h">
       <Filter>Header Files\Console\Plane</Filter>
     </ClInclude>
+    <ClInclude Include="Memento.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
