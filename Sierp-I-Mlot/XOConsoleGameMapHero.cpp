@@ -218,15 +218,15 @@ static struct anim_helper_hero_map
 	{
 		auto screen_height = buffer->screen_height();
 
-		for (auto i = 0; i < notes->size(); ++i)
+		for (auto& note : *notes)
 		{
-			if (notes->at(i).time < ommision_time)
+			if (note.time < ommision_time)
 			{
 				continue;
 			}
-			else if (notes->at(i).time <= duration + NOTE_START_TIME)
+			else if (note.time <= duration + NOTE_START_TIME)
 			{
-				_put_note(notes->at(i));
+				_put_note(note);
 			}
 		}
 	}

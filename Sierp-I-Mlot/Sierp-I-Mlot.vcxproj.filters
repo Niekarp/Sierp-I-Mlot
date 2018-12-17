@@ -14,9 +14,6 @@
     <Filter Include="Header Files\Presentation">
       <UniqueIdentifier>{6cb727b0-a60f-4c72-8117-ec13cca885b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Deprecated">
-      <UniqueIdentifier>{8e9fbf40-843c-41ec-829d-d3d52792bb87}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -29,18 +26,6 @@
     </Filter>
     <Filter Include="Source Files\Presentation">
       <UniqueIdentifier>{da54de29-d221-4a69-89f0-b5249b14cadb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Deprecated\Network">
-      <UniqueIdentifier>{a5d5418e-08d6-4495-a406-06daf6dd79cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Deprecated\Network\Network">
-      <UniqueIdentifier>{f232b768-10a4-43e1-b942-0b3d8fdf1720}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Deprecated\Input">
-      <UniqueIdentifier>{08ce2675-8b6f-4af9-a03f-5060423b36b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Deprecated\Input\Input">
-      <UniqueIdentifier>{69523fe4-2153-48f9-8fc4-767f3ce2b7b0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Console">
       <UniqueIdentifier>{edb562fa-51dc-463e-9935-ac21c0699b46}</UniqueIdentifier>
@@ -77,9 +62,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="XOInput.h">
-      <Filter>Deprecated\Input</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
@@ -91,12 +73,6 @@
     </ClInclude>
     <ClInclude Include="XOGameLogic.h">
       <Filter>Header Files\Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="XOClient.h">
-      <Filter>Deprecated\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="XOViewManager.h">
-      <Filter>Deprecated</Filter>
     </ClInclude>
     <ClInclude Include="Console.h">
       <Filter>Header Files\Console</Filter>
@@ -124,9 +100,6 @@
     </ClInclude>
     <ClInclude Include="XOIOutput.h">
       <Filter>Header Files\Presentation\Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Deprecated</Filter>
     </ClInclude>
     <ClInclude Include="XOIGameMapXO.h">
       <Filter>Header Files\Presentation\Abstract</Filter>
@@ -247,9 +220,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="XOInput.cpp">
-      <Filter>Deprecated\Input\Input</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files\Other</Filter>
     </ClCompile>
@@ -265,15 +235,6 @@
     <ClCompile Include="XOGameLogic.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="XOClient.cpp">
-      <Filter>Deprecated\Network\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="XOViewManager.cpp">
-      <Filter>Deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Deprecated</Filter>
-    </ClCompile>
     <ClCompile Include="Console.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
@@ -285,9 +246,6 @@
     </ClCompile>
     <ClCompile Include="XOConsoleMenu.cpp">
       <Filter>Source Files\Presentation\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Deprecated</Filter>
     </ClCompile>
     <ClCompile Include="XOConsoleGameMapXO.cpp">
       <Filter>Source Files\Presentation\Console</Filter>

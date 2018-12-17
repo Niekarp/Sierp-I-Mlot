@@ -193,7 +193,6 @@
     <ClInclude Include="IConsolePlane.h" />
     <ClInclude Include="IntroAnimation.h" />
     <ClInclude Include="IntroMenuAnimation.h" />
-    <ClInclude Include="Menu.h" />
     <ClInclude Include="MusicPlayer.h" />
     <ClInclude Include="Note.h" />
     <ClInclude Include="SuperWaveAnimation.h" />
@@ -206,14 +205,11 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="XOActionLogic.h" />
     <ClInclude Include="XOApplication.h" />
-    <ClInclude Include="XOClient.h" />
     <ClInclude Include="XOGameLogic.h" />
-    <ClInclude Include="XOInput.h" />
     <ClInclude Include="XOIView.h" />
     <ClInclude Include="XOTimer.h" />
     <ClInclude Include="XOViewElement.h" />
     <ClInclude Include="XOViewElementRegistrar.h" />
-    <ClInclude Include="XOViewManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animatedfileimageplane.cpp" />
@@ -238,7 +234,6 @@
     <ClCompile Include="FullScreenTextAnimation.cpp" />
     <ClCompile Include="IntroAnimation.cpp" />
     <ClCompile Include="IntroMenuAnimation.cpp" />
-    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MusicPlayer.cpp" />
     <ClCompile Include="SuperWaveAnimation.cpp" />
     <ClCompile Include="TextConsolePlane.cpp" />
@@ -254,13 +249,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Source.cpp" />
     <ClCompile Include="XOActionLogic.cpp" />
     <ClCompile Include="XOApplication.cpp" />
-    <ClCompile Include="XOClient.cpp" />
     <ClCompile Include="XOGameLogic.cpp" />
-    <ClCompile Include="XOInput.cpp" />
-    <ClCompile Include="XOViewManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Sierp-I-Mlot.rc" />

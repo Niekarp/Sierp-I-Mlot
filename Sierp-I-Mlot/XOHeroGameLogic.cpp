@@ -7,7 +7,6 @@ using namespace xo;
 XOHeroGameLogic::XOHeroGameLogic() :
 	_turn(0),
 	_chart_reader(),
-	_last_nearest_note_index(0),
 	_current_progress(50),
 	_ommision_time(0),
 	_queue_timer(0),
@@ -24,7 +23,7 @@ void XOHeroGameLogic::turn(int turn)
 std::shared_ptr<NoteContainer> XOHeroGameLogic::load(const std::string &filename)
 {
 	_chart_reader.load(filename);
-  	_notes = _chart_reader.notes();
+	_notes = _chart_reader.notes();
 	return _notes;
 
 	/*map->start(0);
@@ -66,28 +65,28 @@ Note *XOHeroGameLogic::button_pressed(int button)
 		return nullptr;
 	}
 
-	for (auto i = _last_nearest_note_index; i < _notes->size(); ++i)
+	for (auto &note : *_notes)
 	{
-		if (_notes->at(i).time >= duration.count() + conf::GAME_HERO_LOGIC_NOTE_TOLERANCE)
+		if (note.time >= duration.count() + conf::GAME_HERO_LOGIC_NOTE_TOLERANCE)
 		{
 			break;
 		}
 
-		if (_notes->at(i).clicked)
+		if (note.clicked)
 		{
 			continue;
 		}
 
-		if (_notes->at(i).tone == button)
+		if (note.tone == button)
 		{
 			_add_points(conf::GAME_HERO_PROGRESS_REWARD_GOOD_CLICK);
-			_notes->at(i).clicked = true;
-			return &_notes->at(i);
+			note.clicked = true;
+			return &note;
 		}
 	}
 
 	_add_points(conf::GAME_HERO_PROGRESS_PENALTY_WRONG_CLICK);
-	
+
 	return nullptr;
 }
 
@@ -100,7 +99,6 @@ void xo::XOHeroGameLogic::reset()
 {
 	OutputDebugStringA("XOHeroGameLogic: reset");
 	_play = false;
-	_last_nearest_note_index = 0;
 	_current_progress = 50;
 }
 
@@ -147,36 +145,42 @@ void XOHeroGameLogic::_feed_with_next_notes()
 		return;
 	}
 
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - _start_point);
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - _start_point);
 
-	for (auto &i = _last_nearest_note_index; i < _notes->size(); ++i)
+
+	auto it = _notes->begin(), end_it = _notes->end();
+	for (; it != end_it; ++it)
 	{
-		if (_notes->at(i).time < _ommision_time)
+		if ((*it).time < _ommision_time)
 		{
 			continue;
 		}
 
- 		if (_notes->at(i).time >= duration.count() - conf::GAME_HERO_LOGIC_NOTE_TOLERANCE)
+		if ((*it).time >= duration.count() - conf::GAME_HERO_LOGIC_NOTE_TOLERANCE)
 		{
 			break;
 		}
 
-		if (_notes->at(i).clicked)
+		if ((*it).clicked)
 		{
 			continue;
 		}
 
-		_notes->at(i).clicked = true;
+		(*it).clicked = true;
 
-		_on_note_omitted(_notes->at(i));
+		_on_note_omitted((*it));
 	}
 
-	if (_last_nearest_note_index >= _notes->size())
+	/*if (_last_nearest_note_index >= _notes->size())
+	{
+		return;
+	}*/
+	if (it == end_it)
 	{
 		return;
 	}
 
-	auto _next_callback_time = _notes->at(_last_nearest_note_index).time - duration.count();
+	auto _next_callback_time = (*it).time - duration.count();
 
 	if (_next_callback_time < 0)
 	{

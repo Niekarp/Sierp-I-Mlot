@@ -3,7 +3,7 @@
 
 using namespace xo;
 
-NoteContainer::NoteContainer() : 
+NoteContainer::NoteContainer() :
 	_arranged(true)
 {
 }
@@ -20,26 +20,18 @@ void NoteContainer::arrange()
 	_arranged = true;
 }
 
-Note &NoteContainer::operator[](size_t idx)
-{
-	return at(idx);
-}
-
-Note & xo::NoteContainer::at(size_t idx)
-{
-	if (!_arranged)
-	{
-		arrange();
-	}
-	return _notes[idx];
-}
-
-size_t NoteContainer::size()
-{
-	return _notes.size();
-}
-
 void xo::NoteContainer::clear()
 {
 	_notes.clear();
+}
+
+NoteContainer::iterator xo::NoteContainer::begin()
+{
+	auto shr = shared_from_this();
+	return iterator(shared_from_this(), 0);
+}
+
+NoteContainer::iterator xo::NoteContainer::end()
+{
+	return iterator(shared_from_this(), _notes.size());
 }
