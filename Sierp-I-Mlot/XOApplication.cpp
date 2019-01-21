@@ -5,18 +5,15 @@
 
 namespace xo
 {
-	std::shared_ptr<XOApplication> XOApplication::_instance = nullptr;
-	std::shared_ptr<XOApplication> XOApplication::get_instance()
+	XOApplication::XOApplication()
 	{
-		if (_instance == nullptr) _instance = std::shared_ptr<XOApplication>(new XOApplication());
-		return _instance;
 	}
 
-	XOApplication::XOApplication() :
-		_output(new XOConsoleOutput()),
-		_xo_game_logic(std::make_shared<XOGameLogic>(3, 3, PlayerSymbol::circle, 3)),
-		_hero_game_logic(std::make_shared<XOHeroGameLogic>())
+	void XOApplication::initialize()
 	{
+		_xo_game_logic = std::make_shared<XOGameLogic>(3, 3, PlayerSymbol::circle, 3);
+		_hero_game_logic = std::make_shared<XOHeroGameLogic>();		
+		_output = create_output();
 		_action_logic = std::make_shared<XOActionLogic>(_output, _xo_game_logic, _hero_game_logic);
 	}
 

@@ -270,4 +270,26 @@ namespace xo
 		}
 		cout << endl << endl;
 	}
+	std::shared_ptr<Memento> XOGameLogic::create_memento()
+	{
+		auto game_logic_memento = std::make_shared<XOGameLogicMemento>();
+		game_logic_memento->set_state(_board_info, _current_player, _current_state, _winning_squares_sqruences, _winning_streak);
+		return game_logic_memento;
+	}
+
+	void XOGameLogic::set_memento(const std::shared_ptr<Memento>& memento)
+	{
+		auto game_logic_memento = std::dynamic_pointer_cast<XOGameLogicMemento>(memento);
+		if (game_logic_memento->state() != GameState::finished)
+		{
+			game_logic_memento->get_state(&_board_info, &_current_player, &_current_state, &_winning_squares_sqruences, &_winning_streak);
+		}
+	}
+	void XOGameLogic::for_each_square(const std::function<void(int x, int y, SquareState state)>& callback)
+	{
+		for (int i = 0; i < _board_info.squares_states.size(); ++i)
+		{
+			callback(i % _board_info.height, i / _board_info.height, _board_info.squares_states[i]);
+		}
+	}
 }

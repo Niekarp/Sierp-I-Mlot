@@ -37,6 +37,8 @@ namespace xo
 	private:
 		void _resume_xo_map();
 		void _on_hero_end(int x, int y);
+		void _resume_xo_state_from_file();
+		void _save_xo_state_to_file();
 
 		float _scale;
 		unsigned _next_x;

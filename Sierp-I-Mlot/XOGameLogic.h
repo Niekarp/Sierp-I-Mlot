@@ -2,29 +2,13 @@
 
 #include <utility>
 #include "PlayerSymbol.h"
+#include "BoardInfo.h"
+#include "XOGameLogicMemento.h"
 
 namespace xo
 {
-	typedef PlayerSymbol SquareState;
-
-	enum class GameState
-	{
-		ongoing,
-		stopped,
-		finished
-	};
-
-
 	class XOGameLogic
 	{
-		struct BoardInfo
-		{
-			// sizes measured with board square unit
-			unsigned width, height;
-			unsigned number_of_squares;
-
-			std::vector<SquareState> squares_states;
-		};
 	public:
 		XOGameLogic(unsigned initial_width, unsigned initial_height, PlayerSymbol initial_player, unsigned initial_winning_streak);
 
@@ -39,6 +23,12 @@ namespace xo
 
 		// prints text representation of the game
 		void print_status();
+
+		// memento
+		std::shared_ptr<Memento> create_memento();
+		void set_memento(const std::shared_ptr<Memento> &);
+		void for_each_square(const std::function<void(int x, int y, SquareState state)> &callback);
+
 	private:
 		BoardInfo _board_info;
 		PlayerSymbol _current_player;

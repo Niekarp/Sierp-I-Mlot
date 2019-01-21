@@ -2,6 +2,7 @@
 #include "XOActionLogic.h"
 #include "ChartReader.h"
 #include "XOTimer.h"
+#include "MementoFileSerializer.h"
 
 
 using namespace xo;
@@ -153,11 +154,33 @@ XOActionLogic::XOActionLogic(const std::shared_ptr<XOIOutput> &output,
 
 	_sound_effect_player = std::make_shared<MusicPlayer>();
 	_sound_effect_player->delegate_executor(_output);
+
+	_resume_xo_state_from_file();
 }
 
 void xo::XOActionLogic::direct_execution()
 {
 	_output->run();
+}
+
+void xo::XOActionLogic::_resume_xo_state_from_file()
+{
+	auto empty_memento = _xo_game_logic->create_memento();
+	MementoFileSerializer serializer(empty_memento);
+	serializer.load(conf::GAME_XO_LOGIC_STATE_PATH);
+	_xo_game_logic->set_memento(empty_memento);
+
+	_xo_game_logic->for_each_square([this](auto x, auto y, auto state)
+	{
+		_game_map_xo->put(state, x, y);
+	});
+}
+
+void xo::XOActionLogic::_save_xo_state_to_file()
+{
+	auto memento = _xo_game_logic->create_memento();
+	MementoFileSerializer serializer(memento);
+	serializer.save(conf::GAME_XO_LOGIC_STATE_PATH);
 }
 
 void XOActionLogic::main_menu_play()
@@ -307,6 +330,8 @@ void xo::XOActionLogic::_on_hero_end(int x, int y)
 	{
 		_game_map_xo->put(_xo_game_logic->player_to_play_next(), x, y);
 		_xo_game_logic->play_move(x, y);
+
+		_save_xo_state_to_file();
 
 		if (_xo_game_logic->current_state() == GameState::finished)
 		{

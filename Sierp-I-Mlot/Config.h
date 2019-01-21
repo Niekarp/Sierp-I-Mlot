@@ -55,5 +55,7 @@ namespace xo
 		const int GAME_XO_SELECT_FLASHING_SPEED = 10;
 		const int GAME_XO_SELECT_TIME = 2000;
 		const char * const GAME_XO_BACK_IMAGE = "resources/xo_menu_back.txt";
+
+		const char * const GAME_XO_LOGIC_STATE_PATH = "resources/logic_state.txt";
 	}
 }
